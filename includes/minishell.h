@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/15 11:23:48 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/09/27 15:18:06 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,49 @@
 */
 # include <stdlib.h>
 # include <stdio.h>
+# include <string.h>
+# include <unistd.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 /*
 ** -----------------------------------------------------------------------------
 ** Structs and typedef.
 */
+typedef struct s_data {
+	char ***cmd;
+	char **envpath;
+	int	end[2];
+	int	cmd_amt;
+	int	fd_temp;
+	int	fd_in;
+	int fd_out;
+	int	cmd_count;
+	pid_t child;
+}				t_data;
 /*
 ** -----------------------------------------------------------------------------
 ** Function prototypes
 */
+char	*ft_strcpy(char *dest, const char *src);
+char	**ft_split(char const *s, char c);
+char	*ft_strchr(const char *str, int c);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+size_t	ft_strlen(const char *s);
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strdup(const char *src);
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_bzero(void *s, size_t n);
+
+int		pipex(int argc, char **argv, char **envp, t_data *data);
+int		error_handler(t_data *data, int argc, char **argv);
+void	runcmd(t_data *data, char **cmd, char **envp);
+int		forking(t_data *data, char **envp);
+void	parsing_envpath(t_data *data, char **envp);
 
 #endif

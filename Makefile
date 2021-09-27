@@ -8,17 +8,23 @@ OBJDIR = ./objs/
 DEBUGDIR = ./debug/
 
 CFLAGS = -Wall -Werror -Wextra
-
 OBJECTS = $(OBJDIR)/*.o
 D_OBJECTS = $(DEBUGDIR)/*.o
 
-SRC =	./srcs/main.c						\
+SRC =	./srcs/main.c							\
+		./srcs/ft_utils.c						\
+		./srcs/ft_utils2.c						\
+		./srcs/ft_split.c						\
+		./srcs/px.c								\
+		./srcs/px_cmd.c							\
+		./srcs/px_fork.c						\
+		./srcs/px_error.c						\
+		./srcs/px_parse.c						\
 
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME)
-	lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/khirsig/.brew/opt/readline/include
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) -lreadline
 
 test: $(D_OBJECTS)
 	$(CC) $(D_OBJECTS) $(LIBFT) -o $(D_NAME)
