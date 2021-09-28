@@ -8,6 +8,8 @@ OBJDIR = ./objs/
 DEBUGDIR = ./debug/
 
 CFLAGS = -Wall -Werror -Wextra
+LDFLAGS = -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
+CPPFLAGS = -I /Users/$(USER)/.brew/opt/readline/include
 
 OBJECTS = $(OBJDIR)/*.o
 D_OBJECTS = $(DEBUGDIR)/*.o
@@ -17,8 +19,7 @@ SRC =	./srcs/main.c						\
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME)
-	lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/khirsig/.brew/opt/readline/include
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CPPFLAGS) $(OBJECTS) -o $(NAME)
 
 test: $(D_OBJECTS)
 	$(CC) $(D_OBJECTS) $(LIBFT) -o $(D_NAME)
