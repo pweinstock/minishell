@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:16:08 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/28 08:51:02 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/09/28 09:37:36 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	child_process(t_pipex *p_strct, t_data *data, char **envp)
 {
+	(void)data;
 	dup2(p_strct->fd_temp, STDIN_FILENO);
 	close(p_strct->end[0]);
 	if (p_strct->cmd_count + 1 < p_strct->cmd_amt)
@@ -21,7 +22,7 @@ static void	child_process(t_pipex *p_strct, t_data *data, char **envp)
 	else
 	{
 		dup2(data->fd_out, STDOUT_FILENO);
-		close(data->fd_out);
+		// close(data->fd_out);
 		close(p_strct->end[1]);
 	}
 	runcmd(p_strct, p_strct->cmd[p_strct->cmd_count], envp);

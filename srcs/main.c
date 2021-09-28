@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/28 08:56:59 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/09/28 09:06:28 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,6 @@ int	main(int argc, char **argv, char **envp)
 		free(str);
 	}
 	// write(2, "Test\n", 5);
-	// system("leaks minishell > leaks.txt");
+	system("leaks minishell > leaks.txt");
 	return (0);
 }
