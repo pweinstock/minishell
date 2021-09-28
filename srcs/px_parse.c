@@ -6,13 +6,13 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:34:45 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/27 15:16:29 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/09/28 08:48:50 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	parsing_envpath(t_data *data, char **envp)
+void	parsing_envpath(t_pipex *p_strct, char **envp)
 {
 	int	i;
 
@@ -24,5 +24,5 @@ void	parsing_envpath(t_data *data, char **envp)
 		i++;
 	}
 	envp[i] += 5;
-	data->envpath = ft_split(envp[i], ':');
+	p_strct->envpath = ft_split(envp[i], ':');
 }

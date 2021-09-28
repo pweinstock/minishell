@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/27 15:18:06 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/09/28 08:52:24 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,19 @@
 ** Structs and typedef.
 */
 typedef struct s_data {
+	int	fd_in;
+	int	fd_out;
+}				t_data;
+
+typedef struct s_pipex {
 	char ***cmd;
 	char **envpath;
 	int	end[2];
 	int	cmd_amt;
 	int	fd_temp;
-	int	fd_in;
-	int fd_out;
 	int	cmd_count;
 	pid_t child;
-}				t_data;
+}				t_pipex;
 /*
 ** -----------------------------------------------------------------------------
 ** Function prototypes
@@ -63,9 +66,9 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_bzero(void *s, size_t n);
 
 int		pipex(int argc, char **argv, char **envp, t_data *data);
-int		error_handler(t_data *data, int argc, char **argv);
-void	runcmd(t_data *data, char **cmd, char **envp);
-int		forking(t_data *data, char **envp);
-void	parsing_envpath(t_data *data, char **envp);
+int		error_handler(t_pipex *p_strct, int argc, char **argv);
+void	runcmd(t_pipex *p_strct, char **cmd, char **envp);
+int		forking(t_pipex *p_strct, t_data *data, char **envp);
+void	parsing_envpath(t_pipex *p_strct, char **envp);
 
 #endif

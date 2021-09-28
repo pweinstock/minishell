@@ -6,50 +6,50 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:16:08 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/27 15:17:06 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/09/28 08:51:02 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	child_process(t_data *data, char **envp)
+static void	child_process(t_pipex *p_strct, t_data *data, char **envp)
 {
-	dup2(data->fd_temp, STDIN_FILENO);
-	close(data->end[0]);
-	if (data->cmd_count + 1 < data->cmd_amt)
-		dup2(data->end[1], STDOUT_FILENO);
+	dup2(p_strct->fd_temp, STDIN_FILENO);
+	close(p_strct->end[0]);
+	if (p_strct->cmd_count + 1 < p_strct->cmd_amt)
+		dup2(p_strct->end[1], STDOUT_FILENO);
 	else
 	{
 		dup2(data->fd_out, STDOUT_FILENO);
 		close(data->fd_out);
-		close(data->end[1]);
+		close(p_strct->end[1]);
 	}
-	runcmd(data, data->cmd[data->cmd_count], envp);
+	runcmd(p_strct, p_strct->cmd[p_strct->cmd_count], envp);
 	return ;
 }
 
-int	forking(t_data *data, char **envp)
+int	forking(t_pipex *p_strct, t_data *data, char **envp)
 {
-	data->cmd_count = 0;
-	dup2(data->fd_in, data->fd_temp);
-	while (data->cmd[data->cmd_count] != NULL)
+	p_strct->cmd_count = 0;
+	dup2(data->fd_in, p_strct->fd_temp);
+	while (p_strct->cmd[p_strct->cmd_count] != NULL)
 	{
-		if (pipe(data->end) == -1)
+		if (pipe(p_strct->end) == -1)
 		{
 			perror("Error");
 			exit(EXIT_FAILURE);
 		}
-		data->child = fork();
-		if (data->child == -1)
+		p_strct->child = fork();
+		if (p_strct->child == -1)
 			exit(EXIT_FAILURE);
-		if (data->child == 0)
-			child_process(data, envp);
+		if (p_strct->child == 0)
+			child_process(p_strct, data, envp);
 		while (wait(NULL) != -1 || errno != ECHILD)
 			continue ;
-		close(data->end[1]);
-		dup2(data->end[0], data->fd_temp);
-		close(data->end[0]);
-		data->cmd_count++;
+		close(p_strct->end[1]);
+		dup2(p_strct->end[0], p_strct->fd_temp);
+		close(p_strct->end[0]);
+		p_strct->cmd_count++;
 	}
 	return (0);
 }
