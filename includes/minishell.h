@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/28 13:04:51 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/09/29 11:31:53 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_bzero(void *s, size_t n);
 
-int		pipex(int argc, char **argv, char **envp, t_data *data);
-int		error_handler(t_pipex *p_strct, int argc, char **argv);
+int		pipex(char *input, char **envp, t_data *data);
+int		error_handler(t_pipex *p_strct, char *input);
 void	runcmd(t_pipex *p_strct, char **cmd, char **envp);
 int		forking(t_pipex *p_strct, t_data *data, char **envp);
 void	parsing_envpath(t_pipex *p_strct, char **envp);
