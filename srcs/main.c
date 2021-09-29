@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/29 13:19:03 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/09/29 13:24:10 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static char *ft_readadd(char *s, char c)
 	free (s);
 	return (re);
 }
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*ret;
