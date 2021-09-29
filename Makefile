@@ -3,6 +3,9 @@ CC = gcc
 NAME = minishell
 D_NAME = minishell_debug
 
+LFLAGS = -L$$HOME/.brew/opt/readline/lib -lreadline
+CPFLAGS = -I$$HOME/.brew/opt/readline/include
+
 SDIR = ./srcs/
 OBJDIR = ./objs/
 DEBUGDIR = ./debug/
@@ -24,13 +27,13 @@ SRC =	./srcs/main.c							\
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) -lreadline
+	$(CC) $(LFLAGS) $(OBJECTS) -o $(NAME)
 
 test: $(D_OBJECTS)
 	$(CC) $(D_OBJECTS) $(LIBFT) -o $(D_NAME)
 
 $(OBJECTS): $(SRC)
-	@$(CC) -c $(CFLAGS) $(SRC)
+	$(CC) -c $(CFLAGS) $(CPFLAGS) $(SRC)
 	rm -rf ./objs; mkdir ./objs
 	mv *.o $(OBJDIR)
 
