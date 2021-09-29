@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:34:45 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/28 08:48:50 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/09/29 08:40:51 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	parsing_envpath(t_pipex *p_strct, char **envp)
 {
 	int	i;
+	char *temp;
 
 	i = 0;
 	while (envp[i] != NULL)
@@ -23,6 +24,7 @@ void	parsing_envpath(t_pipex *p_strct, char **envp)
 			break ;
 		i++;
 	}
-	envp[i] += 5;
-	p_strct->envpath = ft_split(envp[i], ':');
+	temp = envp[i];
+	temp += 5;
+	p_strct->envpath = ft_split(temp, ':');
 }

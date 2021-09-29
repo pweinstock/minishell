@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 14:07:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/28 08:49:14 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/09/29 08:36:21 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	parse_args(t_pipex *p_strct, int argc, char **argv)
 		cmd_index++;
 		index++;
 	}
+	printf("cmdamt:%i\n", p_strct->cmd_amt);
 	return (0);
 }
 

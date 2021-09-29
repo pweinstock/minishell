@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:33:30 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/28 08:52:09 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/09/29 08:29:52 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,11 @@ void	runcmd(t_pipex *p_strct, char **cmd, char **envp)
 	ft_run_err(p_strct, index, cmd, cmd_prefix);
 	while (p_strct->envpath[index] != NULL)
 	{
-		temp = ft_strjoin(p_strct->envpath[index], "/");
 		// write(2, p_strct->envpath[index], ft_strlen(p_strct->envpath[index]));
+		// write(2, "\n", 2);
+		temp = ft_strjoin(p_strct->envpath[index], "/");
+		// write(2, temp, ft_strlen(temp));
+		// write(2, "\n", 2);
 		full_cmdpath = ft_strjoin(temp, cmd_prefix);
 		// write(2, full_cmdpath, ft_strlen(full_cmdpath));
 		// write(2, "\n", 2);
@@ -60,5 +63,6 @@ void	runcmd(t_pipex *p_strct, char **cmd, char **envp)
 		free(full_cmdpath);
 		index++;
 		ft_run_err(p_strct, index, cmd, cmd_prefix);
+		// write(2, "\n", 2);
 	}
 }
