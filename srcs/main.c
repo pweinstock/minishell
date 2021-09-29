@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/29 11:37:09 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/09/29 13:19:03 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ int	main(int argc, char **argv, char **envp)
 	ft_bzero(data, sizeof(t_data));
 	(void)argv;
 	(void)argc;
+	// data->fd_in = open("infile", O_RDONLY);
+	// data->fd_out = open("outfile", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	data->fd_in = 0;
+	data->fd_out = 1;
 	while(42)
 	{
 		// write(2, "Tes1\n", 5);
@@ -57,8 +61,6 @@ int	main(int argc, char **argv, char **envp)
 		// rl_replace_line("Test\n", 2);
 		while ((bytes = read(1, &c, 1)) && c != '\n')
 			ret = ft_readadd(ret,c);
-		data->fd_in = 0;
-		data->fd_out = 1;
 		if (ret[0])
 			pipex(ret, envp, data);
 		// write(2, "Te4\n", 5);
