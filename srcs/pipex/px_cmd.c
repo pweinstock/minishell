@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:33:30 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/01 10:07:20 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/01 10:19:19 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ static void	ft_run_err(t_pipex *p_strct, int index, char **cmd, char *cmd_prefix
 	}
 }
 
-static void	runbltin(char **cmd, int cmdnbr)
+static void	runbltin(t_data *data, char **cmd, int cmdnbr)
 {
 	if (cmdnbr == 0)
-		bltin_cd(cmd);
+		bltin_cd(data, cmd);
 	return ;
 }
 
@@ -64,13 +64,10 @@ void	runcmd(t_data *data, t_pipex *p_strct, char **cmd, char **envp)
 	int		index;
 
 	cmd_prefix = ft_strdup(cmd[0]);
-	// write(2, cmd[0], ft_strlen(cmd[0]));
 	index = bltin_compare(data, cmd[0]);
-	// write(2, "Test\n", 6);
 	if (index != -1)
 	{
-		// write(2, "Test\n", 6);
-		runbltin(cmd, index);
+		runbltin(data, cmd, index);
 		return ;
 	}
 	if (ft_chrsrch(cmd[0], '/') != -1)
