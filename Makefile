@@ -31,6 +31,7 @@ SRC =	./srcs/main.c									\
 		./srcs/builtin/bltin_cd.c						\
 		./srcs/builtin/bltin_compare.c					\
 		./srcs/builtin/bltin_init.c						\
+		./srcs/builtin/bltin_exit.c						\
 
 
 all: header $(NAME)

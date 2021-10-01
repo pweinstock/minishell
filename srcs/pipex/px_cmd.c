@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:33:30 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/01 10:19:19 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/01 14:21:23 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ static void	runbltin(t_data *data, char **cmd, int cmdnbr)
 {
 	if (cmdnbr == 0)
 		bltin_cd(data, cmd);
+	if (cmdnbr == 1)
+		bltin_exit(data);
 	return ;
 }
 

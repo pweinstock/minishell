@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:16:08 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/01 09:00:08 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/01 14:26:14 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	forking(t_pipex *p_strct, t_data *data, char **envp)
 		close(p_strct->end[1]);
 		dup2(p_strct->end[0], p_strct->fd_temp);
 		close(p_strct->end[0]);
+		if (data->gameover == TRUE)
+			exit(EXIT_SUCCESS);
 		p_strct->cmd_count++;
 	}
 	return (0);

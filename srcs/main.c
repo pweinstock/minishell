@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/01 10:23:56 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/01 14:26:22 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	main(int argc, char **argv, char **envp)
 		if (ret[0])
 			pipex(ret, envp, data);
 		// write(2, "Te4\n", 5);
+		if (data->gameover == TRUE)
+			exit(EXIT_SUCCESS);
 		if (ret)
 		{
 			free(ret);

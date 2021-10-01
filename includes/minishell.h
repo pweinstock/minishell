@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/01 10:19:32 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/01 14:24:54 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 typedef struct s_data {
 	char	**bltin_cmds;
 	char	*path_prefix;
+	int		gameover;
 	int		fd_in;
 	int		fd_out;
 }				t_data;
@@ -79,5 +80,6 @@ void	parsing_envpath(t_pipex *p_strct, char **envp);
 void	bltin_cd(t_data *data, char **cmd);
 int		bltin_compare(t_data *data, char *needle);
 int		bltin_init(t_data *data);
+void	bltin_exit(t_data *data);
 
 #endif
