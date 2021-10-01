@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   px_parse.c                                         :+:      :+:    :+:   */
+/*   px.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/24 08:34:45 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/29 08:40:51 by khirsig          ###   ########.fr       */
+/*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
+/*   Updated: 2021/10/01 08:35:36 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	parsing_envpath(t_pipex *p_strct, char **envp)
+int	pipex(char *input, char **envp, t_data *data)
 {
-	int	i;
-	char *temp;
+	t_pipex	p_strct;
 
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		if (ft_strnstr(envp[i], "PATH", ft_strlen(envp[i])) != 0)
-			break ;
-		i++;
-	}
-	temp = envp[i];
-	temp += 5;
-	p_strct->envpath = ft_split(temp, ':');
+	ft_bzero(&p_strct, sizeof(t_pipex));
+	if (error_handler(&p_strct, input) == ERROR)
+		return (1);
+	parsing_envpath(&p_strct, envp);
+	if (forking(&p_strct, data, envp) == ERROR)
+		return (1);
+	// write(2, "Test\n", 6);
+	free(p_strct.envpath);
+	return (0);
 }

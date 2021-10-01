@@ -6,11 +6,11 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 14:08:33 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/27 14:34:42 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/01 08:35:41 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 size_t	ft_strlen(const char *s)
 {

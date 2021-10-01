@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/29 11:31:53 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/09/30 15:25:18 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_pipex {
 	char ***cmd;
 	char **envpath;
 	int	end[2];
+	int cmdpathfound;
 	int	cmd_amt;
 	int	fd_temp;
 	int	cmd_count;
@@ -64,6 +65,8 @@ char	*ft_strdup(const char *src);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_bzero(void *s, size_t n);
+int		ft_chrsrch(char *haystack, char needle);
+int		ft_revchrsrch(char *haystack, char needle);
 
 int		pipex(char *input, char **envp, t_data *data);
 int		error_handler(t_pipex *p_strct, char *input);

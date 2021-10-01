@@ -6,11 +6,11 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 14:07:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/29 11:38:29 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/01 08:35:18 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static int	parse_args(t_pipex *p_strct, char *input)
 {

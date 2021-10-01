@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/29 13:24:10 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/09/30 15:55:29 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	main(int argc, char **argv, char **envp)
 	t_data	*data;
 	char c;
 	int bytes;
+	// char *cwd;
 
 	data = malloc(sizeof(t_data));
 	ft_bzero(data, sizeof(t_data));
@@ -53,6 +54,8 @@ int	main(int argc, char **argv, char **envp)
 	// data->fd_out = open("outfile", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	data->fd_in = 0;
 	data->fd_out = 1;
+	// cwd = malloc(sizeof(char) * 200);
+	// printf("%s\n", getcwd(cwd, 200));
 	while(42)
 	{
 		// write(2, "Tes1\n", 5);

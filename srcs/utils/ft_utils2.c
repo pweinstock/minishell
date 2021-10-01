@@ -6,11 +6,11 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 14:50:51 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/27 17:03:28 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/01 08:35:44 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

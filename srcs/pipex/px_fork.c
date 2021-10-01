@@ -6,15 +6,14 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:16:08 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/29 13:12:32 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/01 08:35:21 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static void	child_process(t_pipex *p_strct, t_data *data, char **envp)
 {
-	// (void)data;
 	dup2(p_strct->fd_temp, STDIN_FILENO);
 	close(p_strct->end[0]);
 	if (p_strct->cmd_count + 1 < p_strct->cmd_amt)
