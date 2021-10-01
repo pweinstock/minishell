@@ -28,6 +28,9 @@ SRC =	./srcs/main.c									\
 		./srcs/pipex/px_fork.c							\
 		./srcs/pipex/px_error.c							\
 		./srcs/pipex/px_parse.c							\
+		./srcs/builtin/bltin_cd.c						\
+		./srcs/builtin/bltin_compare.c					\
+		./srcs/builtin/bltin_init.c						\
 
 
 all: header $(NAME)

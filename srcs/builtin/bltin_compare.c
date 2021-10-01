@@ -1,41 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils3.c                                        :+:      :+:    :+:   */
+/*   bltin_compare.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/30 15:16:43 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/01 09:20:35 by khirsig          ###   ########.fr       */
+/*   Created: 2021/10/01 08:40:28 by khirsig           #+#    #+#             */
+/*   Updated: 2021/10/01 09:47:15 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_chrsrch(char *haystack, char needle)
+int	bltin_compare(t_data *data, char *needle)
 {
 	int index;
 
 	index = 0;
-	while (haystack[index] != '\0')
+	while (data->bltin_cmds[index] != NULL)
 	{
-		if (haystack[index] == needle)
+		if (ft_strnstr(data->bltin_cmds[index], needle, ft_strlen(needle)) != 0)
 			return (index);
 		index++;
-	}
-	return (-1);
-}
-
-int	ft_revchrsrch(char *haystack, char needle)
-{
-	int index;
-
-	index = ft_strlen(haystack);
-	while (index >= 0)
-	{
-		if (haystack[index] == needle)
-			return (index);
-		index--;
 	}
 	return (-1);
 }

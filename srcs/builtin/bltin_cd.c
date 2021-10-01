@@ -1,41 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils3.c                                        :+:      :+:    :+:   */
+/*   bltin_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/30 15:16:43 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/01 09:20:35 by khirsig          ###   ########.fr       */
+/*   Created: 2021/10/01 08:39:20 by khirsig           #+#    #+#             */
+/*   Updated: 2021/10/01 10:10:06 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_chrsrch(char *haystack, char needle)
+void	bltin_cd(char **cmd)
 {
-	int index;
-
-	index = 0;
-	while (haystack[index] != '\0')
+	if (chdir(cmd[1]) == -1)
 	{
-		if (haystack[index] == needle)
-			return (index);
-		index++;
+		ft_putstr_fd("cd: no such file or directory: ", 2);
+		ft_putstr_fd(cmd[1], 2);
+		ft_putstr_fd("\n", 2);
+		return ;
 	}
-	return (-1);
-}
-
-int	ft_revchrsrch(char *haystack, char needle)
-{
-	int index;
-
-	index = ft_strlen(haystack);
-	while (index >= 0)
-	{
-		if (haystack[index] == needle)
-			return (index);
-		index--;
-	}
-	return (-1);
+	return ;
 }

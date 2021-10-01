@@ -1,41 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils3.c                                        :+:      :+:    :+:   */
+/*   bltin_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/30 15:16:43 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/01 09:20:35 by khirsig          ###   ########.fr       */
+/*   Created: 2021/10/01 08:42:53 by khirsig           #+#    #+#             */
+/*   Updated: 2021/10/01 08:46:35 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_chrsrch(char *haystack, char needle)
+int	bltin_init(t_data *data)
 {
-	int index;
-
-	index = 0;
-	while (haystack[index] != '\0')
-	{
-		if (haystack[index] == needle)
-			return (index);
-		index++;
-	}
-	return (-1);
-}
-
-int	ft_revchrsrch(char *haystack, char needle)
-{
-	int index;
-
-	index = ft_strlen(haystack);
-	while (index >= 0)
-	{
-		if (haystack[index] == needle)
-			return (index);
-		index--;
-	}
-	return (-1);
+	data->bltin_cmds = malloc(sizeof(char *));
+	data->bltin_cmds[0] = ft_strdup("cd");
+	data->bltin_cmds[1] = NULL;
+	return (0);
 }

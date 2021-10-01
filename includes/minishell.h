@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/09/30 15:25:18 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/01 09:20:40 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@
 ** Structs and typedef.
 */
 typedef struct s_data {
-	int	fd_in;
-	int	fd_out;
+	char	**bltin_cmds;
+	int		fd_in;
+	int		fd_out;
 }				t_data;
 
 typedef struct s_pipex {
@@ -70,8 +71,12 @@ int		ft_revchrsrch(char *haystack, char needle);
 
 int		pipex(char *input, char **envp, t_data *data);
 int		error_handler(t_pipex *p_strct, char *input);
-void	runcmd(t_pipex *p_strct, char **cmd, char **envp);
+void	runcmd(t_data *data, t_pipex *p_strct, char **cmd, char **envp);
 int		forking(t_pipex *p_strct, t_data *data, char **envp);
 void	parsing_envpath(t_pipex *p_strct, char **envp);
+
+void	bltin_cd(char **cmd);
+int		bltin_compare(t_data *data, char *needle);
+int		bltin_init(t_data *data);
 
 #endif

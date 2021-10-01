@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:33:30 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/01 08:35:15 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/01 10:07:20 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,36 @@ static void	ft_run_err(t_pipex *p_strct, int index, char **cmd, char *cmd_prefix
 	}
 }
 
-void	runcmd(t_pipex *p_strct, char **cmd, char **envp)
+static void	runbltin(char **cmd, int cmdnbr)
+{
+	if (cmdnbr == 0)
+		bltin_cd(cmd);
+	return ;
+}
+
+void	runcmd(t_data *data, t_pipex *p_strct, char **cmd, char **envp)
 {
 	char	*temp;
 	char	*cmd_prefix;
 	char	*full_cmdpath;
 	int		index;
 
-	index = 0;
 	cmd_prefix = ft_strdup(cmd[0]);
+	// write(2, cmd[0], ft_strlen(cmd[0]));
+	index = bltin_compare(data, cmd[0]);
+	// write(2, "Test\n", 6);
+	if (index != -1)
+	{
+		// write(2, "Test\n", 6);
+		runbltin(cmd, index);
+		return ;
+	}
 	if (ft_chrsrch(cmd[0], '/') != -1)
 	{
 		run_fullpathcmd(cmd, envp);
 		return ;
 	}
+	index = 0;
 	ft_run_err(p_strct, index, cmd, cmd_prefix);
 	while (p_strct->envpath[index] != NULL)
 	{

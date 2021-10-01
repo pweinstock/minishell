@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:16:08 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/01 08:35:21 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/01 09:00:08 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	child_process(t_pipex *p_strct, t_data *data, char **envp)
 		// close(data->fd_out);
 		close(p_strct->end[1]);
 	}
-	runcmd(p_strct, p_strct->cmd[p_strct->cmd_count], envp);
+	runcmd(data, p_strct, p_strct->cmd[p_strct->cmd_count], envp);
 	return ;
 }
 
