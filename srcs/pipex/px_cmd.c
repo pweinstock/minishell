@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:33:30 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/01 14:21:23 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/05 15:48:35 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	ft_run_err(t_pipex *p_strct, int index, char **cmd, char *cmd_prefix
 		ft_putstr_fd(cmd[0], 2);
 		ft_putstr_fd("\n", 2);
 		free(cmd_prefix);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 	if (p_strct->envpath[index] == NULL)
 	{
@@ -45,7 +45,7 @@ static void	ft_run_err(t_pipex *p_strct, int index, char **cmd, char *cmd_prefix
 		ft_putstr_fd(cmd[0], 2);
 		ft_putstr_fd("\n", 2);
 		free(cmd_prefix);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 }
 
@@ -53,8 +53,8 @@ static void	runbltin(t_data *data, char **cmd, int cmdnbr)
 {
 	if (cmdnbr == 0)
 		bltin_cd(data, cmd);
-	if (cmdnbr == 1)
-		bltin_exit(data);
+	// if (cmdnbr == 1)
+	// 	bltin_exit(data);
 	return ;
 }
 
@@ -71,11 +71,12 @@ void	runcmd(t_data *data, t_pipex *p_strct, char **cmd, char **envp)
 	{
 		runbltin(data, cmd, index);
 		return ;
+
 	}
 	if (ft_chrsrch(cmd[0], '/') != -1)
 	{
 		run_fullpathcmd(cmd, envp);
-		return ;
+		exit(EXIT_SUCCESS);
 	}
 	index = 0;
 	ft_run_err(p_strct, index, cmd, cmd_prefix);
@@ -87,7 +88,7 @@ void	runcmd(t_data *data, t_pipex *p_strct, char **cmd, char **envp)
 		{
 			execve(full_cmdpath, cmd, envp);
 			free(cmd_prefix);
-			return ;
+			exit(EXIT_SUCCESS);
 		}
 		free(temp);
 		free(full_cmdpath);

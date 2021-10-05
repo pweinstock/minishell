@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/01 14:26:22 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/05 15:54:09 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,13 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	// data->fd_in = open("infile", O_RDONLY);
 	// data->fd_out = open("outfile", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	data->fd_in = 0;
-	data->fd_out = 1;
+	dup2(data->fd_in, 0);
+	dup2(data->fd_out, 1);
+	// data->fd_in = 0;
+	// data->fd_out = 1;
 	data->path_prefix = ft_strdup("minishell");
 	bltin_init(data);
+	ret = NULL;
 	while(42)
 	{
 		// write(2, "Tes1\n", 5);
@@ -66,8 +69,10 @@ int	main(int argc, char **argv, char **envp)
 		// rl_replace_line("Test\n", 2);
 		while ((bytes = read(1, &c, 1)) && c != '\n')
 			ret = ft_readadd(ret,c);
-		if (ret[0])
+		if (ret != NULL)
 			pipex(ret, envp, data);
+		dup2(0, data->fd_in);
+		dup2(1, data->fd_out);
 		// write(2, "Te4\n", 5);
 		if (data->gameover == TRUE)
 			exit(EXIT_SUCCESS);
