@@ -63,7 +63,6 @@ $(OBJECTS): $(SRC)
 	@$(CC) -c $(CFLAGS) $(CPFLAGS) $(SRC)
 	@rm -rf ./objs; mkdir ./objs
 	@mv *.o $(OBJDIR)
-	@stty -echoctl
 	@echo "|                                                       Object files created and moved.                                                              |"
 
 clean: header
