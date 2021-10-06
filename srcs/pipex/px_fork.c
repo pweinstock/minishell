@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:16:08 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/05 16:15:11 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/06 14:59:08 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,36 @@ static void	child_process(t_pipex *p_strct, t_data *data, char **envp)
 		// close(data->fd_out);
 		close(p_strct->end[1]);
 	}
-	runcmd(data, p_strct, p_strct->cmd[p_strct->cmd_count], envp);
+	runcmd(p_strct, p_strct->cmd[p_strct->cmd_count], envp);
+	exit(EXIT_SUCCESS);
+}
+
+static void	runbltin(t_data *data, char **cmd, int cmdnbr)
+{
+	if (cmdnbr == 0)
+		bltin_cd(data, cmd);
+	if (cmdnbr == 1)
+		bltin_exit(data);
+	if (cmdnbr == 2)
+		bltin_pikachu();
 	return ;
+}
+
+static void create_child(t_data *data, t_pipex *p_strct, char **envp)
+{
+		p_strct->child = fork();
+		if (p_strct->child == -1)
+			exit(EXIT_FAILURE);
+		if (p_strct->child == 0)
+			child_process(p_strct, data, envp);
+		while (wait(NULL) != -1 || errno != ECHILD)
+			continue ;
 }
 
 int	forking(t_pipex *p_strct, t_data *data, char **envp)
 {
+	int is_bltin;
+
 	p_strct->cmd_count = 0;
 	dup2(data->fd_in, p_strct->fd_temp);
 	while (p_strct->cmd[p_strct->cmd_count] != NULL)
@@ -41,15 +65,11 @@ int	forking(t_pipex *p_strct, t_data *data, char **envp)
 			perror("Error");
 			exit(EXIT_FAILURE);
 		}
-		p_strct->child = fork();
-		if (p_strct->child == -1)
-			exit(EXIT_FAILURE);
-		if (p_strct->child == 0)
-			child_process(p_strct, data, envp);
-		while (wait(NULL) != -1 || errno != ECHILD)
-			continue ;
-		if (data->gameover == TRUE)
-			exit(EXIT_SUCCESS);
+		is_bltin = bltin_compare(p_strct->cmd[p_strct->cmd_count][0]);
+		if (is_bltin != -1)
+			runbltin(data, p_strct->cmd[p_strct->cmd_count], is_bltin);
+		else
+			create_child(data, p_strct, envp);
 		close(p_strct->end[1]);
 		dup2(p_strct->end[0], p_strct->fd_temp);
 		close(p_strct->end[0]);

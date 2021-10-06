@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/01 14:24:54 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/06 14:58:31 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@
 ** Structs and typedef.
 */
 typedef struct s_data {
-	char	**bltin_cmds;
 	char	*path_prefix;
-	int		gameover;
 	int		fd_in;
 	int		fd_out;
 }				t_data;
@@ -53,6 +51,13 @@ typedef struct s_pipex {
 	int	cmd_count;
 	pid_t child;
 }				t_pipex;
+
+const static char	*g_bltin_cmds[4] = {
+	"cd",
+	"exit",
+	"pikachu",
+	NULL
+};
 /*
 ** -----------------------------------------------------------------------------
 ** Function prototypes
@@ -73,13 +78,14 @@ int		ft_revchrsrch(char *haystack, char needle);
 
 int		pipex(char *input, char **envp, t_data *data);
 int		error_handler(t_pipex *p_strct, char *input);
-void	runcmd(t_data *data, t_pipex *p_strct, char **cmd, char **envp);
+void	runcmd(t_pipex *p_strct, char **cmd, char **envp);
 int		forking(t_pipex *p_strct, t_data *data, char **envp);
 void	parsing_envpath(t_pipex *p_strct, char **envp);
 
 void	bltin_cd(t_data *data, char **cmd);
-int		bltin_compare(t_data *data, char *needle);
+int		bltin_compare(char *needle);
 int		bltin_init(t_data *data);
 void	bltin_exit(t_data *data);
+void	bltin_pikachu(void);
 
 #endif

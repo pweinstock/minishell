@@ -30,8 +30,8 @@ SRC =	./srcs/main.c									\
 		./srcs/pipex/px_parse.c							\
 		./srcs/builtin/bltin_cd.c						\
 		./srcs/builtin/bltin_compare.c					\
-		./srcs/builtin/bltin_init.c						\
 		./srcs/builtin/bltin_exit.c						\
+		./srcs/builtin/bltin_eastereggs.c				\
 
 
 all: header $(NAME)
