@@ -6,12 +6,12 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/06 14:58:31 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/06 16:10:10 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # define TRUE 1
 # define FALSE 0
