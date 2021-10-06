@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 14:07:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/01 08:59:35 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/06 15:54:13 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,8 @@ static int	parse_args(t_pipex *p_strct, char *input)
 	return (0);
 }
 
-// static int	open_files(t_data *p_strct, int argc, char **argv)
-// {
-// 	if (p_strct->fd_in == 0)
-// 		p_strct->fd_in = open(argv[1], O_RDONLY);
-// 	if (p_strct->fd_out == 0)
-// 		p_strct->fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-// 	return (0);
-// }
-
 int	error_handler(t_pipex *p_strct, char *input)
 {
-	// if (open_files(p_strct, argc, argv) == ERROR)
-	// 	return (ERROR);
 	if (parse_args(p_strct, input) == ERROR)
 		return (ERROR);
 	return (0);
