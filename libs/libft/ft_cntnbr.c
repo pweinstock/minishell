@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bltin_compare.c                                    :+:      :+:    :+:   */
+/*   ft_cntnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 08:40:28 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/07 08:45:03 by khirsig          ###   ########.fr       */
+/*   Created: 2021/07/02 09:19:58 by khirsig           #+#    #+#             */
+/*   Updated: 2021/07/06 08:30:42 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-int	bltin_compare(char *needle)
+int	ft_cntnbr(long long n)
 {
-	int index;
+	int		count;
 
-	index = 0;
-	printf("Test: |%s|\n", needle);
-	while (g_bltin_cmds[index] != NULL)
+	count = 1;
+	if (n < 0)
+		n *= -1;
+	while (n / 10 != 0)
 	{
-		if (ft_strnstr(g_bltin_cmds[index], needle, ft_strlen(needle)) != 0)
-			return (index);
-		index++;
+		n /= 10;
+		count++;
 	}
-	return (-1);
+	return (count);
 }

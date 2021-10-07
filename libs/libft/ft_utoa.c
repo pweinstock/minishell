@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bltin_compare.c                                    :+:      :+:    :+:   */
+/*   ft_utoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 08:40:28 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/07 08:45:03 by khirsig          ###   ########.fr       */
+/*   Created: 2021/06/30 10:41:21 by khirsig           #+#    #+#             */
+/*   Updated: 2021/07/06 08:30:36 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-int	bltin_compare(char *needle)
+char	*ft_utoa(long long u)
 {
-	int index;
+	char	*final_digit;
+	int		count;
 
-	index = 0;
-	printf("Test: |%s|\n", needle);
-	while (g_bltin_cmds[index] != NULL)
+	count = ft_cntnbr(u);
+	final_digit = malloc(count + 1);
+	if (!final_digit)
+		return (0);
+	final_digit[count] = 0;
+	count--;
+	while (count >= 0)
 	{
-		if (ft_strnstr(g_bltin_cmds[index], needle, ft_strlen(needle)) != 0)
-			return (index);
-		index++;
+		final_digit[count] = '0' + u % 10;
+		u /= 10;
+		count--;
 	}
-	return (-1);
+	return (final_digit);
 }

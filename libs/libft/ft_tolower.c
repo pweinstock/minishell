@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bltin_compare.c                                    :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 08:40:28 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/07 08:45:03 by khirsig          ###   ########.fr       */
+/*   Created: 2021/06/17 14:16:56 by khirsig           #+#    #+#             */
+/*   Updated: 2021/08/17 14:47:37 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-int	bltin_compare(char *needle)
+int	ft_tolower(int c)
 {
-	int index;
-
-	index = 0;
-	printf("Test: |%s|\n", needle);
-	while (g_bltin_cmds[index] != NULL)
-	{
-		if (ft_strnstr(g_bltin_cmds[index], needle, ft_strlen(needle)) != 0)
-			return (index);
-		index++;
-	}
-	return (-1);
+	if (c >= 'A' && c <= 'Z')
+		return (c + 32);
+	return (c);
 }

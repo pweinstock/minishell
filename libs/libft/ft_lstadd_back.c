@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bltin_compare.c                                    :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 08:40:28 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/07 08:45:03 by khirsig          ###   ########.fr       */
+/*   Created: 2021/06/25 12:30:50 by khirsig           #+#    #+#             */
+/*   Updated: 2021/06/26 11:58:45 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-int	bltin_compare(char *needle)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	int index;
+	t_list	*save_lst;
 
-	index = 0;
-	printf("Test: |%s|\n", needle);
-	while (g_bltin_cmds[index] != NULL)
+	if (!*lst)
 	{
-		if (ft_strnstr(g_bltin_cmds[index], needle, ft_strlen(needle)) != 0)
-			return (index);
-		index++;
+		*lst = new;
+		return ;
 	}
-	return (-1);
+	save_lst = *lst;
+	while (*lst != 0 && (*lst)-> next)
+		*lst = (*lst)-> next;
+	(*lst)-> next = new;
+	*lst = save_lst;
 }

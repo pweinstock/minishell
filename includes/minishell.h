@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/06 16:10:10 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/07 10:12:35 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,15 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "../libs/libft/libft.h"
+
 /*
 ** -----------------------------------------------------------------------------
 ** Structs and typedef.
 */
 typedef struct s_data {
+	char	**envp;
+	char	*cmd;
 	char	*path_prefix;
 	int		fd_in;
 	int		fd_out;
@@ -62,17 +66,6 @@ const static char	*g_bltin_cmds[4] = {
 ** -----------------------------------------------------------------------------
 ** Function prototypes
 */
-char	*ft_strcpy(char *dest, const char *src);
-char	**ft_split(char const *s, char c);
-char	*ft_strchr(const char *str, int c);
-size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-size_t	ft_strlen(const char *s);
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strdup(const char *src);
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
-void	ft_putstr_fd(char *s, int fd);
-void	ft_bzero(void *s, size_t n);
 int		ft_chrsrch(char *haystack, char needle);
 int		ft_revchrsrch(char *haystack, char needle);
 
@@ -87,5 +80,9 @@ int		bltin_compare(char *needle);
 int		bltin_init(t_data *data);
 void	bltin_exit(t_data *data);
 void	bltin_pikachu(void);
+
+void	signal_handler(int sig);
+void	specifier(t_data *data, char *str);
+
 
 #endif

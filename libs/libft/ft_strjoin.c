@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils2.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/27 14:50:51 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/01 08:35:44 by khirsig          ###   ########.fr       */
+/*   Created: 2021/06/18 11:04:58 by khirsig           #+#    #+#             */
+/*   Updated: 2021/06/28 10:26:47 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -37,48 +37,4 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	new_string[index] = '\0';
 	return (new_string);
-}
-
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
-{
-	unsigned int	i;
-	unsigned int	j;
-
-	i = 0;
-	if (!ft_strlen(needle))
-		return ((char *) haystack);
-	while (i < len && haystack[i] != 0)
-	{
-		j = 0;
-		while (needle[j] == haystack[i + j]
-			&& haystack[i + j] != '\0' && i + j < len)
-			j++;
-		if (needle[j] == '\0')
-			return ((char *)(haystack + i));
-		i++;
-	}
-	return (0);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	int	index;
-
-	index = 0;
-	while (!(!s) && s[index] != '\0')
-	{
-		write(fd, &s[index], 1);
-		index++;
-	}
-}
-
-char	*ft_strdup(const char *src)
-{
-	char	*dst;
-
-	dst = malloc(ft_strlen (src) + 1);
-	if (dst == 0)
-		return (0);
-	ft_strlcpy (dst, src, ft_strlen(src) + 1);
-	return (dst);
 }

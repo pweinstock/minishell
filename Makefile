@@ -7,6 +7,7 @@ CPFLAGS = -I$$HOME/.brew/opt/readline/include
 
 SDIR = ./srcs/
 OBJDIR = ./objs/
+LIBFT = ./libs/libft/libft.a
 
 CFLAGS = -Wall -Werror -Wextra
 OBJECTS = $(OBJDIR)/*.o
@@ -19,10 +20,7 @@ ORANGE		= \033[0;33m
 NO_COLOR	= \033[m
 
 SRC =	./srcs/main.c									\
-		./srcs/utils/ft_utils.c							\
-		./srcs/utils/ft_utils2.c						\
-		./srcs/utils/ft_utils3.c						\
-		./srcs/utils/ft_split.c							\
+		./srcs/utils/char_search.c							\
 		./srcs/pipex/px.c								\
 		./srcs/pipex/px_cmd.c							\
 		./srcs/pipex/px_fork.c							\
@@ -32,6 +30,9 @@ SRC =	./srcs/main.c									\
 		./srcs/builtin/bltin_compare.c					\
 		./srcs/builtin/bltin_exit.c						\
 		./srcs/builtin/bltin_eastereggs.c				\
+		./srcs/pweinsto/signals.c						\
+		./srcs/pweinsto/redirections.c					\
+		./srcs/pweinsto/parsing.c						\
 
 
 all: header $(NAME)
@@ -55,7 +56,8 @@ header_end:
 	@echo "|____________________________________________________________________________________________________________________________________________________|"
 
 $(NAME): $(OBJECTS)
-	@$(CC) $(LFLAGS) $(OBJECTS) -o $(NAME)
+	@make --directory=./libs/libft
+	@$(CC) $(LFLAGS) $(OBJECTS) -o $(NAME) $(LIBFT)
 	@echo "|                                                             Compiling completed.                                                                   |"
 	@make header_end
 
@@ -66,12 +68,14 @@ $(OBJECTS): $(SRC)
 	@echo "|                                                       Object files created and moved.                                                              |"
 
 clean: header
+	@make clean --directory=./libs/libft
 	@rm -f $(OBJECTS) $(D_OBJECTS)
 	@rm -rf ./objs ./debug
 	@echo "|                                                             Object files cleaned.                                                                  |"
 	@make header_end
 
 fclean: header
+	@make fclean --directory=./libs/libft
 	@rm -f $(NAME) $(D_NAME)
 	@echo "|                                                             Executeable cleaned.                                                                   |"
 	@rm -f $(OBJECTS) $(D_OBJECTS)
@@ -80,9 +84,11 @@ fclean: header
 	@make header_end
 
 re: header
+	@make fclean --directory=./libs/libft
 	@rm -f $(NAME) $(D_NAME)
 	@echo "|                                                             Executeable cleaned.                                                                   |"
 	@rm -f $(OBJECTS) $(D_OBJECTS)
 	@rm -rf ./objs ./debug
 	@echo "|                                                             Object files cleaned.                                                                  |"
+	@make --directory=./libs/libft
 	@make $(NAME)

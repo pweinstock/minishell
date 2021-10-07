@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bltin_compare.c                                    :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 08:40:28 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/07 08:45:03 by khirsig          ###   ########.fr       */
+/*   Created: 2021/06/18 10:28:07 by khirsig           #+#    #+#             */
+/*   Updated: 2021/06/28 10:50:07 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-int	bltin_compare(char *needle)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int index;
+	unsigned int	index;
+	char			*substr;
 
 	index = 0;
-	printf("Test: |%s|\n", needle);
-	while (g_bltin_cmds[index] != NULL)
+	if (!s)
+		return (0);
+	substr = malloc(len + 1);
+	if (!substr)
+		return (0);
+	if (start < ft_strlen(s))
 	{
-		if (ft_strnstr(g_bltin_cmds[index], needle, ft_strlen(needle)) != 0)
-			return (index);
-		index++;
+		while (index < len && s[start])
+		{
+			substr[index] = s[start];
+			index++;
+			start++;
+		}
 	}
-	return (-1);
+	substr[index] = '\0';
+	return (substr);
 }

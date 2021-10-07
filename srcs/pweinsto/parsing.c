@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bltin_compare.c                                    :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 08:40:28 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/07 08:45:03 by khirsig          ###   ########.fr       */
+/*   Created: 2021/09/30 16:44:43 by pweinsto          #+#    #+#             */
+/*   Updated: 2021/10/07 10:01:57 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../../includes/minishell.h"
 
-int	bltin_compare(char *needle)
-{
-	int index;
-
-	index = 0;
-	printf("Test: |%s|\n", needle);
-	while (g_bltin_cmds[index] != NULL)
-	{
-		if (ft_strnstr(g_bltin_cmds[index], needle, ft_strlen(needle)) != 0)
-			return (index);
-		index++;
-	}
-	return (-1);
-}
+// void	specifier(t_data *data, char *str)
+// {
+// 	void(data);
+// 	void(str);
+// 	//output(vars, str);
+// 	//output_append(vars, str);
+// 	// input(vars, str);
+// 	//input_append(vars, str);
+// }

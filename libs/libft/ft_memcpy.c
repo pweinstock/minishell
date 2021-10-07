@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bltin_compare.c                                    :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 08:40:28 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/07 08:45:03 by khirsig          ###   ########.fr       */
+/*   Created: 2021/06/15 16:28:17 by khirsig           #+#    #+#             */
+/*   Updated: 2021/06/24 16:51:34 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-int	bltin_compare(char *needle)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	int index;
+	size_t			index;
+	unsigned char	*c;
+	unsigned char	*d;
 
 	index = 0;
-	printf("Test: |%s|\n", needle);
-	while (g_bltin_cmds[index] != NULL)
+	c = (unsigned char *)dest;
+	d = (unsigned char *)src;
+	if (!dest && !src)
+		return (NULL);
+	while (index < n)
 	{
-		if (ft_strnstr(g_bltin_cmds[index], needle, ft_strlen(needle)) != 0)
-			return (index);
+		c[index] = d[index];
 		index++;
 	}
-	return (-1);
+	return (dest);
 }

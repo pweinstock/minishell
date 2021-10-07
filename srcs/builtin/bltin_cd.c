@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 08:39:20 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/06 16:01:41 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/07 09:25:46 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	bltin_cd(t_data *data, char **cmd)
 {
-	char *cwd;
+	// char *cwd;
 
+	(void)data;
+	// printf("Test: |%s|\n", cmd[1]);
 	if (chdir(cmd[1]) == -1)
 	{
 		ft_putstr_fd("cd: no such file or directory: ", 2);
@@ -23,9 +25,9 @@ void	bltin_cd(t_data *data, char **cmd)
 		ft_putstr_fd("\n", 2);
 		return ;
 	}
-	cwd = getcwd(NULL, 0);
-	cwd += ft_revchrsrch(cwd, '/') + 1;
-	free(data->path_prefix);
-	data->path_prefix = ft_strdup(cwd);
+	// cwd = getcwd(NULL, 0);
+	// cwd += ft_revchrsrch(cwd, '/') + 1;
+	// free(data->path_prefix);
+	// data->path_prefix = ft_strdup(cwd);
 	return ;
 }

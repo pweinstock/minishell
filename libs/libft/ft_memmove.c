@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bltin_compare.c                                    :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 08:40:28 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/07 08:45:03 by khirsig          ###   ########.fr       */
+/*   Created: 2021/06/16 11:10:41 by khirsig           #+#    #+#             */
+/*   Updated: 2021/06/24 16:36:42 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-int	bltin_compare(char *needle)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	int index;
+	size_t			index;
+	unsigned char	*c;
+	unsigned char	*d;
 
 	index = 0;
-	printf("Test: |%s|\n", needle);
-	while (g_bltin_cmds[index] != NULL)
+	c = (unsigned char *)dst;
+	d = (unsigned char *)src;
+	if (!dst && !src)
+		return (0);
+	while (len > 0 && dst > src)
 	{
-		if (ft_strnstr(g_bltin_cmds[index], needle, ft_strlen(needle)) != 0)
-			return (index);
+		c[len - 1] = d[len - 1];
+		len--;
+	}
+	while (index < len && dst <= src)
+	{
+		c[index] = d[index];
 		index++;
 	}
-	return (-1);
+	return (dst);
 }

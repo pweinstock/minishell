@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bltin_compare.c                                    :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 08:40:28 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/07 08:45:03 by khirsig          ###   ########.fr       */
+/*   Created: 2021/06/17 11:41:06 by khirsig           #+#    #+#             */
+/*   Updated: 2021/08/17 14:47:25 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-int	bltin_compare(char *needle)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int index;
+	size_t	index;
 
 	index = 0;
-	printf("Test: |%s|\n", needle);
-	while (g_bltin_cmds[index] != NULL)
+	if (n == 0)
+		return (0);
+	if (s1[0] == 0 || s2[0] == 0)
+		return ((unsigned char) s1[0] - s2[0]);
+	while (index < n && s1[index] && s2[index])
 	{
-		if (ft_strnstr(g_bltin_cmds[index], needle, ft_strlen(needle)) != 0)
-			return (index);
+		if (s1[index] != s2[index])
+			return ((unsigned char) s1[index] - s2[index]);
 		index++;
 	}
-	return (-1);
+	if (index < n)
+		return ((unsigned char) s1[index] - s2[index]);
+	return (0);
 }

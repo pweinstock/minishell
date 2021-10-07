@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/06 16:11:19 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/07 09:19:50 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ int	pipex(char *input, char **envp, t_data *data)
 	ft_bzero(&p_strct, sizeof(t_pipex));
 	if (error_handler(&p_strct, input) == ERROR)
 		return (1);
-	parsing_envpath(&p_strct, envp);
+	// parsing_envpath(&p_strct, envp);
 	if (forking(&p_strct, data, envp) == ERROR)
 		return (1);
 	free(p_strct.envpath);
+	p_strct.envpath = NULL;
 	free(p_strct.cmd);
+	p_strct.cmd = NULL;
 	return (0);
 }

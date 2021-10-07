@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bltin_compare.c                                    :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 08:40:28 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/07 08:45:03 by khirsig          ###   ########.fr       */
+/*   Created: 2021/06/16 16:45:29 by khirsig           #+#    #+#             */
+/*   Updated: 2021/08/17 14:47:28 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-int	bltin_compare(char *needle)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	int index;
+	unsigned int	i;
+	unsigned int	j;
 
-	index = 0;
-	printf("Test: |%s|\n", needle);
-	while (g_bltin_cmds[index] != NULL)
+	i = 0;
+	if (!ft_strlen(needle))
+		return ((char *) haystack);
+	while (i < len && haystack[i] != 0)
 	{
-		if (ft_strnstr(g_bltin_cmds[index], needle, ft_strlen(needle)) != 0)
-			return (index);
-		index++;
+		j = 0;
+		while (needle[j] == haystack[i + j]
+			&& haystack[i + j] != '\0' && i + j < len)
+			j++;
+		if (needle[j] == '\0')
+			return ((char *)(haystack + i));
+		i++;
 	}
-	return (-1);
+	return (0);
 }

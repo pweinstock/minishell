@@ -6,11 +6,11 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 16:13:02 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/01 08:35:39 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/08/17 14:48:15 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
 static unsigned int	ft_strarrlen(char const *s, char c)
 {
