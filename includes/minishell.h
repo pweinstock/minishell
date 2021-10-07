@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/09/23 15:56:53 by pweinsto         ###   ########.fr       */
-=======
-/*   Updated: 2021/10/07 10:12:35 by khirsig          ###   ########.fr       */
->>>>>>> khirsig
+/*   Updated: 2021/10/07 10:18:41 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +31,8 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-<<<<<<< HEAD
-# include <unistd.h>
-# include <string.h>
-=======
 # include "../libs/libft/libft.h"
 
->>>>>>> khirsig
 /*
 ** -----------------------------------------------------------------------------
 ** Structs and typedef.
