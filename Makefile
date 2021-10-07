@@ -56,7 +56,8 @@ header_end:
 	@echo "|____________________________________________________________________________________________________________________________________________________|"
 
 $(NAME): $(OBJECTS)
-	@make --directory=./libs/libft
+	make --directory=./libs/libft
+	@echo "|                                                               Libft compiled.                                                                      |"
 	@$(CC) $(LFLAGS) $(OBJECTS) -o $(NAME) $(LIBFT)
 	@echo "|                                                             Compiling completed.                                                                   |"
 	@make header_end
@@ -90,5 +91,4 @@ re: header
 	@rm -f $(OBJECTS) $(D_OBJECTS)
 	@rm -rf ./objs ./debug
 	@echo "|                                                             Object files cleaned.                                                                  |"
-	@make --directory=./libs/libft
 	@make $(NAME)
