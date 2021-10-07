@@ -10,12 +10,6 @@ OBJDIR = ./objs/
 LIBFT = ./libs/libft/libft.a
 
 CFLAGS = -Wall -Werror -Wextra
-<<<<<<< HEAD
-LDFLAGS = -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
-CPPFLAGS = -I /Users/$(USER)/.brew/opt/readline/include
-
-=======
->>>>>>> khirsig
 OBJECTS = $(OBJDIR)/*.o
 
 DARKBLUE	= \033[0;34m
@@ -40,11 +34,6 @@ SRC =	./srcs/main.c									\
 		./srcs/pweinsto/redirections.c					\
 		./srcs/pweinsto/parsing.c						\
 
-<<<<<<< HEAD
-$(NAME): $(OBJECTS)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(CPPFLAGS) $(OBJECTS) -o $(NAME)
-=======
->>>>>>> khirsig
 
 all: header $(NAME)
 
