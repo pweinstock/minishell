@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/07 11:05:40 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/09 18:34:15 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,20 @@ int	main(int argc, char **argv, char **envp)
 	t_data	*data;
 	char *shellprefix;
 	char *temp;
+	char	*str;
 
 	data = malloc(sizeof(t_data));
 	ft_bzero(data, sizeof(t_data));
 	data->envp = envp;
-	// data->fd_in = open("fd_in", O_CREAT|O_RDWR|O_TRUNC, S_IRWXU);
-	//close(data.fd_in);
-	// data->fd_out = open("fd_out", O_CREAT|O_RDWR|O_TRUNC, S_IRWXU);
+	data->original_stdin = dup(STDIN_FILENO);
+	data->original_stdout = dup(STDOUT_FILENO);
+	//data->fd_in = open("fd_in", O_CREAT|O_RDWR|O_TRUNC, S_IRWXU);
+	// close(data.fd_in);
+	//data->fd_out = open("fd_out", O_CREAT|O_RDWR|O_TRUNC, S_IRWXU);
 	// close(data->fd_out);
-	dup2(data->fd_in, 0);
-	dup2(data->fd_out, 1);
-	// data->fd_in = 0;
-	// data->fd_out = 1;
+	data->fd_in = 0;
+	data->fd_out = 1;
+	
 	data->path_prefix = ft_strdup("minishell");
 	(void)argc;
 	(void)argv;
@@ -38,21 +40,22 @@ int	main(int argc, char **argv, char **envp)
 		shellprefix = ft_strjoin(temp, "\033[1;33m ✗\033[0m ");
 		free(temp);
 		temp = NULL;
-		char	*str = readline(shellprefix);
+		
+		str = readline(shellprefix);
 		free(shellprefix);
 		shellprefix = NULL;
 		// if (str == NULL)
 		// 	break;
+		
 		if (str && *str)
 			add_history(str);
-		// printf("|%s|\n", str);
-		pipex(str, envp, data);
-		dup2(0, data->fd_in);
-		dup2(1, data->fd_out);
-		// specifier(&data, str);
-		//printf("%s\n", str);
+		//data->fd_in = open("infile", O_RDWR | O_CREAT);
+		//data->fd_out = open("outfile", O_RDWR | O_CREAT | O_TRUNC, 0644);
+		//data->fd_out = 1;
+		specifier(data, str);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, signal_handler);
+		
 	}
 	// int fd = open("test", O_CREAT);
 	// printf("fd: %d\n", fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/07 10:18:41 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/09 14:47:05 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ typedef struct s_data {
 	char	*path_prefix;
 	int		fd_in;
 	int		fd_out;
+	int		i;
+	int		j;
+	int		original_stdin;
+	int		original_stdout;
 }				t_data;
 
 typedef struct s_pipex {
@@ -83,6 +87,9 @@ void	bltin_pikachu(void);
 
 void	signal_handler(int sig);
 void	specifier(t_data *data, char *str);
+void	output(t_data *data, char *str);
+void	output_append(t_data *data, char *str);
+void	input(t_data *data, char *str);
 
 
 #endif

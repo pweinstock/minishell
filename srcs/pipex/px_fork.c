@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:16:08 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/07 11:00:57 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/09 12:09:29 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,8 @@ int	forking(t_pipex *p_strct, t_data *data, char **envp)
 			perror("Error");
 			exit(EXIT_FAILURE);
 		}
-		// printf("TEST: %s\n", p_strct->cmd[p_strct->cmd_count][0]);
 		is_bltin = 0;
-		// if (p_strct->cmd[p_strct->cmd_count][0] != '\n')
 		is_bltin = bltin_compare(p_strct->cmd[p_strct->cmd_count][0]);
-		// printf("Test: %s\n", p_strct->cmd[p_strct->cmd_count][0]);
 		if (is_bltin != -1)
 			runbltin(data, p_strct->cmd[p_strct->cmd_count], is_bltin);
 		else
@@ -79,6 +76,5 @@ int	forking(t_pipex *p_strct, t_data *data, char **envp)
 		close(p_strct->end[0]);
 		p_strct->cmd_count++;
 	}
-	// printf("Test\n");
 	return (0);
 }
