@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   px.c                                               :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/11 10:58:35 by khirsig          ###   ########.fr       */
+/*   Created: 2021/10/11 10:54:54 by khirsig           #+#    #+#             */
+/*   Updated: 2021/10/11 10:55:41 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	pipex(char *input, char **envp, t_data *data)
+int	get_envnum(t_data *data, char *needle)
 {
-	t_pipex	p_strct;
+	int i;
 
-	ft_bzero(&p_strct, sizeof(t_pipex));
-	if (error_handler(&p_strct, input) == ERROR)
-		return (1);
-	parsing_envpath(data, &p_strct, envp);
-	if (forking(&p_strct, data, envp) == ERROR)
-		return (1);
-	free(p_strct.envpath);
-	p_strct.envpath = NULL;
-	free(p_strct.cmd);
-	p_strct.cmd = NULL;
-	return (0);
+	i = 0;
+	while (data->envp[i] != NULL)
+	{
+		if (ft_strnstr(data->envp[i], needle, ft_strlen(data->envp[i])) != 0)
+			return (i);
+		i++;
+	}
+	return (-1);
 }

@@ -6,25 +6,24 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:34:45 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/01 08:35:33 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/11 10:59:33 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	parsing_envpath(t_pipex *p_strct, char **envp)
+void	parsing_envpath(t_data *data, t_pipex *p_strct, char **envp)
 {
-	int	i;
+	int		envnum;
 	char *temp;
 
-	i = 0;
-	while (envp[i] != NULL)
+	envnum = get_envnum(data, "PATH");
+	if (envnum == -1)
 	{
-		if (ft_strnstr(envp[i], "PATH", ft_strlen(envp[i])) != 0)
-			break ;
-		i++;
+		p_strct->envpath = NULL;
+		return ;
 	}
-	temp = envp[i];
+	temp = envp[envnum];
 	temp += 5;
 	p_strct->envpath = ft_split(temp, ':');
 }

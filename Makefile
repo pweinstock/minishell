@@ -20,7 +20,8 @@ ORANGE		= \033[0;33m
 NO_COLOR	= \033[m
 
 SRC =	./srcs/main.c									\
-		./srcs/utils/char_search.c							\
+		./srcs/utils/char_search.c						\
+		./srcs/utils/env_utils.c						\
 		./srcs/pipex/px.c								\
 		./srcs/pipex/px_cmd.c							\
 		./srcs/pipex/px_fork.c							\
@@ -30,6 +31,10 @@ SRC =	./srcs/main.c									\
 		./srcs/builtin/bltin_compare.c					\
 		./srcs/builtin/bltin_exit.c						\
 		./srcs/builtin/bltin_eastereggs.c				\
+		./srcs/builtin/bltin_pwd.c						\
+		./srcs/builtin/bltin_echo.c						\
+		./srcs/builtin/bltin_env.c						\
+		./srcs/builtin/bltin_unset.c					\
 		./srcs/pweinsto/signals.c						\
 		./srcs/pweinsto/redirections.c					\
 		./srcs/pweinsto/parsing.c						\

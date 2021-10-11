@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/09 14:47:05 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/10/11 10:58:40 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,14 @@ typedef struct s_pipex {
 	pid_t child;
 }				t_pipex;
 
-const static char	*g_bltin_cmds[4] = {
+const static char	*g_bltin_cmds[8] = {
 	"cd",
 	"exit",
 	"pikachu",
+	"pwd",
+	"echo",
+	"env",
+	"unset",
 	NULL
 };
 /*
@@ -72,18 +76,23 @@ const static char	*g_bltin_cmds[4] = {
 */
 int		ft_chrsrch(char *haystack, char needle);
 int		ft_revchrsrch(char *haystack, char needle);
+int		get_envnum(t_data *data, char *needle);
 
 int		pipex(char *input, char **envp, t_data *data);
 int		error_handler(t_pipex *p_strct, char *input);
 void	runcmd(t_pipex *p_strct, char **cmd, char **envp);
 int		forking(t_pipex *p_strct, t_data *data, char **envp);
-void	parsing_envpath(t_pipex *p_strct, char **envp);
+void	parsing_envpath(t_data *data, t_pipex *p_strct, char **envp);
 
 void	bltin_cd(t_data *data, char **cmd);
 int		bltin_compare(char *needle);
 int		bltin_init(t_data *data);
 void	bltin_exit(t_data *data);
 void	bltin_pikachu(void);
+void	bltin_pwd(char **cmd);
+void	bltin_echo(char **cmd);
+void	bltin_env(t_data *data, char **cmd);
+void	bltin_unset(t_data *data, char **cmd);
 
 void	signal_handler(int sig);
 void	specifier(t_data *data, char *str);

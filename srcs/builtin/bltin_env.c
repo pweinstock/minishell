@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   px.c                                               :+:      :+:    :+:   */
+/*   bltin_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/11 10:58:35 by khirsig          ###   ########.fr       */
+/*   Created: 2021/10/11 10:20:58 by khirsig           #+#    #+#             */
+/*   Updated: 2021/10/11 10:26:23 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	pipex(char *input, char **envp, t_data *data)
+void	bltin_env(t_data *data, char **cmd)
 {
-	t_pipex	p_strct;
+	int index;
 
-	ft_bzero(&p_strct, sizeof(t_pipex));
-	if (error_handler(&p_strct, input) == ERROR)
-		return (1);
-	parsing_envpath(data, &p_strct, envp);
-	if (forking(&p_strct, data, envp) == ERROR)
-		return (1);
-	free(p_strct.envpath);
-	p_strct.envpath = NULL;
-	free(p_strct.cmd);
-	p_strct.cmd = NULL;
-	return (0);
+	if (cmd[1])
+	{
+		write(2, "env: Too many options.\n", 24);
+		return ;
+	}
+	index = 0;
+	while (data->envp[index] != NULL)
+	{
+		write(1, data->envp[index], ft_strlen(data->envp[index]));
+		write(1, "\n", 1);
+		index++;
+	}
+	return ;
 }

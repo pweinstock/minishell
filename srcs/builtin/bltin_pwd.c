@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   px.c                                               :+:      :+:    :+:   */
+/*   bltin_pwd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/11 10:58:35 by khirsig          ###   ########.fr       */
+/*   Created: 2021/10/11 08:51:04 by khirsig           #+#    #+#             */
+/*   Updated: 2021/10/11 10:25:27 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	pipex(char *input, char **envp, t_data *data)
+void	bltin_pwd(char **cmd)
 {
-	t_pipex	p_strct;
+	char *cwd;
 
-	ft_bzero(&p_strct, sizeof(t_pipex));
-	if (error_handler(&p_strct, input) == ERROR)
-		return (1);
-	parsing_envpath(data, &p_strct, envp);
-	if (forking(&p_strct, data, envp) == ERROR)
-		return (1);
-	free(p_strct.envpath);
-	p_strct.envpath = NULL;
-	free(p_strct.cmd);
-	p_strct.cmd = NULL;
-	return (0);
+	if (cmd[1])
+	{
+		write(2, "pwd: Too many options.\n", 24);
+		return ;
+	}
+	cwd = getcwd(NULL, 0);
+	write(1, cwd, ft_strlen(cwd));
+	write(1, "\n", 2);
+	free(cwd);
+	return ;
 }
