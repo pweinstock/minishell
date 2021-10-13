@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/11 10:58:40 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/13 15:41:17 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_pipex {
 	pid_t child;
 }				t_pipex;
 
-const static char	*g_bltin_cmds[8] = {
+const static char	*g_bltin_cmds[9] = {
 	"cd",
 	"exit",
 	"pikachu",
@@ -68,6 +68,7 @@ const static char	*g_bltin_cmds[8] = {
 	"echo",
 	"env",
 	"unset",
+	"export",
 	NULL
 };
 /*
@@ -90,9 +91,10 @@ int		bltin_init(t_data *data);
 void	bltin_exit(t_data *data);
 void	bltin_pikachu(void);
 void	bltin_pwd(char **cmd);
-void	bltin_echo(char **cmd);
+void	bltin_echo(t_data *data, char **cmd);
 void	bltin_env(t_data *data, char **cmd);
 void	bltin_unset(t_data *data, char **cmd);
+void	bltin_export(t_data *data, char **cmd);
 
 void	signal_handler(int sig);
 void	specifier(t_data *data, char *str);

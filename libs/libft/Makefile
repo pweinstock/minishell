@@ -2,7 +2,7 @@ CC = gcc
 
 CFLAGS = -Wall -Werror -Wextra
 
-CFILES =	ft_atoi.c			\
+SRC =		ft_atoi.c			\
 			ft_bzero.c			\
 			ft_calloc.c			\
 			ft_cntnbr.c			\
@@ -50,18 +50,27 @@ CFILES =	ft_atoi.c			\
 			get_next_line.c		\
 			get_next_line_utils.c\
 
-OBJECTS = $(CFILES:.c=.o)
+OBJECTS = ./*.o
 
 NAME = libft.a
 
-@$(NAME):
-	@make $(OBJECTS)
+$(NAME): $(OBJECTS)
 	@ar rc $(NAME) $(OBJECTS)
+	@printf "|                                                           Libft compiling complete.                                                                |"
+
+$(OBJECTS): $(SRC)
+	@printf "|                                                               Libft compiling.                                                                     |\r"
+	@sleep 0.5
+	@printf "|                                                               Libft compiling..                                                                    |\r"
+	@sleep 0.5
+	@printf "|                                                               Libft compiling...                                                                   |\r"
+	@$(CC) -c $(CFLAGS) $(SRC)
 
 clean:
 	@rm -f $(OBJECTS)
 
 fclean:
 	@rm -f $(NAME) $(OBJECTS)
+	@echo "|                                                               Libft cleaned.                                                                       |"
 
 re: fclean $(NAME)

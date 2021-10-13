@@ -28,13 +28,14 @@ SRC =	./srcs/main.c									\
 		./srcs/pipex/px_error.c							\
 		./srcs/pipex/px_parse.c							\
 		./srcs/builtin/bltin_cd.c						\
+		./srcs/builtin/bltin_unset.c					\
+		./srcs/builtin/bltin_export.c					\
+		./srcs/builtin/bltin_env.c						\
+		./srcs/builtin/bltin_pwd.c						\
+		./srcs/builtin/bltin_echo.c						\
 		./srcs/builtin/bltin_compare.c					\
 		./srcs/builtin/bltin_exit.c						\
 		./srcs/builtin/bltin_eastereggs.c				\
-		./srcs/builtin/bltin_pwd.c						\
-		./srcs/builtin/bltin_echo.c						\
-		./srcs/builtin/bltin_env.c						\
-		./srcs/builtin/bltin_unset.c					\
 		./srcs/pweinsto/signals.c						\
 		./srcs/pweinsto/redirections.c					\
 		./srcs/pweinsto/parsing.c						\
@@ -60,9 +61,9 @@ header:
 header_end:
 	@echo "|____________________________________________________________________________________________________________________________________________________|"
 
-$(NAME): $(OBJECTS)
-	make --directory=./libs/libft
-	@echo "|                                                               Libft compiled.                                                                      |"
+$(NAME):
+	@make --directory=./libs/libft
+	@make $(OBJECTS)
 	@$(CC) $(LFLAGS) $(OBJECTS) -o $(NAME) $(LIBFT)
 	@echo "|                                                             Compiling completed.                                                                   |"
 	@make header_end
@@ -71,6 +72,7 @@ $(OBJECTS): $(SRC)
 	@$(CC) -c $(CFLAGS) $(CPFLAGS) $(SRC)
 	@rm -rf ./objs; mkdir ./objs
 	@mv *.o $(OBJDIR)
+	@echo
 	@echo "|                                                       Object files created and moved.                                                              |"
 
 clean: header
