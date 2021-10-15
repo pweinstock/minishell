@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 16:45:29 by khirsig           #+#    #+#             */
-/*   Updated: 2021/08/17 14:47:28 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/15 12:59:08 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	unsigned int	j;
 
 	i = 0;
+	if (haystack == NULL)
+		return (0);
 	if (!ft_strlen(needle))
 		return ((char *) haystack);
 	while (i < len && haystack[i] != 0)

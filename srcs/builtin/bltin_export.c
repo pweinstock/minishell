@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 13:55:01 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/13 15:30:19 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/10/14 13:18:42 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	bltin_export(t_data *data, char **cmd)
 	{
 		while (cmd[word_index][chr_index] != '=')
 			chr_index++;
-		addback_env(data, cmd[word_index]);
+		if (cmd[word_index][chr_index] != '\0' && cmd[word_index][chr_index + 1] != '\0')
+			addback_env(data, cmd[word_index]);
 		word_index++;
 	}
 	return ;
