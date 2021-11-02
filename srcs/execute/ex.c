@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ex.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/02 14:39:39 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/02 16:47:47 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,14 @@ int	execute(char **input, t_data *data)
 	ft_bzero(&p_strct, sizeof(t_pipex));
 	// if (error_handler(&p_strct, input) == ERROR)
 	// 	return (1);
-	write(2, input[0], ft_strlen(input[0]));
-	write(2, input[1], ft_strlen(input[1]));
+	// write(2, input[0], ft_strlen(input[0]));
+	// write(2, input[1], ft_strlen(input[1]));
+	// while (*input)
+	// {
+	// 	write(data->original_stdout, *input, ft_strlen(*input));
+	// 	write(data->original_stdout, "\n", 1);
+	// 	input++;
+	// }
 	p_strct.cmd = input;
 	p_strct.envp = data->envp;
 	p_strct.fd_in = data->fd_in;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/02 14:44:42 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/02 16:36:10 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,14 @@ int	parser(t_lex **lex, t_data *data)
 	{
 		if ((*lex)->type == PIPE)
 		{
+			data->fd_out = open("temp", O_CREAT|O_RDWR, S_IRWXU);
+			dup2(data->fd_in, STDIN_FILENO);
+			dup2(data->fd_out, STDOUT_FILENO);
 			execute(str_array(line_lst), data);
+			data->fd_in = data->fd_out;
+			dup2(data->original_stdin, STDIN_FILENO);
+			dup2(data->original_stdout, STDOUT_FILENO);
+			line_lst = NULL;
 		}
 		else if ((*lex)->type == OUTPUT)
 		{
@@ -137,7 +144,11 @@ int	parser(t_lex **lex, t_data *data)
 	// 	line_lst = line_lst->previous;
 	//printf("--------------line_lst---------------\n");
 	//print_lex(line_lst);
-	str_array(line_lst);
+	dup2(data->fd_in, STDIN_FILENO);
+	dup2(data->fd_out, STDOUT_FILENO);
+	execute(str_array(line_lst), data);
+	dup2(data->original_stdin, STDIN_FILENO);
+	dup2(data->original_stdout, STDOUT_FILENO);
 	return (1);
 }
 

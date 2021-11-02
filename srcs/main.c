@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:45:01 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/02 14:33:52 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/02 15:21:26 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	main(int argc, char **argv, char **envp)
 	char	*temp;
 	char	*str;
 
+	data.original_stdin = dup(STDIN_FILENO);
+	data.original_stdout = dup(STDOUT_FILENO);
 	data.path_prefix = ft_strdup("minishell");
 	(void)argc;
 	(void)argv;
@@ -33,14 +35,13 @@ int	main(int argc, char **argv, char **envp)
 		temp = NULL;
 
 		str = readline(shellprefix);
-
+		if (str && *str)
+			add_history(str);
 		free(shellprefix);
 		shellprefix = NULL;
 		lex = NULL;
-
 		lex_analyzer(lex, str, &data);
-		// if (str && *str)
-		// 	add_history(str);
+		
 	}
 	return (0);
 }
