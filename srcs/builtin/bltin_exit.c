@@ -6,14 +6,14 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 14:19:31 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/06 08:46:09 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/02 14:12:41 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/execute.h"
 
-void	bltin_exit(t_data *data)
+void	bltin_exit(t_pipex *p_strct)
 {
-	(void)data;
+	(void)p_strct;
 	exit(EXIT_SUCCESS);
 }

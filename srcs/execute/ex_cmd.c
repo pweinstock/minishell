@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   px_cmd.c                                           :+:      :+:    :+:   */
+/*   ex_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:33:30 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/06 15:55:01 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/02 14:08:30 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/execute.h"
 
 static void run_fullpathcmd(char **cmd, char **envp)
 {
@@ -55,7 +55,15 @@ void	runcmd(t_pipex *p_strct, char **cmd, char **envp)
 	char	*cmd_prefix;
 	char	*full_cmdpath;
 	int		index;
+	int		is_bltin;
 
+	is_bltin = 0;
+	is_bltin = bltin_compare(cmd[0]);
+	if (is_bltin != -1)
+	{
+		runbltin(p_strct, cmd, is_bltin);
+		return ;
+	}
 	cmd_prefix = ft_strdup(cmd[0]);
 	if (ft_chrsrch(cmd[0], '/') != -1)
 	{

@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   px.c                                               :+:      :+:    :+:   */
+/*   ex_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/11 10:58:35 by khirsig          ###   ########.fr       */
+/*   Created: 2021/09/24 08:34:45 by khirsig           #+#    #+#             */
+/*   Updated: 2021/11/02 14:05:41 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/execute.h"
 
-int	pipex(char *input, char **envp, t_data *data)
+void	parsing_envpath(t_pipex *p_strct, char **envp)
 {
-	t_pipex	p_strct;
+	int		envnum;
+	char *temp;
 
-	ft_bzero(&p_strct, sizeof(t_pipex));
-	if (error_handler(&p_strct, input) == ERROR)
-		return (1);
-	parsing_envpath(data, &p_strct, envp);
-	if (forking(&p_strct, data, envp) == ERROR)
-		return (1);
-	free(p_strct.envpath);
-	p_strct.envpath = NULL;
-	free(p_strct.cmd);
-	p_strct.cmd = NULL;
-	return (0);
+	envnum = get_envnum(envp, "PATH");
+	if (envnum == -1)
+	{
+		p_strct->envpath = NULL;
+		return ;
+	}
+	temp = envp[envnum];
+	temp += 5;
+	p_strct->envpath = ft_split(temp, ':');
 }

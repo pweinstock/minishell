@@ -6,20 +6,20 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 10:54:54 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/11 10:55:41 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/02 14:05:29 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/execute.h"
 
-int	get_envnum(t_data *data, char *needle)
+int	get_envnum(char **envp, char *needle)
 {
 	int i;
 
 	i = 0;
-	while (data->envp[i] != NULL)
+	while (envp[i] != NULL)
 	{
-		if (ft_strnstr(data->envp[i], needle, ft_strlen(data->envp[i])) != 0)
+		if (ft_strnstr(envp[i], needle, ft_strlen(envp[i])) != 0)
 			return (i);
 		i++;
 	}

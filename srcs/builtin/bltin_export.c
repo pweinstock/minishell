@@ -6,26 +6,26 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 13:55:01 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/14 13:18:42 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/02 14:12:05 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/execute.h"
 
-static void	addback_env(t_data *data, char *str)
+static void	addback_env(t_pipex *p_strct, char *str)
 {
 	int index;
 
 	index = 0;
-	while (data->envp[index] != NULL)
+	while (p_strct->envp[index] != NULL)
 		index++;
-	data->envp[index] = ft_strdup(str);
-	data->envp[index + 1] = malloc(sizeof(char *));
-	data->envp[index + 1] = NULL;
+	p_strct->envp[index] = ft_strdup(str);
+	p_strct->envp[index + 1] = malloc(sizeof(char *));
+	p_strct->envp[index + 1] = NULL;
 	return ;
 }
 
-void	bltin_export(t_data *data, char **cmd)
+void	bltin_export(t_pipex *p_strct, char **cmd)
 {
 	int word_index;
 	int	chr_index;
@@ -37,7 +37,7 @@ void	bltin_export(t_data *data, char **cmd)
 		while (cmd[word_index][chr_index] != '=')
 			chr_index++;
 		if (cmd[word_index][chr_index] != '\0' && cmd[word_index][chr_index + 1] != '\0')
-			addback_env(data, cmd[word_index]);
+			addback_env(p_strct, cmd[word_index]);
 		word_index++;
 	}
 	return ;

@@ -10,7 +10,6 @@ OBJDIR = ./objs/
 LIBFT = ./libs/libft/libft.a
 
 CFLAGS = -Wall -Werror -Wextra
-OBJECTS = $(OBJDIR)/*.o
 
 DARKBLUE	= \033[0;34m
 LIGHTBLUE	= \033[0;36m
@@ -22,11 +21,12 @@ NO_COLOR	= \033[m
 SRC =	./srcs/main.c									\
 		./srcs/utils/char_search.c						\
 		./srcs/utils/env_utils.c						\
-		./srcs/pipex/px.c								\
-		./srcs/pipex/px_cmd.c							\
-		./srcs/pipex/px_fork.c							\
-		./srcs/pipex/px_error.c							\
-		./srcs/pipex/px_parse.c							\
+		./srcs/execute/ex.c								\
+		./srcs/execute/ex_cmd.c							\
+		./srcs/execute/ex_fork.c						\
+		./srcs/execute/ex_error.c						\
+		./srcs/execute/ex_parse.c						\
+		./srcs/builtin/run_bltin.c						\
 		./srcs/builtin/bltin_cd.c						\
 		./srcs/builtin/bltin_unset.c					\
 		./srcs/builtin/bltin_export.c					\
@@ -36,9 +36,9 @@ SRC =	./srcs/main.c									\
 		./srcs/builtin/bltin_compare.c					\
 		./srcs/builtin/bltin_exit.c						\
 		./srcs/builtin/bltin_eastereggs.c				\
-		./srcs/pweinsto/signals.c						\
-		./srcs/pweinsto/redirections.c					\
-		./srcs/pweinsto/parsing.c						\
+		./srcs/parser/list.c							\
+		./srcs/parser/lexical_analysis.c				\
+		./srcs/parser/parser.c							\
 
 
 all: header $(NAME)
@@ -63,39 +63,22 @@ header_end:
 
 $(NAME):
 	@make --directory=./libs/libft
-	@make $(OBJECTS)
-	@$(CC) $(LFLAGS) $(OBJECTS) -o $(NAME) $(LIBFT)
+	@$(CC) $(LFLAGS) $(SRC) -o $(NAME) $(LIBFT)
 	@echo "|                                                             Compiling completed.                                                                   |"
 	@make header_end
 
-$(OBJECTS): $(SRC)
-	@$(CC) -c $(CFLAGS) $(CPFLAGS) $(SRC)
-	@rm -rf ./objs; mkdir ./objs
-	@mv *.o $(OBJDIR)
-	@echo
-	@echo "|                                                       Object files created and moved.                                                              |"
-
 clean: header
 	@make clean --directory=./libs/libft
-	@rm -f $(OBJECTS) $(D_OBJECTS)
-	@rm -rf ./objs ./debug
-	@echo "|                                                             Object files cleaned.                                                                  |"
 	@make header_end
 
 fclean: header
 	@make fclean --directory=./libs/libft
 	@rm -f $(NAME) $(D_NAME)
 	@echo "|                                                             Executeable cleaned.                                                                   |"
-	@rm -f $(OBJECTS) $(D_OBJECTS)
-	@rm -rf ./objs ./debug
-	@echo "|                                                             Object files cleaned.                                                                  |"
 	@make header_end
 
 re: header
 	@make fclean --directory=./libs/libft
 	@rm -f $(NAME) $(D_NAME)
 	@echo "|                                                             Executeable cleaned.                                                                   |"
-	@rm -f $(OBJECTS) $(D_OBJECTS)
-	@rm -rf ./objs ./debug
-	@echo "|                                                             Object files cleaned.                                                                  |"
 	@make $(NAME)

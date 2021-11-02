@@ -6,11 +6,11 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 08:40:28 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/14 13:23:22 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/02 14:13:43 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/execute.h"
 
 int	bltin_compare(char *needle)
 {

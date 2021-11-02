@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bltin_cd.c                                         :+:      :+:    :+:   */
+/*   run_bltin.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 08:39:20 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/02 14:14:48 by khirsig          ###   ########.fr       */
+/*   Created: 2021/10/25 11:23:04 by khirsig           #+#    #+#             */
+/*   Updated: 2021/11/02 14:09:23 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execute.h"
 
-void	bltin_cd(t_pipex *p_strct, char **cmd)
+void	runbltin(t_pipex *p_strct, char **cmd, int cmdnbr)
 {
-	char *cwd;
-
-	if (chdir(cmd[1]) == -1)
-	{
-		ft_putstr_fd("cd: no such file or directory: ", 2);
-		ft_putstr_fd(cmd[1], 2);
-		ft_putstr_fd("\n", 2);
-		return ;
-	}
-	cwd = getcwd(NULL, 0);
-	cwd += ft_revchrsrch(cwd, '/') + 1;
-	// free(p_strct->path_prefix);
-	// p_strct->path_prefix = ft_strdup(cwd);
+	if (cmdnbr == 0)
+		bltin_cd(p_strct, cmd);
+	if (cmdnbr == 1)
+		bltin_exit(p_strct);
+	if (cmdnbr == 2)
+		bltin_pikachu();
+	if (cmdnbr == 3)
+		bltin_pwd(cmd);
+	if (cmdnbr == 4)
+		bltin_echo(p_strct, cmd);
+	if (cmdnbr == 5)
+		bltin_env(p_strct, cmd);
+	if (cmdnbr == 6)
+		bltin_unset(p_strct, cmd);
+	if (cmdnbr == 7)
+		bltin_export(p_strct, cmd);
 	return ;
 }

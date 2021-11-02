@@ -6,11 +6,11 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 14:48:55 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/06 15:13:38 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/02 14:13:39 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/execute.h"
 
 void	bltin_pikachu(void)
 {

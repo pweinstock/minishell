@@ -6,11 +6,11 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 08:51:04 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/11 10:25:27 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/02 14:11:07 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/execute.h"
 
 void	bltin_pwd(char **cmd)
 {

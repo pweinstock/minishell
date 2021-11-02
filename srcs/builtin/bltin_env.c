@@ -6,13 +6,13 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 10:20:58 by khirsig           #+#    #+#             */
-/*   Updated: 2021/10/11 10:26:23 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/02 14:13:07 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/execute.h"
 
-void	bltin_env(t_data *data, char **cmd)
+void	bltin_env(t_pipex *p_strct, char **cmd)
 {
 	int index;
 
@@ -22,9 +22,9 @@ void	bltin_env(t_data *data, char **cmd)
 		return ;
 	}
 	index = 0;
-	while (data->envp[index] != NULL)
+	while (p_strct->envp[index] != NULL)
 	{
-		write(1, data->envp[index], ft_strlen(data->envp[index]));
+		write(1, p_strct->envp[index], ft_strlen(p_strct->envp[index]));
 		write(1, "\n", 1);
 		index++;
 	}
