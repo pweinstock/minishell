@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analysis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 18:02:37 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/02 14:34:18 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/03 10:27:00 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	lex_analyzer(t_lex *lex, char *str, t_data *data)
 		else if (*str == '<')
 		{
 			if (input(&lex, &token, &*str) == 2)
-				str++;;
+				str++;
 		}
 		else if (*str == '|')
 			pipes(&lex, &token);
@@ -277,8 +277,13 @@ int	input(t_lex **lex, char **token, char *str)
 	}
 	else
 	{
-		element = ft_lexnew("<", INPUT);
-		ft_lexadd_back(*lex, element);
+		if (*lex == NULL)
+			*lex = ft_lexnew("<", INPUT);
+		else
+		{
+			element = ft_lexnew("<", INPUT);
+			ft_lexadd_back(*lex, element);
+		}	
 		*token = "";
 		return (1);
 	}

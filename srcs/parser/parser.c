@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/02 16:36:10 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/03 10:46:19 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ int	parser(t_lex **lex, t_data *data)
 	{
 		if ((*lex)->type == PIPE)
 		{
-			data->fd_out = open("temp", O_CREAT|O_RDWR, S_IRWXU);
+			if (!data->fd_out)
+				data->fd_out = open("temp", O_CREAT|O_RDWR, S_IRWXU);
 			dup2(data->fd_in, STDIN_FILENO);
 			dup2(data->fd_out, STDOUT_FILENO);
 			execute(str_array(line_lst), data);
-			data->fd_in = data->fd_out;
+			//data->fd_in = data->fd_out;
 			dup2(data->original_stdin, STDIN_FILENO);
 			dup2(data->original_stdout, STDOUT_FILENO);
 			line_lst = NULL;
@@ -47,6 +48,7 @@ int	parser(t_lex **lex, t_data *data)
 				printf("error\n");
 			else
 					data->fd_in = open((*lex)->str, O_RDONLY, S_IRWXU);
+			//write(data->original_stdout, (*lex)->str, ft_strlen((*lex)->str));
 		}
 		else if ((*lex)->type == APPEND)
 		{
@@ -144,6 +146,11 @@ int	parser(t_lex **lex, t_data *data)
 	// 	line_lst = line_lst->previous;
 	//printf("--------------line_lst---------------\n");
 	//print_lex(line_lst);
+	if (!line_lst)
+	{
+		write(data->original_stdout, "Error\n", 6);
+		return (0);
+	}
 	dup2(data->fd_in, STDIN_FILENO);
 	dup2(data->fd_out, STDOUT_FILENO);
 	execute(str_array(line_lst), data);

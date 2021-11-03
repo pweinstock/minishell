@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/02 16:47:47 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/03 10:46:31 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ int	execute(char **input, t_data *data)
 	// 	write(data->original_stdout, "\n", 1);
 	// 	input++;
 	// }
+	// write(data->original_stdout, "fd_in: ", 7);
+	// write(data->original_stdout, ft_itoa(data->fd_in), 1);
+	// write(data->original_stdout, "\n", 2);
 	p_strct.cmd = input;
 	p_strct.envp = data->envp;
 	p_strct.fd_in = data->fd_in;
