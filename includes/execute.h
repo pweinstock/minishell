@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/04 11:02:38 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/04 12:58:28 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void	bltin_env(t_pipex *p_strct, char **cmd);
 void	bltin_unset(t_pipex *p_strct, char **cmd);
 void	bltin_export(t_pipex *p_strct, char **cmd);
 void	runbltin(t_pipex *p_strct, char **cmd, int cmdnbr);
+void	addback_env(t_pipex *p_strct, char *str);
+void	rotate_env(t_data *data, int envnum);
 
 
 #endif

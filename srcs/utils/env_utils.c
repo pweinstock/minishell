@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 10:54:54 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/04 10:58:47 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/04 12:52:43 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,30 @@ char **get_envpath(t_pipex *p_strct)
 	temp = p_strct->data->envp[envnum];
 	temp += 5;
 	return (ft_split(temp, ':'));
+}
+
+void	addback_env(t_pipex *p_strct, char *str)
+{
+	int index;
+
+	index = 0;
+	while (p_strct->data->envp[index] != NULL)
+		index++;
+	p_strct->data->envp[index] = ft_strdup(str);
+	p_strct->data->envp[index + 1] = malloc(sizeof(char *));
+	p_strct->data->envp[index + 1] = NULL;
+	return ;
+}
+
+void	rotate_env(t_data *data, int envnum)
+{
+	while (data->envp[envnum] != NULL)
+	{
+		if (data->envp[envnum + 1] != NULL)
+			data->envp[envnum] = ft_strdup(data->envp[envnum + 1]);
+		else
+			data->envp[envnum] = NULL;
+		envnum++;
+	}
+	return ;
 }

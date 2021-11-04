@@ -21,6 +21,7 @@ NO_COLOR	= \033[m
 SRC =	./srcs/main.c									\
 		./srcs/utils/char_search.c						\
 		./srcs/utils/env_utils.c						\
+		./srcs/utils/init.c								\
 		./srcs/execute/ex.c								\
 		./srcs/execute/ex_cmd.c							\
 		./srcs/execute/ex_fork.c						\

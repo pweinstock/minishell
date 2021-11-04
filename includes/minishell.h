@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:39:48 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/04 10:20:54 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/04 12:58:34 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int	pipes(t_lex **lex, char **token);
 int	squote(t_lex **lex, char **token, char *str);
 int	dquote(t_lex **lex, char **token, char *str);
 
-int	execute(char **input, t_data *data);
+int		execute(char **input, t_data *data);
+void	init_data(t_data *data, char **envp);
 
 //parsing
 int	parser(t_lex **lex, t_data *data);
