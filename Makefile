@@ -24,8 +24,6 @@ SRC =	./srcs/main.c									\
 		./srcs/execute/ex.c								\
 		./srcs/execute/ex_cmd.c							\
 		./srcs/execute/ex_fork.c						\
-		./srcs/execute/ex_error.c						\
-		./srcs/execute/ex_parse.c						\
 		./srcs/builtin/run_bltin.c						\
 		./srcs/builtin/bltin_cd.c						\
 		./srcs/builtin/bltin_unset.c					\
@@ -63,6 +61,7 @@ header_end:
 
 $(NAME):
 	@make --directory=./libs/libft
+	@echo
 	@$(CC) $(LFLAGS) $(SRC) -o $(NAME) $(LIBFT)
 	@echo "|                                                             Compiling completed.                                                                   |"
 	@make header_end

@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 08:39:20 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/02 14:14:48 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/04 10:59:51 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	bltin_cd(t_pipex *p_strct, char **cmd)
 	}
 	cwd = getcwd(NULL, 0);
 	cwd += ft_revchrsrch(cwd, '/') + 1;
-	// free(p_strct->path_prefix);
-	// p_strct->path_prefix = ft_strdup(cwd);
+	free(p_strct->data->path_prefix);
+	p_strct->data->path_prefix = ft_strdup(cwd);
 	return ;
 }

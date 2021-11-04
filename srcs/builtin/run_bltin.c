@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 11:23:04 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/02 14:09:23 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/04 08:06:30 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	runbltin(t_pipex *p_strct, char **cmd, int cmdnbr)
 	if (cmdnbr == 0)
 		bltin_cd(p_strct, cmd);
 	if (cmdnbr == 1)
-		bltin_exit(p_strct);
+		bltin_exit(p_strct, cmd);
 	if (cmdnbr == 2)
 		bltin_pikachu();
 	if (cmdnbr == 3)

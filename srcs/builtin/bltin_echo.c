@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 09:03:38 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/02 14:22:48 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/04 11:00:23 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ static void	echo_vars(t_pipex *p_strct, char *str)
 	i = 0;
 	while (str[i] != '\0')
 		i++;
-	envnum = get_envnum(p_strct->envp, str + 1);
+	envnum = get_envnum(p_strct->data->envp, str + 1);
 	if (envnum == -1)
 		return ;
-	write(1, p_strct->envp[envnum] + i, ft_strlen(p_strct->envp[envnum] + i));
+	write(1, p_strct->data->envp[envnum] + i, ft_strlen(p_strct->data->envp[envnum] + i));
 	return ;
 }
 

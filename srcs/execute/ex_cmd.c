@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:33:30 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/02 14:08:30 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/04 10:57:57 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void run_fullpathcmd(char **cmd, char **envp)
 
 	if (access(cmd[0], F_OK) == -1)
 	{
-		ft_putstr_fd("zsh: no such file or directory: ", 2);
+		ft_putstr_fd("minishell: no such file or directory: ", 2);
 		ft_putstr_fd(cmd[0], 2);
 		ft_putstr_fd("\n", 2);
 	}
@@ -33,7 +33,7 @@ static void	ft_run_err(t_pipex *p_strct, int index, char **cmd, char *cmd_prefix
 {
 	if (p_strct->envpath == NULL)
 	{
-		ft_putstr_fd("zsh: command not found: ", 2);
+		ft_putstr_fd("minishell: command not found: ", 2);
 		ft_putstr_fd(cmd[0], 2);
 		ft_putstr_fd("\n", 2);
 		free(cmd_prefix);
@@ -41,7 +41,7 @@ static void	ft_run_err(t_pipex *p_strct, int index, char **cmd, char *cmd_prefix
 	}
 	if (p_strct->envpath[index] == NULL)
 	{
-		ft_putstr_fd("zsh: command not found: ", 2);
+		ft_putstr_fd("minishell: command not found: ", 2);
 		ft_putstr_fd(cmd[0], 2);
 		ft_putstr_fd("\n", 2);
 		free(cmd_prefix);
@@ -49,7 +49,7 @@ static void	ft_run_err(t_pipex *p_strct, int index, char **cmd, char *cmd_prefix
 	}
 }
 
-void	runcmd(t_pipex *p_strct, char **cmd, char **envp)
+void	runcmd(t_pipex *p_strct, char **cmd)
 {
 	char	*temp;
 	char	*cmd_prefix;
@@ -67,7 +67,7 @@ void	runcmd(t_pipex *p_strct, char **cmd, char **envp)
 	cmd_prefix = ft_strdup(cmd[0]);
 	if (ft_chrsrch(cmd[0], '/') != -1)
 	{
-		run_fullpathcmd(cmd, envp);
+		run_fullpathcmd(cmd, p_strct->data->envp);
 		exit(EXIT_SUCCESS);
 	}
 	index = 0;
@@ -78,7 +78,7 @@ void	runcmd(t_pipex *p_strct, char **cmd, char **envp)
 		full_cmdpath = ft_strjoin(temp, cmd_prefix);
 		if (access(full_cmdpath, F_OK) != -1)
 		{
-			execve(full_cmdpath, cmd, envp);
+			execve(full_cmdpath, cmd, p_strct->data->envp);
 			free(cmd_prefix);
 			exit(EXIT_SUCCESS);
 		}

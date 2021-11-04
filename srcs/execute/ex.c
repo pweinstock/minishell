@@ -3,43 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ex.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/03 10:46:31 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/04 11:04:41 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execute.h"
-#include "../../includes/minishell.h"
 
 int	execute(char **input, t_data *data)
 {
 	t_pipex	p_strct;
 
 	ft_bzero(&p_strct, sizeof(t_pipex));
-	// if (error_handler(&p_strct, input) == ERROR)
-	// 	return (1);
-	// write(2, input[0], ft_strlen(input[0]));
-	// write(2, input[1], ft_strlen(input[1]));
-	// while (*input)
-	// {
-	// 	write(data->original_stdout, *input, ft_strlen(*input));
-	// 	write(data->original_stdout, "\n", 1);
-	// 	input++;
-	// }
-	// write(data->original_stdout, "fd_in: ", 7);
-	// write(data->original_stdout, ft_itoa(data->fd_in), 1);
-	// write(data->original_stdout, "\n", 2);
 	p_strct.cmd = input;
-	p_strct.envp = data->envp;
-	p_strct.fd_in = data->fd_in;
-	p_strct.fd_out = data->fd_out;
-	parsing_envpath(&p_strct, p_strct.envp);
-	if (forking(&p_strct, p_strct.envp) == ERROR)
+	p_strct.data = data;
+	p_strct.envpath = get_envpath(&p_strct);
+	if (forking(&p_strct) == ERROR)
 		return (1);
-	free(p_strct.envpath);
-	p_strct.envpath = NULL;
 	free(p_strct.cmd);
 	p_strct.cmd = NULL;
 	return (0);

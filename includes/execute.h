@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/02 14:37:07 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/04 11:02:38 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,11 @@
 */
 
 typedef struct s_pipex {
-	char **cmd;
-	char **envp;
-	char **envpath;
-	int	end[2];
-	int cmdpathfound;
-	int	cmd_amt;
-	int	fd_in;
-	int	fd_out;
-	int	fd_temp;
-	int	cmd_count;
-	pid_t child;
+	char		**cmd;
+	char		**envpath;
+	t_data		*data;
+	int			cmdpathfound;
+	pid_t		child;
 }				t_pipex;
 
 const static char	*g_bltin_cmds[9] = {
@@ -72,15 +66,15 @@ int		get_envnum(char **envp, char *needle);
 
 int		execute(char **input, t_data *data);
 int		error_handler(t_pipex *p_strct, char *input);
-void	runcmd(t_pipex *p_strct, char **cmd, char **envp);
-int		forking(t_pipex *p_strct, char **envp);
-void	parsing_envpath(t_pipex *p_strct, char **envp);
+void	runcmd(t_pipex *p_strct, char **cmd);
+int		forking(t_pipex *p_strct);
+char	**get_envpath(t_pipex *p_strct);
 char	**split_args(char *temp);
 
 void	bltin_cd(t_pipex *p_strct, char **cmd);
 int		bltin_compare(char *needle);
 int		bltin_init(t_pipex *p_strct);
-void	bltin_exit(t_pipex *p_strct);
+void	bltin_exit(t_pipex *p_strct, char **cmd);
 void	bltin_pikachu(void);
 void	bltin_pwd(char **cmd);
 void	bltin_echo(t_pipex *p_strct, char **cmd);

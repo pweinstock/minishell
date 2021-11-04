@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:39:48 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/02 14:36:25 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/04 10:20:54 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define CSQUOTE 8
 # define DQUOTE 9
 # define CDQUOTE 10
+
 
 typedef struct	s_lex
 {
