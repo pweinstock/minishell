@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 18:02:37 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/03 10:27:00 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/05 15:28:07 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	lex_analyzer(t_lex *lex, char *str, t_data *data)
 	char	*token;
 	t_lex	*element;
 
-	token = "";
+	token = (char *)malloc(sizeof(char));
 	str--;
 	*str = 0;
 	str++;
@@ -42,7 +42,7 @@ int	lex_analyzer(t_lex *lex, char *str, t_data *data)
 		else if (*str == '"')
 			str += dquote(&lex, &token, &*str);
 		else
-			token = ft_strchrjoin(token, *str);
+			token = ft_strchrjoin(token, *str, &token);
 		str++;
 	}
 	if (ft_strlen(token))
@@ -55,8 +55,9 @@ int	lex_analyzer(t_lex *lex, char *str, t_data *data)
 			ft_lexadd_back(lex, element);
 		}
 	}
+	//free(token);
 	//print_lex(lex);
-	parser(&lex, data);
+	parser(lex, data);
 	return (1);
 }
 
@@ -106,7 +107,7 @@ int	dquote(t_lex **lex, char **token, char *str)
 			printf("Error!\n");
 			break;
 		}
-		*token = ft_strchrjoin(*token, *str);
+		*token = ft_strchrjoin(*token, *str, token);
 		str++;
 		i++;
 	}
@@ -183,7 +184,7 @@ int	squote(t_lex **lex, char **token, char *str)
 			printf("Error!\n");
 			break;
 		}
-		*token = ft_strchrjoin(*token, *str);
+		*token = ft_strchrjoin(*token, *str, token);
 		str++;
 		i++;
 	}
@@ -213,29 +214,6 @@ int	squote(t_lex **lex, char **token, char *str)
 	}
 	return (i + 1);
 }
-
-// int	squote(t_lex **lex, char **token, char *str)
-// {
-// 	t_lex	*element;
-
-// 	if (*lex == NULL && ft_strlen(*token))
-// 	{
-// 		*lex = ft_lexnew(*token, WORD);
-// 	}
-// 	else if (ft_strlen(*token))
-// 	{
-// 		element = ft_lexnew(*token, WORD);
-// 		ft_lexadd_back(*lex, element);
-// 	}
-// 	*token = "";
-// 	str--;
-// 	if (*str != ' ' && *(str+=2) != ' ')
-// 		element = ft_lexnew("'", CSQUOTE);
-// 	else
-// 		element = ft_lexnew("'", SQUOTE);
-// 	ft_lexadd_back(*lex, element);
-// 	return (1);
-// }
 
 int	pipes(t_lex **lex, char **token)
 {
@@ -284,7 +262,8 @@ int	input(t_lex **lex, char **token, char *str)
 			element = ft_lexnew("<", INPUT);
 			ft_lexadd_back(*lex, element);
 		}	
-		*token = "";
+		free(*token);
+		*token = malloc(sizeof(char));
 		return (1);
 	}
 }
@@ -336,7 +315,7 @@ int	space(t_lex **lex, char **token)
 	return (1);
 }
 
-char	*ft_strchrjoin(char const *s1, char const s2)
+char	*ft_strchrjoin(char *s1, char const s2, char **adress)
 {
 	char			*new_string;
 	unsigned int	index;
@@ -354,6 +333,8 @@ char	*ft_strchrjoin(char const *s1, char const s2)
 		new_string[index] = s1[index];
 		index++;
 	}
+	//free(*adress);
+	// *s1 = NULL;
 	new_string[index] = s2;
 	index++;
 	new_string[index] = '\0';

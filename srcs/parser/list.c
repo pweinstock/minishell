@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 16:55:07 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/10/27 16:41:46 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/05 11:05:06 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,18 @@ void	print_lex(t_lex *lst)
 		printf("str: %s\ntype: %d\nprevious: %p\ncurrent: %p\nnext: %p\n\n", (lst)->str, (lst)->type, (lst)->previous, lst, (lst)->next);
 		lst = (lst)-> next;
 	}
+}
+
+int free_list(t_lex *lst)
+{
+	t_lex	*next;
+	while (lst)
+	{
+		next = lst->next;
+		ft_bzero(lst, sizeof(t_lex));
+		free(lst);
+		lst = NULL;
+		lst = next;
+	}
+	return (1);
 }

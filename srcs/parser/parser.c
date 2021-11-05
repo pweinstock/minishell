@@ -3,144 +3,158 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/04 08:02:06 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/05 20:08:56 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	parser(t_lex **lex, t_data *data)
+int	parser(t_lex *lex, t_data *data)
 {
-	//char	**line;
+	t_lex	*temp;
 	t_lex	*line_lst;
 	t_lex	*element;
 
+	temp = lex;
 	line_lst = NULL;
-	while (*lex)
+	while (lex)
 	{
-		if ((*lex)->type == PIPE)
+		if (lex->type == PIPE)
 		{
-			if (!data->fd_out)
-				data->fd_out = open("temp", O_CREAT|O_RDWR, S_IRWXU);
-			dup2(data->fd_in, STDIN_FILENO);
-			dup2(data->fd_out, STDOUT_FILENO);
+			if (!data->redirection)
+			{
+				if (!data->file_out)
+					data->file_out = "temp1";
+				if (!data->file_in)
+					data->file_in = "temp2";
+				data->fd_out = open(data->file_out, O_CREAT|O_RDWR|O_TRUNC, S_IRWXU);
+			}
 			execute(str_array(line_lst), data);
-			//data->fd_in = data->fd_out;
 			dup2(data->original_stdin, STDIN_FILENO);
 			dup2(data->original_stdout, STDOUT_FILENO);
+			close(data->fd_out);
+			if (!data->redirection)
+			{
+				data->file = data->file_in;
+				data->file_in = data->file_out;
+				data->file_out = data->file;
+				data->fd_in = open(data->file_in, O_CREAT|O_RDWR, S_IRWXU);
+			}
+			data->fd_out = 1;
 			line_lst = NULL;
 		}
-		else if ((*lex)->type == OUTPUT)
+		else if (lex->type == OUTPUT)
 		{
-			*lex = (*lex)->next;
-			if ((*lex)->type != WORD)
+			lex = lex->next;
+			if (lex->type != WORD)
 				printf("error\n");
 			else
-					data->fd_out = open((*lex)->str, O_CREAT|O_WRONLY, S_IRWXU);
+					data->fd_out = open(lex->str, O_CREAT|O_WRONLY|O_TRUNC, S_IRWXU);
+			data->redirection = 1;
 		}
-		else if ((*lex)->type == INPUT)
+		else if (lex->type == INPUT)
 		{
-			*lex = (*lex)->next;
-			if ((*lex)->type != WORD)
+			lex = lex->next;
+			if (lex->type != WORD)
 				printf("error\n");
 			else
-					data->fd_in = open((*lex)->str, O_RDONLY, S_IRWXU);
+					data->fd_in = open(lex->str, O_RDONLY, S_IRWXU);
 			//write(data->original_stdout, (*lex)->str, ft_strlen((*lex)->str));
 		}
-		else if ((*lex)->type == APPEND)
+		else if (lex->type == APPEND)
 		{
-			*lex = (*lex)->next;
-			if ((*lex)->type != WORD)
+			lex = lex->next;
+			if (lex->type != WORD)
 				printf("error\n");
 			else
-					data->fd_out = open((*lex)->str, O_CREAT|O_WRONLY|O_APPEND, S_IRWXU);
+					data->fd_out = open(lex->str, O_CREAT|O_WRONLY|O_APPEND, S_IRWXU);
 		}
-		else if ((*lex)->type == HEREDOC)
+		else if (lex->type == HEREDOC)
 		{
-			*lex = (*lex)->next;
-			if ((*lex)->type != WORD)
+			lex = lex->next;
+			if (lex->type != WORD)
 				printf("error\n");
 			else
 			{
 				while (1)
 				{
 					char	*heredoc = readline("heredoc> ");
-					if (!ft_strncmp((*lex)->str, heredoc, ft_strlen(heredoc)) && heredoc[0] != 0)
+					if (!ft_strncmp(lex->str, heredoc, ft_strlen(heredoc)) && heredoc[0] != 0)
 						break;
 					write(data->fd_in, heredoc, ft_strlen(heredoc));
 					write(data->fd_in, "\n", 1);
 				}
 			}
 		}
-		else if ((*lex)->type == DQUOTE)
+		else if (lex->type == DQUOTE)
 		{
-			*lex = (*lex)->next;
-			if (!*lex)
+			lex = lex->next;
+			if (!lex)
 				break;
-			if (line_lst == NULL && (*lex)->type == WORD)
-					line_lst = ft_lexnew((*lex)->str, WORD);
-			else if ((*lex)->type == WORD)
+			if (line_lst == NULL && lex->type == WORD)
+					line_lst = ft_lexnew(lex->str, WORD);
+			else if (lex->type == WORD)
 			{
-				element = ft_lexnew((*lex)->str, WORD);
+				element = ft_lexnew(lex->str, WORD);
 				ft_lexadd_back(line_lst, element);
 				line_lst = element;
 			}
 		}
-		else if ((*lex)->type == SQUOTE)
+		else if (lex->type == SQUOTE)
 		{
-			*lex = (*lex)->next;
-			if (!*lex)
+			lex = lex->next;
+			if (!lex)
 				break;
-			if (line_lst == NULL && (*lex)->type == WORD)
-					line_lst = ft_lexnew((*lex)->str, WORD);
-			else if ((*lex)->type == WORD)
+			if (line_lst == NULL && lex->type == WORD)
+					line_lst = ft_lexnew(lex->str, WORD);
+			else if (lex->type == WORD)
 			{
-				element = ft_lexnew((*lex)->str, WORD);
+				element = ft_lexnew(lex->str, WORD);
 				ft_lexadd_back(line_lst, element);
 				line_lst = element;
 			}
 		}
-		else if ((*lex)->type == CDQUOTE)
+		else if (lex->type == CDQUOTE)
 		{
-			while ((*lex)->type == CDQUOTE)
-				*lex = (*lex)->next;
-			if ((*lex)->type != DQUOTE && (*lex)->type != CDQUOTE)
+			while (lex->type == CDQUOTE)
+				lex = lex->next;
+			if (lex->type != DQUOTE && lex->type != CDQUOTE)
 			{
 
 				if (line_lst == NULL)
-					line_lst = ft_lexnew((*lex)->str, WORD);
+					line_lst = ft_lexnew(lex->str, WORD);
 				else
-					line_lst->str = ft_strjoin(line_lst->str, (*lex)->str);
+					line_lst->str = ft_strjoin(line_lst->str, lex->str);
 			}
 		}
-		else if ((*lex)->type == CSQUOTE)
+		else if (lex->type == CSQUOTE)
 		{
-			while ((*lex)->type == CSQUOTE)
-				*lex = (*lex)->next;
-			if ((*lex)->type != SQUOTE && (*lex)->type != CSQUOTE)
+			while (lex->type == CSQUOTE)
+				lex = lex->next;
+			if (lex->type != SQUOTE && lex->type != CSQUOTE)
 			{
 
 				if (line_lst == NULL)
-					line_lst = ft_lexnew((*lex)->str, WORD);
+					line_lst = ft_lexnew(lex->str, WORD);
 				else
-					line_lst->str = ft_strjoin(line_lst->str, (*lex)->str);
+					line_lst->str = ft_strjoin(line_lst->str, lex->str);
 			}
 		}
-		else if ((*lex)->type == WORD)
+		else if (lex->type == WORD)
 		{
 			if (line_lst == NULL)
-				line_lst = ft_lexnew((*lex)->str, WORD);
+				line_lst = ft_lexnew(lex->str, WORD);
 			else
 			{
-				element = ft_lexnew((*lex)->str, WORD);
+				element = ft_lexnew(lex->str, WORD);
 				ft_lexadd_back(line_lst, element);
 				line_lst = element;
 			}
 		}
-		*lex = (*lex)->next;
+		lex = lex->next;
 	}
 	// while (line_lst->previous != NULL)
 	// 	line_lst = line_lst->previous;
@@ -157,7 +171,10 @@ int	parser(t_lex **lex, t_data *data)
 	// close(data->fd_in);
 	dup2(data->original_stdin, STDIN_FILENO);
 	dup2(data->original_stdout, STDOUT_FILENO);
+	// if (data->file_in)
+	// 	close(data->fd_in);
 	// close(data->fd_out);
+	free_list(temp);
 	return (1);
 }
 
@@ -165,9 +182,11 @@ char **str_array(t_lex *lst)
 {
 	char **line;
 	int	i;
+	t_lex *temp;
 
 	while (lst->previous != NULL)
 		lst = lst->previous;
+	temp = lst;
 	line = malloc(sizeof(char **) * (lex_len(lst) + 1));
 
 	line[lex_len(lst) + 1] = NULL;
@@ -178,6 +197,7 @@ char **str_array(t_lex *lst)
 		i++;
 		lst = lst->next;
 	}
+	free_list(temp);
 	// while (*line)
 	// {
 	// 	printf("%s\n", *line);
