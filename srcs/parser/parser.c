@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/05 20:08:56 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/09 16:35:28 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	parser(t_lex *lex, t_data *data)
 	t_lex	*temp;
 	t_lex	*line_lst;
 	t_lex	*element;
+	char	**array;
 
 	temp = lex;
 	line_lst = NULL;
@@ -165,9 +166,10 @@ int	parser(t_lex *lex, t_data *data)
 		write(data->original_stdout, "Error\n", 6);
 		return (0);
 	}
+	array = str_array(line_lst);
 	// dup2(data->fd_in, STDIN_FILENO);
 	// dup2(data->fd_out, STDOUT_FILENO);
-	execute(str_array(line_lst), data);
+	execute(array, data);
 	// close(data->fd_in);
 	dup2(data->original_stdin, STDIN_FILENO);
 	dup2(data->original_stdout, STDOUT_FILENO);

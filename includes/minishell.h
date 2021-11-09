@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:39:48 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/05 20:14:28 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/09 14:29:46 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		free_list(t_lex *lst);
 //lexical_analysis
 int	lex_analyzer(t_lex *lex, char *str, t_data *data);
 int	space(t_lex **lex, char **token);
-char	*ft_strchrjoin(char *s1, char const s2, char **adress);
+char	*ft_strchrjoin(char *s1, char const s2);
 int	output(t_lex **lex, char **token, char *str);
 int	input(t_lex **lex, char **token, char *str);
 int	pipes(t_lex **lex, char **token);

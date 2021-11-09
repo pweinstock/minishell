@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 16:55:07 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/05 11:05:06 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/09 14:15:10 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 t_lex	*ft_lexnew(char *str, int type)
 {
 	t_lex	*new_elem;
+	char	*token = str;
 
 	new_elem = malloc(sizeof(t_lex));
 	if (!new_elem)
 		return (0);
-	new_elem -> str = str;
+	new_elem -> str = token;
 	new_elem -> type = type;
 	new_elem -> previous = 0;
 	new_elem -> next = 0;
