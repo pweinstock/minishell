@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/09 16:35:28 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/10 17:49:10 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	parser(t_lex *lex, t_data *data)
 			dup2(data->original_stdin, STDIN_FILENO);
 			dup2(data->original_stdout, STDOUT_FILENO);
 			close(data->fd_out);
+			close(data->fd_in);
 			if (!data->redirection)
 			{
 				data->file = data->file_in;
@@ -44,7 +45,8 @@ int	parser(t_lex *lex, t_data *data)
 				data->file_out = data->file;
 				data->fd_in = open(data->file_in, O_CREAT|O_RDWR, S_IRWXU);
 			}
-			data->fd_out = 1;
+			data->fd_out = STDOUT_FILENO;
+			data->redirection = 0;
 			line_lst = NULL;
 		}
 		else if (lex->type == OUTPUT)
@@ -80,13 +82,17 @@ int	parser(t_lex *lex, t_data *data)
 				printf("error\n");
 			else
 			{
+				//close(data->fd_in);
+				if (data->fd_in == STDIN_FILENO)
+					data->file_in = "temp2";
+				data->fd_in = open(data->file_in, O_CREAT|O_WRONLY|O_TRUNC, S_IRWXU);
 				while (1)
 				{
 					char	*heredoc = readline("heredoc> ");
 					if (!ft_strncmp(lex->str, heredoc, ft_strlen(heredoc)) && heredoc[0] != 0)
 						break;
 					write(data->fd_in, heredoc, ft_strlen(heredoc));
-					write(data->fd_in, "\n", 1);
+					write(data->fd_in, " | ", 3);
 				}
 			}
 		}
@@ -176,6 +182,7 @@ int	parser(t_lex *lex, t_data *data)
 	// if (data->file_in)
 	// 	close(data->fd_in);
 	// close(data->fd_out);
+	close(data->fd_in);
 	free_list(temp);
 	return (1);
 }

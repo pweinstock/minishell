@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:45:01 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/05 20:15:18 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/10 17:46:51 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 		shellprefix = NULL;
 		lex = NULL;
 		lex_analyzer(lex, str, &data);
-		rm(&data);
+		//rm(&data);
 		data.file_in = NULL;
 		data.file_out = NULL;
 		data.file = NULL;
