@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 18:02:37 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/09 15:12:53 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/12 17:44:51 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,8 +258,13 @@ int	input(t_lex **lex, char **token, char *str)
 	str++;
 	if (*str == '<')
 	{
-		element = ft_lexnew("<<", HEREDOC);
-		ft_lexadd_back(*lex, element);
+		if (*lex == NULL)
+			*lex = ft_lexnew("<<", INPUT);
+		else
+		{
+			element = ft_lexnew("<<", HEREDOC);
+			ft_lexadd_back(*lex, element);
+		}
 		free(*token);
 		*token = (char *)malloc(sizeof(char));
 		**token = '\0';
@@ -295,8 +300,14 @@ int	output(t_lex **lex, char **token, char *str)
 	str++;
 	if (*str == '>')
 	{
-		element = ft_lexnew(">>", APPEND);
-		ft_lexadd_back(*lex, element);
+		if (*lex == NULL)
+			*lex = ft_lexnew(">>", OUTPUT);
+		else
+		{
+			element = ft_lexnew(">>", APPEND);
+			ft_lexadd_back(*lex, element);
+		}
+		
 		free(*token);
 		*token = (char *)malloc(sizeof(char));
 		**token = '\0';
@@ -304,8 +315,13 @@ int	output(t_lex **lex, char **token, char *str)
 	}
 	else
 	{
-		element = ft_lexnew(">", OUTPUT);
-		ft_lexadd_back(*lex, element);
+		if (*lex == NULL)
+			*lex = ft_lexnew(">", OUTPUT);
+		else
+		{
+			element = ft_lexnew(">", OUTPUT);
+			ft_lexadd_back(*lex, element);
+		}
 		free(*token);
 		*token = (char *)malloc(sizeof(char));
 		**token = '\0';

@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/10 17:49:10 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/12 17:34:34 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	parser(t_lex *lex, t_data *data)
 			if (!data->redirection)
 			{
 				if (!data->file_out)
-					data->file_out = "temp1";
+					data->file_out = ".temp1";
 				if (!data->file_in)
-					data->file_in = "temp2";
+					data->file_in = ".temp2";
 				data->fd_out = open(data->file_out, O_CREAT|O_RDWR|O_TRUNC, S_IRWXU);
 			}
 			execute(str_array(line_lst), data);
@@ -51,11 +51,12 @@ int	parser(t_lex *lex, t_data *data)
 		}
 		else if (lex->type == OUTPUT)
 		{
+			close(data->fd_out);
 			lex = lex->next;
 			if (lex->type != WORD)
 				printf("error\n");
 			else
-					data->fd_out = open(lex->str, O_CREAT|O_WRONLY|O_TRUNC, S_IRWXU);
+					data->fd_out = open(lex->str, O_CREAT|O_RDWR|O_TRUNC, S_IRWXU);
 			data->redirection = 1;
 		}
 		else if (lex->type == INPUT)
@@ -64,7 +65,7 @@ int	parser(t_lex *lex, t_data *data)
 			if (lex->type != WORD)
 				printf("error\n");
 			else
-					data->fd_in = open(lex->str, O_RDONLY, S_IRWXU);
+					data->fd_in = open(lex->str, O_RDWR, S_IRWXU);
 			//write(data->original_stdout, (*lex)->str, ft_strlen((*lex)->str));
 		}
 		else if (lex->type == APPEND)
@@ -73,7 +74,7 @@ int	parser(t_lex *lex, t_data *data)
 			if (lex->type != WORD)
 				printf("error\n");
 			else
-					data->fd_out = open(lex->str, O_CREAT|O_WRONLY|O_APPEND, S_IRWXU);
+					data->fd_out = open(lex->str, O_CREAT|O_RDWR|O_APPEND, S_IRWXU);
 		}
 		else if (lex->type == HEREDOC)
 		{
@@ -82,17 +83,17 @@ int	parser(t_lex *lex, t_data *data)
 				printf("error\n");
 			else
 			{
-				//close(data->fd_in);
-				if (data->fd_in == STDIN_FILENO)
-					data->file_in = "temp2";
-				data->fd_in = open(data->file_in, O_CREAT|O_WRONLY|O_TRUNC, S_IRWXU);
+				close(data->fd_in);
+				// if (data->fd_in == STDIN_FILENO)
+				data->file_in = ".temp2";
+				data->fd_in = open(data->file_in, O_CREAT|O_RDWR|O_TRUNC, S_IRWXU);
 				while (1)
 				{
 					char	*heredoc = readline("heredoc> ");
-					if (!ft_strncmp(lex->str, heredoc, ft_strlen(heredoc)) && heredoc[0] != 0)
+					if (!ft_strncmp(lex->str, heredoc, ft_strlen(heredoc)) && /*heredoc[0] != 0*/ ft_strlen(heredoc) == ft_strlen(lex->str))
 						break;
 					write(data->fd_in, heredoc, ft_strlen(heredoc));
-					write(data->fd_in, " | ", 3);
+					write(data->fd_in, "\n", 1);
 				}
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 12:53:47 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/09 15:47:52 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/12 15:52:56 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	init_data(t_data *data, char **envp)
 void	rm(t_data *data)
 {
 	char **delete = malloc(sizeof(char*) * 5);
-	
+
 	delete[0] = "rm";
 	delete[1] = "-f";
-	delete[2] = "temp1";
-	delete[3] = "temp2";
+	delete[2] = ".temp1";
+	delete[3] = ".temp2";
 	delete[4] = NULL;
 	execute(delete, data);
 	dup2(data->original_stdin, STDIN_FILENO);
