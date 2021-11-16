@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analysis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 18:02:37 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/12 17:44:51 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/16 13:31:20 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int	lex_analyzer(t_lex *lex, char *str, t_data *data)
 	char	*token;
 	t_lex	*element;
 
-	token = (char *)malloc(sizeof(char));
-	str--;
-	*str = 0;
-	str++;
+	token = (char *)ft_calloc(1, sizeof(char));
+	// str--;
+	// *str = 0;
+	// str++;
 	while (*str)
 	{
 		if (*str == ' ')
@@ -56,7 +56,7 @@ int	lex_analyzer(t_lex *lex, char *str, t_data *data)
 		}
 	}
 	//free(token);
-	//print_lex(lex);
+	// print_lex(lex);
 	parser(lex, data);
 	return (1);
 }
@@ -76,7 +76,7 @@ int	dquote(t_lex **lex, char **token, char *str)
 		ft_lexadd_back(*lex, element);
 	}
 	free(*token);
-	*token = (char *)malloc(sizeof(char));
+	*token = (char *)ft_calloc(1, sizeof(char));
 	**token = '\0';
 	str--;
 	if (*str != ' ' && *str != 0)
@@ -123,7 +123,7 @@ int	dquote(t_lex **lex, char **token, char *str)
 		ft_lexadd_back(*lex, element);
 	}
 	free(*token);
-	*token = (char *)malloc(sizeof(char));
+	*token = (char *)ft_calloc(1, sizeof(char));
 	**token = '\0';
 	if (*str == '"')
 	{
@@ -157,7 +157,7 @@ int	squote(t_lex **lex, char **token, char *str)
 		ft_lexadd_back(*lex, element);
 	}
 	free(*token);
-	*token = (char *)malloc(sizeof(char));
+	*token = (char *)ft_calloc(1, sizeof(char));
 	**token = '\0';
 	str--;
 	if (*str != ' ' && *str != 0)
@@ -204,7 +204,7 @@ int	squote(t_lex **lex, char **token, char *str)
 		ft_lexadd_back(*lex, element);
 	}
 	free(*token);
-	*token = (char *)malloc(sizeof(char));
+	*token = (char *)ft_calloc(1, sizeof(char));
 	**token = '\0';
 	if (*str == '\'')
 	{
@@ -237,7 +237,7 @@ int	pipes(t_lex **lex, char **token)
 		ft_lexadd_back(*lex, element);
 	}
 	free(*token);
-	*token = (char *)malloc(sizeof(char));
+	*token = (char *)ft_calloc(1, sizeof(char));
 	**token = '\0';
 	element = ft_lexnew("|", PIPE);
 	ft_lexadd_back(*lex, element);
@@ -259,14 +259,17 @@ int	input(t_lex **lex, char **token, char *str)
 	if (*str == '<')
 	{
 		if (*lex == NULL)
-			*lex = ft_lexnew("<<", INPUT);
+		{
+			printf("Test0\n");
+			*lex = ft_lexnew("<<", HEREDOC);
+		}
 		else
 		{
 			element = ft_lexnew("<<", HEREDOC);
 			ft_lexadd_back(*lex, element);
 		}
 		free(*token);
-		*token = (char *)malloc(sizeof(char));
+		*token = (char *)ft_calloc(1, sizeof(char));
 		**token = '\0';
 		return(2);
 	}
@@ -278,9 +281,9 @@ int	input(t_lex **lex, char **token, char *str)
 		{
 			element = ft_lexnew("<", INPUT);
 			ft_lexadd_back(*lex, element);
-		}	
+		}
 		free(*token);
-		*token = (char *)malloc(sizeof(char));
+		*token = (char *)ft_calloc(1, sizeof(char));
 		**token = '\0';
 		return (1);
 	}
@@ -307,9 +310,9 @@ int	output(t_lex **lex, char **token, char *str)
 			element = ft_lexnew(">>", APPEND);
 			ft_lexadd_back(*lex, element);
 		}
-		
+
 		free(*token);
-		*token = (char *)malloc(sizeof(char));
+		*token = (char *)ft_calloc(1, sizeof(char));
 		**token = '\0';
 		return(2);
 	}
@@ -323,7 +326,7 @@ int	output(t_lex **lex, char **token, char *str)
 			ft_lexadd_back(*lex, element);
 		}
 		free(*token);
-		*token = (char *)malloc(sizeof(char));
+		*token = (char *)ft_calloc(1, sizeof(char));
 		**token = '\0';
 		return (1);
 	}
@@ -345,7 +348,7 @@ int	space(t_lex **lex, char **token)
 		ft_lexadd_back(*lex, element);
 	}
 	free(*token);
-	*token = (char *)malloc(sizeof(char));
+	*token = (char *)ft_calloc(1, sizeof(char));
 	**token = '\0';
 	return (1);
 }
@@ -359,7 +362,7 @@ char	*ft_strchrjoin(char *s1, char const s2)
 	// if (!s1 || !s2)
 	// 	return (0);
 	length = ft_strlen(s1) + 1;
-	new_string = malloc(length + 1);
+	new_string = ft_calloc(length + 1, sizeof(char));
 	if (!new_string)
 		return (0);
 	index = 0;

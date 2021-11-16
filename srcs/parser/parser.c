@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/12 17:34:34 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/16 13:50:48 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ int	parser(t_lex *lex, t_data *data)
 	t_lex	*line_lst;
 	t_lex	*element;
 	char	**array;
+	char	*heredoc;
 
 	temp = lex;
 	line_lst = NULL;
+	data->is_piped = FALSE;
 	while (lex)
 	{
 		if (lex->type == PIPE)
 		{
+			data->is_piped = TRUE;
 			if (!data->redirection)
 			{
 				if (!data->file_out)
@@ -78,19 +81,21 @@ int	parser(t_lex *lex, t_data *data)
 		}
 		else if (lex->type == HEREDOC)
 		{
+			// printf("lextype: %i\n", lex->type);
 			lex = lex->next;
 			if (lex->type != WORD)
 				printf("error\n");
 			else
 			{
-				close(data->fd_in);
-				// if (data->fd_in == STDIN_FILENO)
+				if (data->fd_in != STDIN_FILENO)
+					close(data->fd_in);
 				data->file_in = ".temp2";
 				data->fd_in = open(data->file_in, O_CREAT|O_RDWR|O_TRUNC, S_IRWXU);
+				dup2(data->original_stdout, data->fd_out);
 				while (1)
 				{
-					char	*heredoc = readline("heredoc> ");
-					if (!ft_strncmp(lex->str, heredoc, ft_strlen(heredoc)) && /*heredoc[0] != 0*/ ft_strlen(heredoc) == ft_strlen(lex->str))
+					heredoc = readline("heredoc> ");
+					if (heredoc[0] != '\0' && ft_strlen(heredoc) == ft_strlen(lex->str) && !ft_strncmp(lex->str, heredoc, ft_strlen(heredoc)))
 						break;
 					write(data->fd_in, heredoc, ft_strlen(heredoc));
 					write(data->fd_in, "\n", 1);
@@ -177,6 +182,7 @@ int	parser(t_lex *lex, t_data *data)
 	// dup2(data->fd_in, STDIN_FILENO);
 	// dup2(data->fd_out, STDOUT_FILENO);
 	execute(array, data);
+	// printf("Test\n");
 	// close(data->fd_in);
 	dup2(data->original_stdin, STDIN_FILENO);
 	dup2(data->original_stdout, STDOUT_FILENO);
@@ -197,7 +203,7 @@ char **str_array(t_lex *lst)
 	while (lst->previous != NULL)
 		lst = lst->previous;
 	temp = lst;
-	line = malloc(sizeof(char **) * (lex_len(lst) + 1));
+	line = ft_calloc(lex_len(lst) + 1, sizeof(char **));
 
 	line[lex_len(lst) + 1] = NULL;
 	i = 0;

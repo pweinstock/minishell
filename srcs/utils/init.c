@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 12:53:47 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/12 15:52:56 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/16 13:05:53 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	rm(t_data *data)
 {
 	char **delete = malloc(sizeof(char*) * 5);
 
-	delete[0] = "rm";
+	delete[0] = "/bin/rm";
 	delete[1] = "-f";
 	delete[2] = ".temp1";
 	delete[3] = ".temp2";
