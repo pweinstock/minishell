@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/16 13:50:48 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/17 10:24:16 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	parser(t_lex *lex, t_data *data)
 	temp = lex;
 	line_lst = NULL;
 	data->is_piped = FALSE;
+	data->is_heredoc = FALSE;
 	while (lex)
 	{
 		if (lex->type == PIPE)
@@ -87,10 +88,11 @@ int	parser(t_lex *lex, t_data *data)
 				printf("error\n");
 			else
 			{
+				data->is_heredoc = TRUE;
 				if (data->fd_in != STDIN_FILENO)
 					close(data->fd_in);
-				data->file_in = ".temp2";
-				data->fd_in = open(data->file_in, O_CREAT|O_RDWR|O_TRUNC, S_IRWXU);
+				data->fd_in = open(".heredoc", O_CREAT|O_RDWR|O_TRUNC, S_IRWXU);
+				printf("|%i|\n", data->fd_in);
 				dup2(data->original_stdout, data->fd_out);
 				while (1)
 				{

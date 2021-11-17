@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/09 10:07:49 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/17 09:10:51 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct s_pipex {
 	char		**cmd;
 	char		**envpath;
 	t_data		*data;
+	int			end[2];
+	int			fd_temp;
 	int			cmdpathfound;
 	pid_t		child;
 }				t_pipex;

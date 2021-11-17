@@ -61,11 +61,11 @@ header_end:
 	@echo "|____________________________________________________________________________________________________________________________________________________|"
 
 $(NAME):
-	@make --directory=./libs/libft
-	@echo
-	@$(CC) $(LFLAGS) $(SRC) -o $(NAME) $(LIBFT)
-	@echo "|                                                             Compiling completed.                                                                   |"
-	@make header_end
+	make --directory=./libs/libft
+	echo
+	$(CC) $(LFLAGS) $(SRC) -o $(NAME) $(LIBFT)
+	echo "|                                                             Compiling completed.                                                                   |"
+	make header_end
 
 clean: header
 	@make clean --directory=./libs/libft

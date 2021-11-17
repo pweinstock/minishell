@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:33:30 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/04 10:57:57 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/17 14:01:02 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,12 @@ void	runcmd(t_pipex *p_strct, char **cmd)
 		full_cmdpath = ft_strjoin(temp, cmd_prefix);
 		if (access(full_cmdpath, F_OK) != -1)
 		{
+			// char *buf = malloc(sizeof(char) * 20);
+			// read(STDIN_FILENO, buf, 19);
+			// buf[19] = '\0';
+			// write(2, "TEST: ", 7);
+			// write(2, buf, 20);
+			// printf("debug: |%s| |%s| |%s| |%s|\n", full_cmdpath, cmd[0], cmd [1], cmd[2]);
 			execve(full_cmdpath, cmd, p_strct->data->envp);
 			free(cmd_prefix);
 			exit(EXIT_SUCCESS);

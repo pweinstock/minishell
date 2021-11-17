@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:39:48 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/16 13:49:36 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/17 14:24:09 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,15 @@ typedef struct	s_lex
 typedef struct s_data {
 	char	**envp;
 	char	*path_prefix;
+	char	*file_in;
+	char	*file_out;
+	char	*file;
+	int		is_heredoc;
 	int		is_piped;
 	int		fd_in;
 	int		fd_out;
 	int		original_stdin;
 	int		original_stdout;
-	char	*file_in;
-	char	*file_out;
-	char	*file;
 	int		redirection;
 }				t_data;
 

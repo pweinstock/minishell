@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 12:53:47 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/16 13:05:53 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/17 14:16:50 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	init_data(t_data *data, char **envp)
 {
-	int envnum;
+	int	envnum;
 
 	data->original_stdin = dup(STDIN_FILENO);
 	data->original_stdout = dup(STDOUT_FILENO);
@@ -30,14 +30,15 @@ void	init_data(t_data *data, char **envp)
 
 void	rm(t_data *data)
 {
-	char **delete = malloc(sizeof(char*) * 5);
+	char	*temp[6];
 
-	delete[0] = "/bin/rm";
-	delete[1] = "-f";
-	delete[2] = ".temp1";
-	delete[3] = ".temp2";
-	delete[4] = NULL;
-	execute(delete, data);
+	temp[0] = "/bin/rm";
+	temp[1] = "-f";
+	temp[2] = ".heredoc";
+	temp[3] = ".temp1";
+	temp[4] = ".temp2";
+	temp[5] = NULL;
+	execute(temp, data);
 	dup2(data->original_stdin, STDIN_FILENO);
 	dup2(data->original_stdout, STDOUT_FILENO);
 }

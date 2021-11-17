@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:16:08 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/04 10:58:02 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/17 14:20:22 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,15 @@
 
 static void	child_process(t_pipex *p_strct)
 {
-	dup2(p_strct->data->fd_in, STDIN_FILENO);
-	dup2(p_strct->data->fd_out, STDOUT_FILENO);
+	if (p_strct->data->is_heredoc == TRUE)
+	{
+		p_strct->data->fd_in = open(".heredoc", O_RDWR);
+		p_strct->data->is_heredoc = FALSE;
+	}
+	if (dup2(p_strct->data->fd_in, STDIN_FILENO) == -1)
+		printf("shit1     %i     !!!!!!!\n", errno);
+	if (dup2(p_strct->data->fd_out, STDOUT_FILENO) == -1)
+		printf("shit2     %i     !!!!!!!\n", errno);
 	runcmd(p_strct, p_strct->cmd);
 	exit(EXIT_SUCCESS);
 }
@@ -37,9 +44,22 @@ int	forking(t_pipex *p_strct)
 
 	is_bltin = 0;
 	is_bltin = bltin_compare(p_strct->cmd[0]);
+	dup2(p_strct->data->fd_in, STDIN_FILENO);
+	dup2(p_strct->data->fd_out, STDOUT_FILENO);
 	if (is_bltin != -1)
+	{
 		runbltin(p_strct, p_strct->cmd, is_bltin);
+	}
 	else
+	{
+		if (pipe(p_strct->end) == -1)
+		{
+			perror("Error");
+			return (ERROR);
+		}
 		create_child(p_strct);
+		close(p_strct->end[0]);
+		close(p_strct->end[1]);
+	}
 	return (0);
 }
