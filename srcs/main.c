@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:45:01 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/12 16:00:41 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/17 18:48:22 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,28 @@ int	main(int argc, char **argv, char **envp)
 		shellprefix = ft_strjoin(temp, "\033[1;33m ✗\033[0m ");
 		free(temp);
 		temp = NULL;
-
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, signal_handler);
 		str = readline(shellprefix);
+		if (!str)
+		{
+			write(1, "exit\n", 5);
+			exit(0);
+		}
 		if (str && *str)
 			add_history(str);
 		free(shellprefix);
 		shellprefix = NULL;
 		lex = NULL;
-		lex_analyzer(lex, str, &data);
+		if (*str)
+			lex_analyzer(lex, str, &data);
+		ft_bzero(str, ft_strlen(str));
+		free(str);
 		rm(&data);
 		data.file_in = NULL;
 		data.file_out = NULL;
 		data.file = NULL;
+
 	}
 	return (0);
 }

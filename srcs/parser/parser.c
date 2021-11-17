@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/17 10:24:16 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/17 18:46:51 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,14 @@ int	parser(t_lex *lex, t_data *data)
 			if (lex->type != WORD)
 				printf("error\n");
 			else
-					data->fd_out = open(lex->str, O_CREAT|O_RDWR|O_TRUNC, S_IRWXU);
+			{
+				if ((data->fd_out = open(lex->str, O_CREAT|O_RDWR|O_TRUNC, S_IRWXU)) == -1)
+				{
+					perror(lex->str);
+					free_list(temp);
+					return (1);
+				}
+			}
 			data->redirection = 1;
 		}
 		else if (lex->type == INPUT)
@@ -69,7 +76,12 @@ int	parser(t_lex *lex, t_data *data)
 			if (lex->type != WORD)
 				printf("error\n");
 			else
-					data->fd_in = open(lex->str, O_RDWR, S_IRWXU);
+			{
+				if ((data->fd_in = open(lex->str, O_RDWR, S_IRWXU)) == -1)
+					perror(lex->str);
+					free_list(temp);
+					return (1);
+			}
 			//write(data->original_stdout, (*lex)->str, ft_strlen((*lex)->str));
 		}
 		else if (lex->type == APPEND)
@@ -78,7 +90,14 @@ int	parser(t_lex *lex, t_data *data)
 			if (lex->type != WORD)
 				printf("error\n");
 			else
-					data->fd_out = open(lex->str, O_CREAT|O_RDWR|O_APPEND, S_IRWXU);
+			{
+				if ((data->fd_out = open(lex->str, O_CREAT|O_RDWR|O_APPEND, S_IRWXU)) == -1)
+				{
+					perror(lex->str);
+					free_list(temp);
+					return (1);
+				}
+			}
 		}
 		else if (lex->type == HEREDOC)
 		{

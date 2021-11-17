@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analysis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 18:02:37 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/16 13:31:20 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/17 18:48:35 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	lex_analyzer(t_lex *lex, char *str, t_data *data)
 		}
 	}
 	//free(token);
-	// print_lex(lex);
+	print_lex(lex);
 	parser(lex, data);
 	return (1);
 }

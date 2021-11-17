@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:39:48 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/17 14:24:09 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/17 16:13:53 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ typedef struct s_data {
 	int		original_stdout;
 	int		redirection;
 }				t_data;
+
+//signals.c
+void	signal_handler(int sig);
 
 // list.c
 t_lex	*ft_lexnew(char *str, int type);
