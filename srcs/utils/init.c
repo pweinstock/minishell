@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 12:53:47 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/17 14:16:50 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/18 10:50:34 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_data(t_data *data, char **envp)
 	data->path_prefix = ft_strdup("minishell");
 	data->fd_in = STDIN_FILENO;
 	data->fd_out = STDOUT_FILENO;
-	data->envp = envp;
+	data->envp = ft_strarr_copy(envp);
 	envnum = get_envnum(data->envp, "OLDPWD");
 	if (envnum != -1)
 		rotate_env(data, envnum);
@@ -30,15 +30,16 @@ void	init_data(t_data *data, char **envp)
 
 void	rm(t_data *data)
 {
-	char	*temp[6];
+	// char	*temp[6];
 
-	temp[0] = "/bin/rm";
-	temp[1] = "-f";
-	temp[2] = ".heredoc";
-	temp[3] = ".temp1";
-	temp[4] = ".temp2";
-	temp[5] = NULL;
-	execute(temp, data);
+	// temp[0] = "/bin/rm";
+	// temp[1] = "-f";
+	// temp[2] = ".heredoc";
+	// temp[3] = ".temp1";
+	// temp[4] = ".temp2";
+	// temp[5] = NULL;
+	// printf("Test\n");
+	// execve(temp[0], temp, data->envp);
 	dup2(data->original_stdin, STDIN_FILENO);
 	dup2(data->original_stdout, STDOUT_FILENO);
 }

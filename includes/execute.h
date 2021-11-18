@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/17 09:10:51 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/18 10:35:07 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ const static char	*g_bltin_cmds[9] = {
 	"export",
 	NULL
 };
+
 /*
 ** -----------------------------------------------------------------------------
 ** Function prototypes
@@ -86,6 +87,7 @@ void	bltin_export(t_pipex *p_strct, char **cmd);
 void	runbltin(t_pipex *p_strct, char **cmd, int cmdnbr);
 void	addback_env(t_pipex *p_strct, char *str);
 void	rotate_env(t_data *data, int envnum);
+void	replace_env(t_data *data, char *str, int envnum);
 
 
 #endif

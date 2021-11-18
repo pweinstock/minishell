@@ -19,7 +19,7 @@ ORANGE		= \033[0;33m
 NO_COLOR	= \033[m
 
 SRC =	./srcs/main.c									\
-		./srcs/utils/char_search.c						\
+		./srcs/utils/char_utils.c						\
 		./srcs/utils/env_utils.c						\
 		./srcs/utils/init.c								\
 		./srcs/utils/signals.c							\
@@ -62,11 +62,11 @@ header_end:
 	@echo "|____________________________________________________________________________________________________________________________________________________|"
 
 $(NAME):
-	make --directory=./libs/libft
-	echo
-	$(CC) $(LFLAGS) $(SRC) -o $(NAME) $(LIBFT)
-	echo "|                                                             Compiling completed.                                                                   |"
-	make header_end
+	@make --directory=./libs/libft
+	@echo
+	@$(CC) $(LFLAGS) $(SRC) -o $(NAME) $(LIBFT)
+	@echo "|                                                             Compiling completed.                                                                   |"
+	@make header_end
 
 clean: header
 	@make clean --directory=./libs/libft

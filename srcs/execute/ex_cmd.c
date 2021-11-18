@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:33:30 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/17 14:01:02 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/18 14:54:05 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	ft_run_err(t_pipex *p_strct, int index, char **cmd, char *cmd_prefix
 		ft_putstr_fd(cmd[0], 2);
 		ft_putstr_fd("\n", 2);
 		free(cmd_prefix);
-		exit(EXIT_SUCCESS);
+		exit(127);
 	}
 	if (p_strct->envpath[index] == NULL)
 	{
@@ -45,7 +45,7 @@ static void	ft_run_err(t_pipex *p_strct, int index, char **cmd, char *cmd_prefix
 		ft_putstr_fd(cmd[0], 2);
 		ft_putstr_fd("\n", 2);
 		free(cmd_prefix);
-		exit(EXIT_SUCCESS);
+		exit(127);
 	}
 }
 

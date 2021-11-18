@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:39:48 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/17 16:13:53 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/18 10:50:06 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_data {
 	char	*file_in;
 	char	*file_out;
 	char	*file;
+	int		error_ret;
 	int		is_heredoc;
 	int		is_piped;
 	int		fd_in;
@@ -82,6 +83,7 @@ int	dquote(t_lex **lex, char **token, char *str);
 
 int		execute(char **input, t_data *data);
 void	init_data(t_data *data, char **envp);
+char	**ft_strarr_copy(char **str);
 void	rm(t_data *data);
 
 //parsing

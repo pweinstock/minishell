@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:16:08 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/17 14:20:22 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/18 14:29:42 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static void	child_process(t_pipex *p_strct)
 		p_strct->data->is_heredoc = FALSE;
 	}
 	if (dup2(p_strct->data->fd_in, STDIN_FILENO) == -1)
-		printf("shit1     %i     !!!!!!!\n", errno);
+		printf("error1: %i\n", errno);
 	if (dup2(p_strct->data->fd_out, STDOUT_FILENO) == -1)
-		printf("shit2     %i     !!!!!!!\n", errno);
+		printf("error2: %i\n", errno);
 	runcmd(p_strct, p_strct->cmd);
 	exit(EXIT_SUCCESS);
 }
@@ -34,8 +34,8 @@ static void create_child(t_pipex *p_strct)
 			exit(EXIT_FAILURE);
 		if (p_strct->child == 0)
 			child_process(p_strct);
-		while (wait(NULL) != -1 || errno != ECHILD)
-			continue ;
+		waitpid(p_strct->child, &p_strct->data->error_ret, 0);
+		printf("errno %i\n", WEXITSTATUS(p_strct->data->error_ret));
 }
 
 int	forking(t_pipex *p_strct)

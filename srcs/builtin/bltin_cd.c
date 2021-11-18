@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 08:39:20 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/04 15:07:20 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/18 10:57:18 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	bltin_cd(t_pipex *p_strct, char **cmd)
 	envnum = get_envnum(p_strct->data->envp, "HOME=");
 	if (!cmd[1] && envnum != -1 && chdir(p_strct->data->envp[envnum] + 5) == -1)
 	{
-		no_such_file(p_strct->data->envp[envnum]);
+		no_such_file(p_strct->data->envp[envnum] + 5);
 		return ;
 	}
 	if (cmd[1] && cmd[1][0] == '-' && cmd[1][1] == '\0')
