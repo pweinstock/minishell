@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 08:39:20 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/18 10:57:18 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/24 10:40:36 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	no_such_file(char *str)
 		ft_putstr_fd("\n", 2);
 }
 
-void	bltin_cd(t_pipex *p_strct, char **cmd)
+int	bltin_cd(t_pipex *p_strct, char **cmd)
 {
 	int		envnum;
 	char	*cwd;
@@ -45,7 +45,7 @@ void	bltin_cd(t_pipex *p_strct, char **cmd)
 	if (!cmd[1] && envnum != -1 && chdir(p_strct->data->envp[envnum] + 5) == -1)
 	{
 		no_such_file(p_strct->data->envp[envnum] + 5);
-		return ;
+		return (1);
 	}
 	if (cmd[1] && cmd[1][0] == '-' && cmd[1][1] == '\0')
 	{
@@ -53,17 +53,20 @@ void	bltin_cd(t_pipex *p_strct, char **cmd)
 		if (envnum != -1)
 			chdir(p_strct->data->envp[envnum] + 7);
 		else
+		{
 			ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
+			return (1);
+		}
 	}
 	else if (cmd[1] && chdir(cmd[1]) == -1)
 	{
 		no_such_file(cmd[1]);
-		return ;
+		return (1);
 	}
 	cwd = getcwd(NULL, 0);
 	cwd += ft_revchrsrch(cwd, '/') + 1;
 	free(p_strct->data->path_prefix);
 	p_strct->data->path_prefix = ft_strdup(cwd);
 	old_pwd(p_strct, oldpath);
-	return ;
+	return (0);
 }

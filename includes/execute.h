@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/18 10:35:07 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/24 10:41:01 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ int		get_envnum(char **envp, char *needle);
 
 int		execute(char **input, t_data *data);
 int		error_handler(t_pipex *p_strct, char *input);
-void	runcmd(t_pipex *p_strct, char **cmd);
+int		runcmd(t_pipex *p_strct, char **cmd);
 int		forking(t_pipex *p_strct);
 char	**get_envpath(t_pipex *p_strct);
 char	**split_args(char *temp);
 
-void	bltin_cd(t_pipex *p_strct, char **cmd);
+int		bltin_cd(t_pipex *p_strct, char **cmd);
 int		bltin_compare(char *needle);
 int		bltin_init(t_pipex *p_strct);
 void	bltin_exit(t_pipex *p_strct, char **cmd);
@@ -83,8 +83,8 @@ void	bltin_pwd(char **cmd);
 void	bltin_echo(t_pipex *p_strct, char **cmd);
 void	bltin_env(t_pipex *p_strct, char **cmd);
 void	bltin_unset(t_pipex *p_strct, char **cmd);
-void	bltin_export(t_pipex *p_strct, char **cmd);
-void	runbltin(t_pipex *p_strct, char **cmd, int cmdnbr);
+int		bltin_export(t_pipex *p_strct, char **cmd);
+int		runbltin(t_pipex *p_strct, char **cmd, int cmdnbr);
 void	addback_env(t_pipex *p_strct, char *str);
 void	rotate_env(t_data *data, int envnum);
 void	replace_env(t_data *data, char *str, int envnum);

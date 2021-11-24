@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/17 18:46:51 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/23 15:15:08 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,60 +123,6 @@ int	parser(t_lex *lex, t_data *data)
 				}
 			}
 		}
-		else if (lex->type == DQUOTE)
-		{
-			lex = lex->next;
-			if (!lex)
-				break;
-			if (line_lst == NULL && lex->type == WORD)
-					line_lst = ft_lexnew(lex->str, WORD);
-			else if (lex->type == WORD)
-			{
-				element = ft_lexnew(lex->str, WORD);
-				ft_lexadd_back(line_lst, element);
-				line_lst = element;
-			}
-		}
-		else if (lex->type == SQUOTE)
-		{
-			lex = lex->next;
-			if (!lex)
-				break;
-			if (line_lst == NULL && lex->type == WORD)
-					line_lst = ft_lexnew(lex->str, WORD);
-			else if (lex->type == WORD)
-			{
-				element = ft_lexnew(lex->str, WORD);
-				ft_lexadd_back(line_lst, element);
-				line_lst = element;
-			}
-		}
-		else if (lex->type == CDQUOTE)
-		{
-			while (lex->type == CDQUOTE)
-				lex = lex->next;
-			if (lex->type != DQUOTE && lex->type != CDQUOTE)
-			{
-
-				if (line_lst == NULL)
-					line_lst = ft_lexnew(lex->str, WORD);
-				else
-					line_lst->str = ft_strjoin(line_lst->str, lex->str);
-			}
-		}
-		else if (lex->type == CSQUOTE)
-		{
-			while (lex->type == CSQUOTE)
-				lex = lex->next;
-			if (lex->type != SQUOTE && lex->type != CSQUOTE)
-			{
-
-				if (line_lst == NULL)
-					line_lst = ft_lexnew(lex->str, WORD);
-				else
-					line_lst->str = ft_strjoin(line_lst->str, lex->str);
-			}
-		}
 		else if (lex->type == WORD)
 		{
 			if (line_lst == NULL)
@@ -193,7 +139,7 @@ int	parser(t_lex *lex, t_data *data)
 	// while (line_lst->previous != NULL)
 	// 	line_lst = line_lst->previous;
 	//printf("--------------line_lst---------------\n");
-	//print_lex(line_lst);
+	// print_lex(line_lst);
 	if (!line_lst)
 	{
 		write(data->original_stdout, "Error\n", 6);
@@ -202,6 +148,10 @@ int	parser(t_lex *lex, t_data *data)
 	array = str_array(line_lst);
 	// dup2(data->fd_in, STDIN_FILENO);
 	// dup2(data->fd_out, STDOUT_FILENO);
+	// if (array[0] != NULL)
+	// 	printf("array: %s\n", array[0]);
+		//write(data->original_stdout, array[0], ft_strlen(array[0]));
+	write(data->original_stdout, "\n", 1);
 	execute(array, data);
 	// printf("Test\n");
 	// close(data->fd_in);
@@ -225,8 +175,7 @@ char **str_array(t_lex *lst)
 		lst = lst->previous;
 	temp = lst;
 	line = ft_calloc(lex_len(lst) + 1, sizeof(char **));
-
-	line[lex_len(lst) + 1] = NULL;
+	lst = temp;
 	i = 0;
 	while (lst)
 	{
@@ -234,6 +183,7 @@ char **str_array(t_lex *lst)
 		i++;
 		lst = lst->next;
 	}
+	line[i] = NULL;
 	free_list(temp);
 	// while (*line)
 	// {

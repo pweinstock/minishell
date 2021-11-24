@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:45:01 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/17 18:48:22 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/23 15:40:40 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init_data(&data, envp);
+	stty(&data);
 	while (1)
 	{
 		// data.fd_in = 0;
@@ -34,21 +35,21 @@ int	main(int argc, char **argv, char **envp)
 		temp = NULL;
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, signal_handler);
-		str = readline(shellprefix);
-		if (!str)
+		data.str = readline(shellprefix);
+		if (!data.str)
 		{
 			write(1, "exit\n", 5);
 			exit(0);
 		}
-		if (str && *str)
-			add_history(str);
+		if (data.str && *data.str)
+			add_history(data.str);
 		free(shellprefix);
 		shellprefix = NULL;
 		lex = NULL;
-		if (*str)
-			lex_analyzer(lex, str, &data);
-		ft_bzero(str, ft_strlen(str));
-		free(str);
+		if (*data.str)
+			lex_analyzer(lex, &data);
+		// ft_bzero(data.str, ft_strlen(data.str));
+		// free(data.str);
 		rm(&data);
 		data.file_in = NULL;
 		data.file_out = NULL;

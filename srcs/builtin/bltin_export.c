@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 13:55:01 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/18 14:25:55 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/24 10:37:20 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ static void	no_args_print(char *input)
 	free(after_equal);
 	print = ft_strjoin(temp, "\"");
 	free(temp);
-	write(1, "declare -x ", 11);
-	write(1, before_equal, ft_strlen(before_equal));
+	ft_putstr_fd("declare -x ", 1);
+	ft_putstr_fd(before_equal, 1);
 	free(before_equal);
-	write(1, print, ft_strlen(print));
+	ft_putstr_fd(print, 1);
 	free(print);
-	write(1, "\n", 1);
+	ft_putstr_fd("\n", 1);
 	return ;
 }
 
@@ -94,22 +94,52 @@ static void	export_noargs(t_pipex *p_strct, char **cmd)
 	return ;
 }
 
-void	bltin_export(t_pipex *p_strct, char **cmd)
+static int	export_str_handling(char *str)
+{
+	int	index;
+
+	index = 0;
+	if (ft_isalpha(str[index]) == 0)
+	{
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd("\': not a valid identifier\n", 2);
+		return (1);
+	}
+	while (str[index] != '\0')
+	{
+		if (str[index] == '=')
+			break ;
+		if (ft_isalnum(str[index]) == 0)
+		{
+			ft_putstr_fd("minishell: export: `", 2);
+			ft_putstr_fd(str, 2);
+			ft_putstr_fd("\': not a valid identifier\n", 2);
+			return (1);
+		}
+		index++;
+	}
+	return (0);
+}
+
+int	bltin_export(t_pipex *p_strct, char **cmd)
 {
 	char	*temp;
 	int		word_index;
 	int		i;
+	int		ret;
 
 	word_index = 1;
+	ret = 0;
 	if (cmd[1] == NULL)
 	{
 		export_noargs(p_strct, cmd);
-		return ;
+		return (ret);
 	}
 	while (cmd[word_index] != NULL)
 	{
 		i = ft_chrsrch(cmd[word_index], '=');
-		if (i != -1)
+		if (export_str_handling(cmd[word_index]) == 0 && i != -1)
 		{
 			temp = ft_substr(cmd[word_index], 0, i + 1);
 			i = get_envnum(p_strct->data->envp, temp);
@@ -118,7 +148,9 @@ void	bltin_export(t_pipex *p_strct, char **cmd)
 			else
 				addback_env(p_strct, cmd[word_index]);
 		}
+		else
+			ret = 1;
 		word_index++;
 	}
-	return ;
+	return (ret);
 }

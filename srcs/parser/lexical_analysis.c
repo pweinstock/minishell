@@ -3,333 +3,177 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analysis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/23 18:02:37 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/17 18:48:35 by pweinsto         ###   ########.fr       */
+/*   Created: 2021/11/17 19:12:03 by pweinsto          #+#    #+#             */
+/*   Updated: 2021/11/24 16:27:13 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	lex_analyzer(t_lex *lex, char *str, t_data *data)
+int	lex_analyzer(t_lex *lex, t_data *data)
 {
 	char	*token;
-	t_lex	*element;
+	char	quote;
 
+	quote = 0;
 	token = (char *)ft_calloc(1, sizeof(char));
-	// str--;
-	// *str = 0;
-	// str++;
-	while (*str)
+	while (*data->str)
 	{
-		if (*str == ' ')
+		if (*data->str == ' ')
 			space(&lex, &token);
-		else if (*str == '>')
-		{
-			if (output(&lex, &token, &*str) == 2)
-				str++;
-		}
-		else if (*str == '<')
-		{
-			if (input(&lex, &token, &*str) == 2)
-				str++;
-		}
-		else if (*str == '|')
-			pipes(&lex, &token);
-		else if (*str == '\'')
-			str += squote(&lex, &token, &*str);
-		else if (*str == '"')
-			str += dquote(&lex, &token, &*str);
+		else if (*data->str == SQUOTE)
+			quote = SQUOTE;
+		else if (*data->str == DQUOTE)
+			quote = DQUOTE;
+		else if (*data->str == '>' || *data->str == '<')
+			output(&lex, &token, data);
+		else if (*data->str == '|')
+			pipes(&lex, &token, data);
+		else if (*data->str == '$')
+			dollar(&lex, &token, data);
 		else
-			token = ft_strchrjoin(token, *str);
-		str++;
+			token = ft_strchrjoin(token, *data->str);
+		data->str++;
+		if (quote)
+			quotes(&token, data, &quote);
 	}
 	if (ft_strlen(token))
-	{
-		if (lex == NULL)
-			lex = ft_lexnew(ft_strdup(token), WORD);
-		else
-		{
-			element = ft_lexnew(ft_strdup(token), WORD);
-			ft_lexadd_back(lex, element);
-		}
-	}
-	//free(token);
-	print_lex(lex);
+		space(&lex, &token);
+	free(token);
+	// print_lex(lex);
 	parser(lex, data);
 	return (1);
 }
 
-int	dquote(t_lex **lex, char **token, char *str)
+int	dollar(t_lex **lex, char **token, t_data *data)
 {
-	t_lex	*element;
-	int i;
+	char	*var;
+	int		i;
+	char	*res;
 
-	if (*lex == NULL && ft_strlen(*token))
+	var = (char *)ft_calloc(1, sizeof(char));
+	data->str++;
+	if (!*data->str || *data->str == ' ')
 	{
-		*lex = ft_lexnew(ft_strdup(*token), WORD);
+		*token = ft_strchrjoin(*token, '$');
+		space(lex, token);
+		data->str--;
+		return (1);
 	}
-	else if (ft_strlen(*token))
+	else if (*data->str == '?')
 	{
-		element = ft_lexnew(ft_strdup(*token), WORD);
-		ft_lexadd_back(*lex, element);
-	}
-	free(*token);
-	*token = (char *)ft_calloc(1, sizeof(char));
-	**token = '\0';
-	str--;
-	if (*str != ' ' && *str != 0)
-	{
-		if (*lex == NULL)
-			*lex = ft_lexnew("\"", CDQUOTE);
+		if (data->is_child == TRUE)
+			*token = ft_strjoin(*token, ft_itoa(WEXITSTATUS(data->error_ret)));
 		else
+			*token = ft_strjoin(*token, ft_itoa(data->error_ret));
+		space(lex, token);
+		return (1);
+	}
+	else if (ft_isdigit(*data->str))
+		return (1);
+	else if (*data->str == '>' || *data->str == '<')
+	{
+		*token = ft_strchrjoin(*token, '$');
+		output(lex, token, data);
+	}
+	else if (ft_isalpha(*data->str))
+	{
+		while (ft_isalpha(*data->str) || ft_isdigit(*data->str))
 		{
-			element = ft_lexnew("\"", CDQUOTE);
-			ft_lexadd_back(*lex, element);
+			var = ft_strchrjoin(var, *data->str);
+			data->str++;
+		}
+		data->str--;
+		var = ft_strchrjoin(var, '=');
+		i = get_envnum(data->envp, var);
+		if (i >= 0)
+		{
+			res = ft_substr(data->envp[i],ft_strlen(var), ft_strlen(data->envp[i]) - ft_strlen(var));
+			*token = ft_strjoin(*token, res);
+			space(lex, token);
 		}
 	}
-	else
-	{
-		if (*lex == NULL)
-			*lex = ft_lexnew("\"", DQUOTE);
-		else
-		{
-			element = ft_lexnew("\"", DQUOTE);
-			ft_lexadd_back(*lex, element);
-		}
-	}
-
-	i = 0;
-	str += 2;
-	while (*str != '"')
-	{
-		if (*str == 0)
-		{
-			printf("Error!\n");
-			break;
-		}
-		*token = ft_strchrjoin(*token, *str);
-		str++;
-		i++;
-	}
-	if (*lex == NULL && ft_strlen(*token))
-	{
-		*lex = ft_lexnew(ft_strdup(*token), WORD);
-	}
-	else if (ft_strlen(*token))
-	{
-		element = ft_lexnew(ft_strdup(*token), WORD);
-		ft_lexadd_back(*lex, element);
-	}
-	free(*token);
-	*token = (char *)ft_calloc(1, sizeof(char));
-	**token = '\0';
-	if (*str == '"')
-	{
-		str++;
-		if (*str != ' ' && *str != 0)
-		{
-			element = ft_lexnew("\"", CDQUOTE);
-			ft_lexadd_back(*lex, element);
-		}
-		else
-		{
-			element = ft_lexnew("\"", DQUOTE);
-			ft_lexadd_back(*lex, element);
-		}
-	}
-	return (i + 1);
-}
-
-int	squote(t_lex **lex, char **token, char *str)
-{
-	t_lex	*element;
-	int i;
-
-	if (*lex == NULL && ft_strlen(*token))
-	{
-		*lex = ft_lexnew(ft_strdup(*token), WORD);
-	}
-	else if (ft_strlen(*token))
-	{
-		element = ft_lexnew(ft_strdup(*token), WORD);
-		ft_lexadd_back(*lex, element);
-	}
-	free(*token);
-	*token = (char *)ft_calloc(1, sizeof(char));
-	**token = '\0';
-	str--;
-	if (*str != ' ' && *str != 0)
-	{
-		if (*lex == NULL)
-			*lex = ft_lexnew("'", CSQUOTE);
-		else
-		{
-			element = ft_lexnew("'", CSQUOTE);
-			ft_lexadd_back(*lex, element);
-		}
-	}
-	else
-	{
-		if (*lex == NULL)
-			*lex = ft_lexnew("'", SQUOTE);
-		else
-		{
-			element = ft_lexnew("'", SQUOTE);
-			ft_lexadd_back(*lex, element);
-		}
-	}
-
-	i = 0;
-	str += 2;
-	while (*str != '\'')
-	{
-		if (*str == 0)
-		{
-			printf("Error!\n");
-			break;
-		}
-		*token = ft_strchrjoin(*token, *str);
-		str++;
-		i++;
-	}
-	if (*lex == NULL && ft_strlen(*token))
-	{
-		*lex = ft_lexnew(ft_strdup(*token), WORD);
-	}
-	else if (ft_strlen(*token))
-	{
-		element = ft_lexnew(ft_strdup(*token), WORD);
-		ft_lexadd_back(*lex, element);
-	}
-	free(*token);
-	*token = (char *)ft_calloc(1, sizeof(char));
-	**token = '\0';
-	if (*str == '\'')
-	{
-		str++;
-		if (*str != ' ' && *str != 0)
-		{
-			element = ft_lexnew("'", CSQUOTE);
-			ft_lexadd_back(*lex, element);
-		}
-		else
-		{
-			element = ft_lexnew("'", SQUOTE);
-			ft_lexadd_back(*lex, element);
-		}
-	}
-	return (i + 1);
-}
-
-int	pipes(t_lex **lex, char **token)
-{
-	t_lex	*element;
-
-	if (*lex == NULL && ft_strlen(*token))
-	{
-		*lex = ft_lexnew(ft_strdup(*token), WORD);
-	}
-	else if (ft_strlen(*token))
-	{
-		element = ft_lexnew(ft_strdup(*token), WORD);
-		ft_lexadd_back(*lex, element);
-	}
-	free(*token);
-	*token = (char *)ft_calloc(1, sizeof(char));
-	**token = '\0';
-	element = ft_lexnew("|", PIPE);
-	ft_lexadd_back(*lex, element);
 	return (1);
 }
 
-int	input(t_lex **lex, char **token, char *str)
+int	pipes(t_lex **lex, char **token, t_data *data)
 {
-	t_lex	*element;
-
-	if (*lex == NULL && ft_strlen(*token))
-		*lex = ft_lexnew(ft_strdup(*token), WORD);
-	else if (ft_strlen(*token))
-	{
-		element = ft_lexnew(ft_strdup(*token), WORD);
-		ft_lexadd_back(*lex, element);
-	}
-	str++;
-	if (*str == '<')
-	{
-		if (*lex == NULL)
-		{
-			printf("Test0\n");
-			*lex = ft_lexnew("<<", HEREDOC);
-		}
-		else
-		{
-			element = ft_lexnew("<<", HEREDOC);
-			ft_lexadd_back(*lex, element);
-		}
-		free(*token);
-		*token = (char *)ft_calloc(1, sizeof(char));
-		**token = '\0';
-		return(2);
-	}
-	else
-	{
-		if (*lex == NULL)
-			*lex = ft_lexnew("<", INPUT);
-		else
-		{
-			element = ft_lexnew("<", INPUT);
-			ft_lexadd_back(*lex, element);
-		}
-		free(*token);
-		*token = (char *)ft_calloc(1, sizeof(char));
-		**token = '\0';
-		return (1);
-	}
+	space(lex, token);
+	ft_lexcreate(lex, NULL, PIPE);
+	return (1);
 }
 
-int	output(t_lex **lex, char **token, char *str)
+int	output(t_lex **lex, char **token, t_data *data)
 {
-	t_lex	*element;
+	char	c;
 
-	if (*lex == NULL && ft_strlen(*token))
-		*lex = ft_lexnew(ft_strdup(*token), WORD);
-	else if (ft_strlen(*token))
+	c = *data->str;
+	space(lex, token);
+	data->str++;
+	if (*data->str == c)
 	{
-		element = ft_lexnew(ft_strdup(*token), WORD);
-		ft_lexadd_back(*lex, element);
-	}
-	str++;
-	if (*str == '>')
-	{
-		if (*lex == NULL)
-			*lex = ft_lexnew(">>", OUTPUT);
+		if (c == '>')
+			ft_lexcreate(lex, NULL, APPEND);
 		else
-		{
-			element = ft_lexnew(">>", APPEND);
-			ft_lexadd_back(*lex, element);
-		}
-
-		free(*token);
-		*token = (char *)ft_calloc(1, sizeof(char));
-		**token = '\0';
-		return(2);
+			ft_lexcreate(lex, NULL, HEREDOC);
 	}
 	else
 	{
-		if (*lex == NULL)
-			*lex = ft_lexnew(">", OUTPUT);
+		if (c == '>')
+			ft_lexcreate(lex, NULL, OUTPUT);
 		else
-		{
-			element = ft_lexnew(">", OUTPUT);
-			ft_lexadd_back(*lex, element);
-		}
-		free(*token);
-		*token = (char *)ft_calloc(1, sizeof(char));
-		**token = '\0';
-		return (1);
+			ft_lexcreate(lex, NULL, INPUT);
+		data->str--;
 	}
+	return (1);
+}
+
+int	quotes(char **token, t_data *data, char *quote)
+{
+	char	*var;
+	int		i;
+	char	*res;
+
+	var = (char *)ft_calloc(1, sizeof(char));
+	while (*data->str)
+	{
+		if (*data->str == *quote)
+		{
+			*quote = 0;
+			data->str++;
+			break;
+		}
+		else if (*data->str == '$' && *quote == DQUOTE)
+		{
+			data->str++;
+			if (*data->str && ft_isdigit(*data->str))
+				data->str++;
+			else if (*data->str && !ft_isalpha(*data->str))
+				*token = ft_strchrjoin(*token, '$');
+			else
+			{
+				while (*data->str && (ft_isalpha(*data->str) || ft_isdigit(*data->str)))
+				{
+					var = ft_strchrjoin(var, *data->str);
+					data->str++;
+				}
+				var = ft_strchrjoin(var, '=');
+				i = get_envnum(data->envp, var);
+				if (i >= 0)
+				{
+					res = ft_substr(data->envp[i],ft_strlen(var), ft_strlen(data->envp[i]) - ft_strlen(var));
+					*token = ft_strjoin(*token, res);
+				}
+				if (*data->str == '"')
+					data->str++;
+			}
+		}
+		*token = ft_strchrjoin(*token, *data->str);
+		data->str++;
+	}
+	return (1);
 }
 
 int	space(t_lex **lex, char **token)
@@ -338,15 +182,7 @@ int	space(t_lex **lex, char **token)
 
 	if (ft_strlen(*token) == 0)
 		return (1);
-	if (*lex == NULL)
-	{
-		*lex = ft_lexnew(ft_strdup(*token), WORD);
-	}
-	else
-	{
-		element = ft_lexnew(ft_strdup(*token), WORD);
-		ft_lexadd_back(*lex, element);
-	}
+	ft_lexcreate(lex, ft_strdup(*token), WORD);
 	free(*token);
 	*token = (char *)ft_calloc(1, sizeof(char));
 	**token = '\0';
@@ -359,8 +195,6 @@ char	*ft_strchrjoin(char *s1, char const s2)
 	unsigned int	index;
 	unsigned int	length;
 
-	// if (!s1 || !s2)
-	// 	return (0);
 	length = ft_strlen(s1) + 1;
 	new_string = ft_calloc(length + 1, sizeof(char));
 	if (!new_string)
@@ -371,7 +205,6 @@ char	*ft_strchrjoin(char *s1, char const s2)
 		new_string[index] = s1[index];
 		index++;
 	}
-	//printf("s1: %s\ns2 %c\n", s1, s2);
 	s1 = NULL;
 	free(s1);
 	new_string[index] = s2;

@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:33:30 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/18 14:54:05 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/24 10:11:35 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	ft_run_err(t_pipex *p_strct, int index, char **cmd, char *cmd_prefix
 	}
 }
 
-void	runcmd(t_pipex *p_strct, char **cmd)
+int	runcmd(t_pipex *p_strct, char **cmd)
 {
 	char	*temp;
 	char	*cmd_prefix;
@@ -60,10 +60,7 @@ void	runcmd(t_pipex *p_strct, char **cmd)
 	is_bltin = 0;
 	is_bltin = bltin_compare(cmd[0]);
 	if (is_bltin != -1)
-	{
-		runbltin(p_strct, cmd, is_bltin);
-		return ;
-	}
+		exit(runbltin(p_strct, cmd, is_bltin));
 	cmd_prefix = ft_strdup(cmd[0]);
 	if (ft_chrsrch(cmd[0], '/') != -1)
 	{
@@ -78,12 +75,6 @@ void	runcmd(t_pipex *p_strct, char **cmd)
 		full_cmdpath = ft_strjoin(temp, cmd_prefix);
 		if (access(full_cmdpath, F_OK) != -1)
 		{
-			// char *buf = malloc(sizeof(char) * 20);
-			// read(STDIN_FILENO, buf, 19);
-			// buf[19] = '\0';
-			// write(2, "TEST: ", 7);
-			// write(2, buf, 20);
-			// printf("debug: |%s| |%s| |%s| |%s|\n", full_cmdpath, cmd[0], cmd [1], cmd[2]);
 			execve(full_cmdpath, cmd, p_strct->data->envp);
 			free(cmd_prefix);
 			exit(EXIT_SUCCESS);
@@ -93,4 +84,5 @@ void	runcmd(t_pipex *p_strct, char **cmd)
 		index++;
 		ft_run_err(p_strct, index, cmd, cmd_prefix);
 	}
+	exit (EXIT_SUCCESS);
 }
