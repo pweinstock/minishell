@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 09:41:11 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/23 15:39:34 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/24 18:50:37 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ void	signal_handler(int sig)
 		// rl_replace_line("", 0);
 		rl_redisplay();
 	}
+}
+
+void	heredoc_signal(int sig)
+{
+	heredoc_break = TRUE;
 }
 
 void	stty(t_data *data)

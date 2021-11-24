@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:39:48 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/24 14:44:56 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/24 18:47:05 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define DQUOTE '"'
 # define CDQUOTE 10
 
+int	heredoc_break;
 
 typedef struct	s_lex
 {
@@ -66,6 +67,7 @@ typedef struct s_data {
 //signals.c
 void	signal_handler(int sig);
 void	stty(t_data *data);
+void	heredoc_signal(int sig);
 
 // list.c
 t_lex	*ft_lexnew(char *str, int type);
