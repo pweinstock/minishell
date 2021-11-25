@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:45:01 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/23 15:40:40 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/25 08:39:49 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 	char	*shellprefix;
 	char	*temp;
-	char	*str;
+	// char	*str;
 
 
 	(void)argc;
@@ -54,7 +54,6 @@ int	main(int argc, char **argv, char **envp)
 		data.file_in = NULL;
 		data.file_out = NULL;
 		data.file = NULL;
-
 	}
 	return (0);
 }

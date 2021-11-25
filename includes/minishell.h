@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:39:48 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/24 18:47:05 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/25 08:35:48 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	space(t_lex **lex, char **token);
 char	*ft_strchrjoin(char *s1, char const s2);
 int	output(t_lex **lex, char **token, t_data *data);
 int	input(t_lex **lex, char **token, char *str);
-int	pipes(t_lex **lex, char **token, t_data *data);
+int	pipes(t_lex **lex, char **token /*, t_data *data */);
 // int	squote(t_lex **lex, char **token, char *str);
 // int	dquote(t_lex **lex, char **token, char *str);
 int	quotes(char **token, t_data *data, char *quote);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 09:41:11 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/24 18:50:37 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/25 08:32:39 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	signal_handler(int sig)
 	}
 }
 
-void	heredoc_signal(int sig)
+void	heredoc_signal(/* int sig */)
 {
 	heredoc_break = TRUE;
 }

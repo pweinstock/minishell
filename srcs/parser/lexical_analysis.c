@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 19:12:03 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/24 16:27:13 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/25 08:36:32 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	lex_analyzer(t_lex *lex, t_data *data)
 		else if (*data->str == '>' || *data->str == '<')
 			output(&lex, &token, data);
 		else if (*data->str == '|')
-			pipes(&lex, &token, data);
+			pipes(&lex, &token /*, data */);
 		else if (*data->str == '$')
 			dollar(&lex, &token, data);
 		else
@@ -98,7 +98,7 @@ int	dollar(t_lex **lex, char **token, t_data *data)
 	return (1);
 }
 
-int	pipes(t_lex **lex, char **token, t_data *data)
+int	pipes(t_lex **lex, char **token /*, t_data *data */)
 {
 	space(lex, token);
 	ft_lexcreate(lex, NULL, PIPE);
@@ -178,7 +178,7 @@ int	quotes(char **token, t_data *data, char *quote)
 
 int	space(t_lex **lex, char **token)
 {
-	t_lex	*element;
+	// t_lex	*element;
 
 	if (ft_strlen(*token) == 0)
 		return (1);

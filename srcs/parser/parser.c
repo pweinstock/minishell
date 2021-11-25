@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/24 19:00:01 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/25 08:42:11 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	parser(t_lex *lex, t_data *data)
 				if (data->fd_in != STDIN_FILENO)
 					close(data->fd_in);
 				data->fd_in = open(".heredoc", O_CREAT|O_RDWR|O_TRUNC, S_IRWXU);
-				printf("|%i|\n", data->fd_in);
+				// printf("|%i|\n", data->fd_in);
 				dup2(data->original_stdout, data->fd_out);
 				while (1)
 				{
@@ -159,7 +159,7 @@ int	parser(t_lex *lex, t_data *data)
 	// if (array[0] != NULL)
 	// 	printf("array: %s\n", array[0]);
 		//write(data->original_stdout, array[0], ft_strlen(array[0]));
-	write(data->original_stdout, "\n", 1);
+	// write(data->original_stdout, "\n", 1);
 	execute(array, data);
 	// printf("Test\n");
 	// close(data->fd_in);

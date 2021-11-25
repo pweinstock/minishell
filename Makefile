@@ -18,6 +18,8 @@ RED			= \033[0;31m
 ORANGE		= \033[0;33m
 NO_COLOR	= \033[m
 
+OBJECTS = $(OBJDIR)/*.o
+
 SRC =	./srcs/main.c									\
 		./srcs/utils/char_utils.c						\
 		./srcs/utils/env_utils.c						\
@@ -61,25 +63,36 @@ header:
 header_end:
 	@echo "|____________________________________________________________________________________________________________________________________________________|"
 
-$(NAME):
+$(NAME): $(OBJECTS)
 	@make --directory=./libs/libft
 	@echo
-	@$(CC) $(LFLAGS) $(SRC) -o $(NAME) $(LIBFT)
+	@$(CC) $(CFLAGS) $(LFLAGS) $(CPFLAGS) $(OBJECTS) -o $(NAME) $(LIBFT)
 	@echo "|                                                             Compiling completed.                                                                   |"
 	@make header_end
 
+$(OBJECTS): $(SRC)
+	@$(CC) -c $(CFLAGS) $(SRC)
+	@rm -rf ./objs; mkdir ./objs
+	@mv *.o $(OBJDIR)
+
 clean: header
 	@make clean --directory=./libs/libft
+	@rm -f $(OBJECTS) .temp1 .temp2
+	@rm -rf ./objs
 	@make header_end
 
 fclean: header
 	@make fclean --directory=./libs/libft
 	@rm -f $(NAME) $(D_NAME)
+	@rm -f $(OBJECTS) .temp1 .temp2 .heredoc
+	@rm -rf ./objs
 	@echo "|                                                             Executeable cleaned.                                                                   |"
 	@make header_end
 
 re: header
 	@make fclean --directory=./libs/libft
 	@rm -f $(NAME) $(D_NAME)
+	@rm -f $(OBJECTS) .temp1 .temp2 .heredoc
+	@rm -rf ./objs
 	@echo "|                                                             Executeable cleaned.                                                                   |"
 	@make $(NAME)

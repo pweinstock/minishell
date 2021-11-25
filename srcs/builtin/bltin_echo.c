@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 09:03:38 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/24 11:20:13 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/25 08:34:22 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	bltin_echo(t_pipex *p_strct, char **cmd)
 	int	index;
 	int	flag;
 
+	(void)p_strct;
 	flag = FALSE;
 	index = 1;
 	if (ft_strnstr(cmd[1], "-n", 2) != 0)

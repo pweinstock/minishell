@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 13:55:01 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/24 10:37:20 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/25 08:33:43 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	no_args_print(char *input)
 	return ;
 }
 
-static void	export_noargs(t_pipex *p_strct, char **cmd)
+static void	export_noargs(t_pipex *p_strct)
 {
 	char	**sort;
 	int		count;
@@ -133,7 +133,7 @@ int	bltin_export(t_pipex *p_strct, char **cmd)
 	ret = 0;
 	if (cmd[1] == NULL)
 	{
-		export_noargs(p_strct, cmd);
+		export_noargs(p_strct);
 		return (ret);
 	}
 	while (cmd[word_index] != NULL)
