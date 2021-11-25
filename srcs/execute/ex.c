@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ex.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/25 14:59:32 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/25 15:08:01 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	execute(char **input, t_data *data)
 	// 	write(data->original_stdout, input[1], ft_strlen(input[1]));
 	// write(data->original_stdout, "\n", 1);
 	// printf("TEST: %s | %s\n", input[0], input[1]);
-	signal(SIGINT, SIG_DFL);
 	data->is_child = TRUE;
 	ft_bzero(&p_strct, sizeof(t_pipex));
 	p_strct.cmd = input;

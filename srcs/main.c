@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:45:01 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/25 14:50:16 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/25 16:31:16 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init_data(&data, envp);
-	stty(&data);
+	// stty(&data);
+	tcgetattr(STDIN_FILENO, &data.original_attr);
 	while (1)
 	{
-		// data.fd_in = 0;
-		// data.fd_out = 1;
+		data.changed_attr = data.original_attr;
+		data.changed_attr.c_lflag -= ECHOCTL;
+		tcsetattr(STDIN_FILENO , TCSANOW, &data.changed_attr);
 		temp = ft_strjoin("\033[1;32m➜\033[1;36m  ", data.path_prefix);
 		shellprefix = ft_strjoin(temp, "\033[1;33m ✗\033[0m ");
 		free(temp);

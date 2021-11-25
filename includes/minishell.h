@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:39:48 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/25 11:03:45 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/25 16:25:27 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <termios.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <readline/readline.h>
@@ -48,21 +49,23 @@ typedef struct	s_lex
 }				t_lex;
 
 typedef struct s_data {
-	char	**envp;
-	char	*path_prefix;
-	char	*str;
-	char	*file_in;
-	char	*file_out;
-	char	*file;
-	int		is_heredoc;
-	int		is_piped;
-	int		is_child;
-	int		fd_in;
-	int		fd_out;
-	int		original_stdin;
-	int		original_stdout;
-	int		redirection;
-	int		error_ret;
+	char			**envp;
+	char			*path_prefix;
+	char			*str;
+	char			*file_in;
+	char			*file_out;
+	char			*file;
+	struct termios	changed_attr;
+	struct termios	original_attr;
+	int				is_heredoc;
+	int				is_piped;
+	int				is_child;
+	int				fd_in;
+	int				fd_out;
+	int				original_stdin;
+	int				original_stdout;
+	int				redirection;
+	int				error_ret;
 }				t_data;
 
 //signals.c

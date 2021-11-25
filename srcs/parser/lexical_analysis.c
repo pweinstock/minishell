@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 19:12:03 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/25 08:36:32 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/25 15:02:21 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,7 @@ int	dollar(t_lex **lex, char **token, t_data *data)
 	}
 	else if (*data->str == '?')
 	{
-		if (data->is_child == TRUE)
-			*token = ft_strjoin(*token, ft_itoa(WEXITSTATUS(data->error_ret)));
-		else
-			*token = ft_strjoin(*token, ft_itoa(data->error_ret));
+		*token = ft_strjoin(*token, ft_itoa(data->error_ret));
 		space(lex, token);
 		return (1);
 	}
