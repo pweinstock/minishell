@@ -6,11 +6,34 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/25 08:42:11 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/25 10:49:37 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	heredoc_child(t_lex *lex, t_data *data)
+{
+	char	*heredoc;
+
+	while (1)
+	{
+		heredoc = readline("heredoc> ");
+		if (!heredoc)
+			break;
+		if (heredoc[0] != '\0' && ft_strlen(heredoc) == ft_strlen(lex->str) && !ft_strncmp(lex->str, heredoc, ft_strlen(heredoc)))
+			break;
+		signal(SIGINT, heredoc_signal);
+		if (heredoc_break == TRUE)
+		{
+			heredoc_break = FALSE;
+			break;
+		}
+		write(data->fd_in, heredoc, ft_strlen(heredoc));
+		write(data->fd_in, "\n", 1);
+	}
+	exit(EXIT_SUCCESS);
+}
 
 int	parser(t_lex *lex, t_data *data)
 {
@@ -18,7 +41,6 @@ int	parser(t_lex *lex, t_data *data)
 	t_lex	*line_lst;
 	t_lex	*element;
 	char	**array;
-	char	*heredoc;
 
 	temp = lex;
 	line_lst = NULL;
@@ -101,7 +123,8 @@ int	parser(t_lex *lex, t_data *data)
 		}
 		else if (lex->type == HEREDOC)
 		{
-			// printf("lextype: %i\n", lex->type);
+			pid_t hd_child;
+
 			lex = lex->next;
 			if (lex->type != WORD)
 				printf("error\n");
@@ -113,22 +136,12 @@ int	parser(t_lex *lex, t_data *data)
 				data->fd_in = open(".heredoc", O_CREAT|O_RDWR|O_TRUNC, S_IRWXU);
 				// printf("|%i|\n", data->fd_in);
 				dup2(data->original_stdout, data->fd_out);
-				while (1)
-				{
-					heredoc = readline("heredoc> ");
-					if (!heredoc)
-						break;
-					if (heredoc[0] != '\0' && ft_strlen(heredoc) == ft_strlen(lex->str) && !ft_strncmp(lex->str, heredoc, ft_strlen(heredoc)))
-						break;
-					signal(SIGINT, heredoc_signal);
-					if (heredoc_break == TRUE)
-					{
-						heredoc_break = FALSE;
-						break;
-					}
-					write(data->fd_in, heredoc, ft_strlen(heredoc));
-					write(data->fd_in, "\n", 1);
-				}
+				hd_child = fork();
+				if (hd_child == -1)
+					exit(EXIT_FAILURE);
+				if (hd_child == 0)
+					heredoc_child(lex, data);
+				waitpid(hd_child, &data->error_ret, 0);
 			}
 		}
 		else if (lex->type == WORD)

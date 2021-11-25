@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:16:08 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/25 09:48:27 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/25 10:41:29 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,5 @@ int	forking(t_pipex *p_strct)
 		close(p_strct->end[0]);
 		close(p_strct->end[1]);
 	}
-	// printf("errno %i | %i\n", WEXITSTATUS(p_strct->data->error_ret), p_strct->data->error_ret);
 	return (0);
 }
