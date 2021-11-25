@@ -3,37 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/25 10:49:37 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/25 14:47:21 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	heredoc_child(t_lex *lex, t_data *data)
-{
-	char	*heredoc;
-
-	while (1)
-	{
-		heredoc = readline("heredoc> ");
-		if (!heredoc)
-			break;
-		if (heredoc[0] != '\0' && ft_strlen(heredoc) == ft_strlen(lex->str) && !ft_strncmp(lex->str, heredoc, ft_strlen(heredoc)))
-			break;
-		signal(SIGINT, heredoc_signal);
-		if (heredoc_break == TRUE)
-		{
-			heredoc_break = FALSE;
-			break;
-		}
-		write(data->fd_in, heredoc, ft_strlen(heredoc));
-		write(data->fd_in, "\n", 1);
-	}
-	exit(EXIT_SUCCESS);
-}
 
 int	parser(t_lex *lex, t_data *data)
 {
@@ -104,7 +81,6 @@ int	parser(t_lex *lex, t_data *data)
 					free_list(temp);
 					return (1);
 			}
-			//write(data->original_stdout, (*lex)->str, ft_strlen((*lex)->str));
 		}
 		else if (lex->type == APPEND)
 		{
@@ -123,7 +99,7 @@ int	parser(t_lex *lex, t_data *data)
 		}
 		else if (lex->type == HEREDOC)
 		{
-			pid_t hd_child;
+			char	*heredoc;
 
 			lex = lex->next;
 			if (lex->type != WORD)
@@ -134,14 +110,19 @@ int	parser(t_lex *lex, t_data *data)
 				if (data->fd_in != STDIN_FILENO)
 					close(data->fd_in);
 				data->fd_in = open(".heredoc", O_CREAT|O_RDWR|O_TRUNC, S_IRWXU);
-				// printf("|%i|\n", data->fd_in);
 				dup2(data->original_stdout, data->fd_out);
-				hd_child = fork();
-				if (hd_child == -1)
-					exit(EXIT_FAILURE);
-				if (hd_child == 0)
-					heredoc_child(lex, data);
-				waitpid(hd_child, &data->error_ret, 0);
+
+				signal(SIGINT, heredoc_signal);
+				while (1)
+				{
+					heredoc = readline("heredoc> ");
+					if (!heredoc)
+						return (1);
+					if (heredoc[0] != '\0' && ft_strlen(heredoc) == ft_strlen(lex->str) && !ft_strncmp(lex->str, heredoc, ft_strlen(heredoc)))
+						break;
+					write(data->fd_in, heredoc, ft_strlen(heredoc));
+					write(data->fd_in, "\n", 1);
+				}
 			}
 		}
 		else if (lex->type == WORD)
@@ -163,8 +144,11 @@ int	parser(t_lex *lex, t_data *data)
 	// print_lex(line_lst);
 	if (!line_lst)
 	{
-		write(data->original_stdout, "Error\n", 6);
-		return (0);
+		// write(data->original_stdout, "Error1\n", 6);
+		// return (0);
+		close(data->fd_in);
+		free_list(temp);
+		return (1);
 	}
 	array = str_array(line_lst);
 	// dup2(data->fd_in, STDIN_FILENO);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 09:41:11 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/25 10:05:34 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/25 14:53:09 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ void	signal_handler(int sig)
 	}
 }
 
-void	heredoc_signal(/* int sig */)
+void	heredoc_signal(int sig)
 {
-	heredoc_break = TRUE;
+	if (sig == SIGINT)
+		close(0);
 }
 
 void	stty(t_data *data)
