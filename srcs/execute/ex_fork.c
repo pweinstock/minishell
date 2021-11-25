@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:16:08 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/24 16:30:14 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/25 09:13:25 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static void	child_process(t_pipex *p_strct)
 		p_strct->data->is_heredoc = FALSE;
 	}
 	if (dup2(p_strct->data->fd_in, STDIN_FILENO) == -1)
-		printf("error1: %i\n", errno);
+		exit(errno);
 	if (dup2(p_strct->data->fd_out, STDOUT_FILENO) == -1)
-		printf("error2: %i\n", errno);
+		exit(errno);
 	runcmd(p_strct, p_strct->cmd);
 	exit(EXIT_SUCCESS);
 }

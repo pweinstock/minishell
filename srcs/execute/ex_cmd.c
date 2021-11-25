@@ -6,13 +6,13 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:33:30 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/24 10:11:35 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/25 08:53:44 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execute.h"
 
-static void run_fullpathcmd(char **cmd, char **envp)
+static int run_fullpathcmd(char **cmd, char **envp)
 {
 	char *full_path;
 
@@ -21,12 +21,13 @@ static void run_fullpathcmd(char **cmd, char **envp)
 		ft_putstr_fd("minishell: no such file or directory: ", 2);
 		ft_putstr_fd(cmd[0], 2);
 		ft_putstr_fd("\n", 2);
+		return (127);
 	}
 	full_path = ft_strdup(cmd[0]);
 	cmd[0] += ft_revchrsrch(cmd[0], '/');
 	execve(full_path, cmd, envp);
 	free(full_path);
-	return ;
+	return (0);
 }
 
 static void	ft_run_err(t_pipex *p_strct, int index, char **cmd, char *cmd_prefix)
@@ -63,10 +64,7 @@ int	runcmd(t_pipex *p_strct, char **cmd)
 		exit(runbltin(p_strct, cmd, is_bltin));
 	cmd_prefix = ft_strdup(cmd[0]);
 	if (ft_chrsrch(cmd[0], '/') != -1)
-	{
-		run_fullpathcmd(cmd, p_strct->data->envp);
-		exit(EXIT_SUCCESS);
-	}
+		exit(run_fullpathcmd(cmd, p_strct->data->envp));
 	index = 0;
 	ft_run_err(p_strct, index, cmd, cmd_prefix);
 	while (p_strct->envpath[index] != NULL)
