@@ -6,41 +6,41 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 14:19:31 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/04 11:05:05 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/25 08:16:07 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execute.h"
 
-static void	no_nbr(const char *str)
+static void	no_nbr(char *str)
 {
-	write(2, "minishell: exit: ", 18);
-	write(2, &str, ft_strlen(str));
-	write(2, ": numeric argument required\n", 29);
+	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": numeric argument required\n", 2);
 	exit(255);
 }
 
-static int	exit_atoi(const char *str)
+static int	exit_atoi(char *str)
 {
-	int		count;
+	int		index;
 	int		minus;
 	long	numb;
 
 	minus = 1;
-	if (*str == '-')
+	index = 0;
+	if (str[index] == '-')
 		minus = -1;
-	if (*str == '-' || *str == '+')
-		str++;
-	count = 0;
+	if (str[index] == '-' || str[index] == '+')
+		index++;
 	numb = 0;
-	if (!ft_isdigit(str[count]))
+	if (!ft_isdigit(str[index]))
 		no_nbr(str);
-	while (str[count] >= '0' && str[count] <= '9')
+	while (str[index] >= '0' && str[index] <= '9')
 	{
-		numb = numb * 10 + str[count] - '0';
-		count++;
+		numb = numb * 10 + str[index] - '0';
+		index++;
 	}
-	if (str[count] != '\0')
+	if (str[index] != '\0')
 		no_nbr(str);
 	return ((int)(numb * minus));
 }
