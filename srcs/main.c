@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:45:01 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/25 08:39:49 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/25 10:05:29 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	main(int argc, char **argv, char **envp)
 	char	*shellprefix;
 	char	*temp;
 	// char	*str;
-
-
 	(void)argc;
 	(void)argv;
 	init_data(&data, envp);

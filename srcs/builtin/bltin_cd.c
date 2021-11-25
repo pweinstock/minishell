@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 08:39:20 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/24 10:40:36 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/25 10:05:15 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ static void	old_pwd(t_pipex *p_strct, char *oldpath)
 	return ;
 }
 
-void	no_such_file(char *str)
+static int	no_such_file(char *str)
 {
 		ft_putstr_fd("cd: no such file or directory: ", 2);
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd("\n", 2);
+		return (1);
 }
 
 int	bltin_cd(t_pipex *p_strct, char **cmd)
@@ -43,10 +44,7 @@ int	bltin_cd(t_pipex *p_strct, char **cmd)
 	oldpath = getcwd(NULL, 0);
 	envnum = get_envnum(p_strct->data->envp, "HOME=");
 	if (!cmd[1] && envnum != -1 && chdir(p_strct->data->envp[envnum] + 5) == -1)
-	{
-		no_such_file(p_strct->data->envp[envnum] + 5);
-		return (1);
-	}
+		return (no_such_file(p_strct->data->envp[envnum] + 5));
 	if (cmd[1] && cmd[1][0] == '-' && cmd[1][1] == '\0')
 	{
 		envnum = get_envnum(p_strct->data->envp, "OLDPWD=");
@@ -59,10 +57,7 @@ int	bltin_cd(t_pipex *p_strct, char **cmd)
 		}
 	}
 	else if (cmd[1] && chdir(cmd[1]) == -1)
-	{
-		no_such_file(cmd[1]);
-		return (1);
-	}
+		return (no_such_file(cmd[1]));
 	cwd = getcwd(NULL, 0);
 	cwd += ft_revchrsrch(cwd, '/') + 1;
 	free(p_strct->data->path_prefix);

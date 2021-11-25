@@ -66,12 +66,12 @@ header_end:
 $(NAME): $(OBJECTS)
 	@make --directory=./libs/libft
 	@echo
-	@$(CC) $(CFLAGS) $(LFLAGS) $(CPFLAGS) $(OBJECTS) -o $(NAME) $(LIBFT)
+	@$(CC) $(LFLAGS) $(OBJECTS) -o $(NAME) $(LIBFT)
 	@echo "|                                                             Compiling completed.                                                                   |"
 	@make header_end
 
 $(OBJECTS): $(SRC)
-	@$(CC) -c $(CFLAGS) $(SRC)
+	@$(CC) -c $(CFLAGS) $(CPFLAGS) $(SRC)
 	@rm -rf ./objs; mkdir ./objs
 	@mv *.o $(OBJDIR)
 
