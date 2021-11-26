@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:39:48 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/25 16:25:27 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/26 11:28:23 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@
 # define INPUT 4
 # define HEREDOC 5
 # define PIPE 6
+# define NEWL 7
 # define SQUOTE '\''
-# define CSQUOTE 8
 # define DQUOTE '"'
-# define CDQUOTE 10
+
 
 int	heredoc_break;
 
@@ -102,7 +102,7 @@ void	rm(t_data *data);
 int	parser(t_lex *lex, t_data *data);
 char	**str_array(t_lex *lst);
 char	**ft_strarr_copy(char **str);
-
+void	redir_err(int type);
 
 //utils
 int	get_envnum(char **envp, char *needle);

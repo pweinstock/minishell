@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/25 14:47:21 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/26 11:34:17 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,16 @@ int	parser(t_lex *lex, t_data *data)
 		{
 			close(data->fd_out);
 			lex = lex->next;
-			if (lex->type != WORD)
-				printf("error\n");
+			if (!lex)
+			{
+				redir_err(NEWL);
+				return (1);
+			}
+			else if (lex->type != WORD)
+			{
+				redir_err(lex->type);
+				return (1);
+			}
 			else
 			{
 				if ((data->fd_out = open(lex->str, O_CREAT|O_RDWR|O_TRUNC, S_IRWXU)) == -1)
@@ -72,8 +80,16 @@ int	parser(t_lex *lex, t_data *data)
 		else if (lex->type == INPUT)
 		{
 			lex = lex->next;
-			if (lex->type != WORD)
-				printf("error\n");
+			if (!lex)
+			{
+				redir_err(NEWL);
+				return (1);
+			}
+			else if (lex->type != WORD)
+			{
+				redir_err(lex->type);
+				return (1);
+			}
 			else
 			{
 				if ((data->fd_in = open(lex->str, O_RDWR, S_IRWXU)) == -1)
@@ -85,8 +101,16 @@ int	parser(t_lex *lex, t_data *data)
 		else if (lex->type == APPEND)
 		{
 			lex = lex->next;
-			if (lex->type != WORD)
-				printf("error\n");
+			if (!lex)
+			{
+				redir_err(NEWL);
+				return (1);
+			}
+			else if (lex->type != WORD)
+			{
+				redir_err(lex->type);
+				return (1);
+			}
 			else
 			{
 				if ((data->fd_out = open(lex->str, O_CREAT|O_RDWR|O_APPEND, S_IRWXU)) == -1)
@@ -102,8 +126,16 @@ int	parser(t_lex *lex, t_data *data)
 			char	*heredoc;
 
 			lex = lex->next;
-			if (lex->type != WORD)
-				printf("error\n");
+			if (!lex)
+			{
+				redir_err(NEWL);
+				return (1);
+			}
+			else if (lex->type != WORD)
+			{
+				redir_err(lex->type);
+				return (1);
+			}
 			else
 			{
 				data->is_heredoc = TRUE;
@@ -198,3 +230,20 @@ char **str_array(t_lex *lst)
 	return (line);
 }
 
+void	redir_err(int type)
+{
+	write(STDOUT_FILENO, "minishell: syntax error near unexpected token ", 46);
+	if (type == OUTPUT)
+		write(STDOUT_FILENO, "`>'\n", 4);
+	else if (type == APPEND)
+		write(STDOUT_FILENO, "`>>'\n", 5);
+	else if (type == INPUT)
+		write(STDOUT_FILENO, "`>'\n", 4);
+	else if (type == HEREDOC)
+		write(STDOUT_FILENO, "`<<'\n", 5);
+	else if (type == PIPE)
+		write(STDOUT_FILENO, "`|'\n", 4);
+	else if (type == NEWL)
+		write(STDOUT_FILENO, "`newline'\n", 10);
+	return ;
+}
