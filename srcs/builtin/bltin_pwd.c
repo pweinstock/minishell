@@ -6,13 +6,13 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 08:51:04 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/02 14:11:07 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/27 12:36:23 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execute.h"
 
-void	bltin_pwd(char **cmd)
+void	bltin_pwd(t_pipex *p_strct, char **cmd)
 {
 	char *cwd;
 
@@ -22,8 +22,8 @@ void	bltin_pwd(char **cmd)
 		return ;
 	}
 	cwd = getcwd(NULL, 0);
-	write(1, cwd, ft_strlen(cwd));
-	write(1, "\n", 2);
+	ft_putstr_fd(cwd, p_strct->data->fd_out);
+	ft_putchar_fd('\n', p_strct->data->fd_out);
 	free(cwd);
 	return ;
 }

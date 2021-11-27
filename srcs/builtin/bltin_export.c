@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 13:55:01 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/25 08:33:43 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/26 19:56:46 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	sort_export(char **sort)
 	}
 }
 
-static void	no_args_print(char *input)
+static void	no_args_print(char *input, int fd)
 {
 	char	*before_equal;
 	char	*after_equal;
@@ -58,12 +58,12 @@ static void	no_args_print(char *input)
 	free(after_equal);
 	print = ft_strjoin(temp, "\"");
 	free(temp);
-	ft_putstr_fd("declare -x ", 1);
-	ft_putstr_fd(before_equal, 1);
+	ft_putstr_fd("declare -x ", fd);
+	ft_putstr_fd(before_equal, fd);
 	free(before_equal);
-	ft_putstr_fd(print, 1);
+	ft_putstr_fd(print, fd);
 	free(print);
-	ft_putstr_fd("\n", 1);
+	ft_putstr_fd("\n", fd);
 	return ;
 }
 
@@ -87,7 +87,7 @@ static void	export_noargs(t_pipex *p_strct)
 	count = 0;
 	while (sort[count] != NULL)
 	{
-		no_args_print(sort[count]);
+		no_args_print(sort[count], p_strct->data->fd_out);
 		count++;
 	}
 	free(sort);

@@ -6,21 +6,21 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 09:03:38 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/25 09:50:02 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/26 19:55:34 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execute.h"
 
-static void	echo_write(char *str)
+static void	echo_write(char *str, int fd)
 {
 	int index;
 
 	index = 0;
 	while (str[index] != '\0')
 	{
-		if (str[index] != '\\' && str[index - 1] != '\\')
-			write(1, &str[index], 1);
+		// if (str[index] != '\\' && str[index - 1] != '\\')
+			ft_putchar_fd(str[index], fd);
 		index++;
 	}
 	return ;
@@ -41,13 +41,13 @@ void	bltin_echo(t_pipex *p_strct, char **cmd)
 	}
 	while (cmd[index] != NULL)
 	{
-		echo_write(cmd[index]);
+		echo_write(cmd[index], p_strct->data->fd_out);
 		if (cmd[index + 1] != NULL)
-			write(1, " ", 1);
+			ft_putchar_fd(' ', p_strct->data->fd_out);
 		index++;
 	}
 	if (flag == TRUE )
 		return ;
-	write(1, "\n", 1);
+	ft_putchar_fd('\n', p_strct->data->fd_out);
 	return ;
 }

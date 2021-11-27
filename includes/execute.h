@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/25 10:36:46 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/27 12:37:05 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int		bltin_cd(t_pipex *p_strct, char **cmd);
 int		bltin_compare(char *needle);
 int		bltin_init(t_pipex *p_strct);
 void	bltin_exit(t_pipex *p_strct, char **cmd);
-void	bltin_pikachu(void);
-void	bltin_pwd(char **cmd);
+void	bltin_pikachu(t_pipex *p_strct);
+void	bltin_pwd(t_pipex *p_strct, char **cmd);
 void	bltin_echo(t_pipex *p_strct, char **cmd);
 void	bltin_env(t_pipex *p_strct, char **cmd);
 void	bltin_unset(t_pipex *p_strct, char **cmd);
