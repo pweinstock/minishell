@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 12:53:47 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/18 10:50:34 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/27 18:10:39 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ void	init_data(t_data *data, char **envp)
 		rotate_env(data, envnum);
 }
 
-void	rm(t_data *data)
+void	reset(t_data *data)
 {
-	// char	*temp[6];
-
-	// temp[0] = "/bin/rm";
-	// temp[1] = "-f";
-	// temp[2] = ".heredoc";
-	// temp[3] = ".temp1";
-	// temp[4] = ".temp2";
-	// temp[5] = NULL;
-	// printf("Test\n");
-	// execve(temp[0], temp, data->envp);
+	// ft_bzero(data->str, ft_strlen(data->str));
+	// free(data->str);
+	tcsetattr(STDIN_FILENO, TCSANOW, &data->original_attr);
+	data->file_in = NULL;
+	data->file_out = NULL;
+	data->file = NULL;
+	unlink(".heredoc");
+	unlink(".temp1");
+	unlink(".temp2");
 	dup2(data->original_stdin, STDIN_FILENO);
 	dup2(data->original_stdout, STDOUT_FILENO);
+	return ;
 }

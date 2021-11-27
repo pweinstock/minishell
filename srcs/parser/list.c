@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 16:55:07 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/18 11:22:04 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/11/27 20:36:56 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ void	ft_lexadd_back(t_lex *lst, t_lex *new)
 	lst = save_lst;
 }
 
-void ft_lexcreate(t_lex **lex, char *str, int type)
+void	ft_lexcreate(t_lex **lex, char *str, int type)
 {
 	t_lex	*element;
 
 	if (*lex == NULL)
-			*lex = ft_lexnew(str, type);
+		*lex = ft_lexnew(str, type);
 	else
 	{
 		element = ft_lexnew(str, type);
@@ -72,7 +72,6 @@ int	lex_len(t_lex *lst)
 
 void	print_lex(t_lex *lst)
 {
-	
 	while (lst)
 	{
 		printf("str: %s\ntype: %d\nprevious: %p\ncurrent: %p\nnext: %p\n\n", (lst)->str, (lst)->type, (lst)->previous, lst, (lst)->next);
@@ -80,9 +79,10 @@ void	print_lex(t_lex *lst)
 	}
 }
 
-int free_list(t_lex *lst)
+int	free_list(t_lex *lst)
 {
 	t_lex	*next;
+
 	while (lst)
 	{
 		next = lst->next;

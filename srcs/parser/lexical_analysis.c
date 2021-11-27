@@ -3,57 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analysis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 19:12:03 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/11/25 15:02:21 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/11/27 19:36:07 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	lex_analyzer(t_lex *lex, t_data *data)
+int	lex_analyzer(t_data *data)
 {
+	t_lex	*lex;
 	char	*token;
 	char	quote;
 
 	quote = 0;
 	token = (char *)ft_calloc(1, sizeof(char));
-	while (*data->str)
-	{
-		if (*data->str == ' ')
-			space(&lex, &token);
-		else if (*data->str == SQUOTE)
-			quote = SQUOTE;
-		else if (*data->str == DQUOTE)
-			quote = DQUOTE;
-		else if (*data->str == '>' || *data->str == '<')
-			output(&lex, &token, data);
-		else if (*data->str == '|')
-			pipes(&lex, &token /*, data */);
-		else if (*data->str == '$')
-			dollar(&lex, &token, data);
-		else
-			token = ft_strchrjoin(token, *data->str);
-		data->str++;
-		if (quote)
-			quotes(&token, data, &quote);
-	}
+	lex_analyzer2(&lex, data, &token, &quote);
 	if (ft_strlen(token))
 		space(&lex, &token);
 	free(token);
-	// print_lex(lex);
+	//print_lex(lex);
 	parser(lex, data);
+	return (1);
+}
+
+int	lex_analyzer2(t_lex **lex, t_data *data, char **token, char *quote)
+{
+	while (*data->str)
+	{
+		if (*data->str == ' ')
+			space(lex, token);
+		else if (*data->str == SQUOTE)
+			*quote = SQUOTE;
+		else if (*data->str == DQUOTE)
+			*quote = DQUOTE;
+		else if (*data->str == '>' || *data->str == '<')
+			redirection(lex, token, data);
+		else if (*data->str == '|')
+			pipes(lex, token);
+		else if (*data->str == '$')
+			dollar(lex, token, data);
+		else
+			*token = ft_strchrjoin(*token, *data->str);
+		data->str++;
+		if (*quote)
+			quotes(token, data, quote);
+	}
 	return (1);
 }
 
 int	dollar(t_lex **lex, char **token, t_data *data)
 {
-	char	*var;
-	int		i;
-	char	*res;
-
-	var = (char *)ft_calloc(1, sizeof(char));
 	data->str++;
 	if (!*data->str || *data->str == ' ')
 	{
@@ -73,9 +75,20 @@ int	dollar(t_lex **lex, char **token, t_data *data)
 	else if (*data->str == '>' || *data->str == '<')
 	{
 		*token = ft_strchrjoin(*token, '$');
-		output(lex, token, data);
+		redirection(lex, token, data);
 	}
-	else if (ft_isalpha(*data->str))
+	dollar2(lex, token, data);
+	return (1);
+}
+
+int	dollar2(t_lex **lex, char **token, t_data *data)
+{
+	char	*var;
+	int		i;
+	char	*res;
+
+	var = (char *)ft_calloc(1, sizeof(char));
+	if (ft_isalpha(*data->str))
 	{
 		while (ft_isalpha(*data->str) || ft_isdigit(*data->str))
 		{
@@ -87,7 +100,8 @@ int	dollar(t_lex **lex, char **token, t_data *data)
 		i = get_envnum(data->envp, var);
 		if (i >= 0)
 		{
-			res = ft_substr(data->envp[i],ft_strlen(var), ft_strlen(data->envp[i]) - ft_strlen(var));
+			res = ft_substr(data->envp[i], ft_strlen(var), \
+			ft_strlen(data->envp[i]) - ft_strlen(var));
 			*token = ft_strjoin(*token, res);
 			space(lex, token);
 		}
@@ -95,14 +109,14 @@ int	dollar(t_lex **lex, char **token, t_data *data)
 	return (1);
 }
 
-int	pipes(t_lex **lex, char **token /*, t_data *data */)
+int	pipes(t_lex **lex, char **token)
 {
 	space(lex, token);
 	ft_lexcreate(lex, NULL, PIPE);
 	return (1);
 }
 
-int	output(t_lex **lex, char **token, t_data *data)
+int	redirection(t_lex **lex, char **token, t_data *data)
 {
 	char	c;
 
@@ -129,19 +143,10 @@ int	output(t_lex **lex, char **token, t_data *data)
 
 int	quotes(char **token, t_data *data, char *quote)
 {
-	char	*var;
-	int		i;
-	char	*res;
-
-	var = (char *)ft_calloc(1, sizeof(char));
 	while (*data->str)
 	{
-		if (*data->str == *quote)
-		{
-			*quote = 0;
-			data->str++;
-			break;
-		}
+		if (*data->str == *quote && quote_reset(data, quote))
+			break ;
 		else if (*data->str == '$' && *quote == DQUOTE)
 		{
 			data->str++;
@@ -151,20 +156,9 @@ int	quotes(char **token, t_data *data, char *quote)
 				*token = ft_strchrjoin(*token, '$');
 			else
 			{
-				while (*data->str && (ft_isalpha(*data->str) || ft_isdigit(*data->str)))
-				{
-					var = ft_strchrjoin(var, *data->str);
-					data->str++;
-				}
-				var = ft_strchrjoin(var, '=');
-				i = get_envnum(data->envp, var);
-				if (i >= 0)
-				{
-					res = ft_substr(data->envp[i],ft_strlen(var), ft_strlen(data->envp[i]) - ft_strlen(var));
-					*token = ft_strjoin(*token, res);
-				}
-				if (*data->str == '"')
-					data->str++;
+				quotes_var(token, data);
+				if (*data->str == '"' && quote_reset(data, quote))
+					break ;
 			}
 		}
 		*token = ft_strchrjoin(*token, *data->str);
@@ -173,10 +167,38 @@ int	quotes(char **token, t_data *data, char *quote)
 	return (1);
 }
 
+int	quote_reset(t_data *data, char *quote)
+{
+	*quote = 0;
+	data->str++;
+	return (1);
+}
+
+int	quotes_var(char **token, t_data *data)
+{
+	char	*var;
+	int		i;
+	char	*res;
+
+	var = (char *)ft_calloc(1, sizeof(char));
+	while (*data->str && (ft_isalpha(*data->str) || ft_isdigit(*data->str)))
+	{
+		var = ft_strchrjoin(var, *data->str);
+		data->str++;
+	}
+	var = ft_strchrjoin(var, '=');
+	i = get_envnum(data->envp, var);
+	if (i >= 0)
+	{
+		res = ft_substr(data->envp[i], ft_strlen(var), \
+		ft_strlen(data->envp[i]) - ft_strlen(var));
+		*token = ft_strjoin(*token, res);
+	}
+	return (1);
+}
+
 int	space(t_lex **lex, char **token)
 {
-	// t_lex	*element;
-
 	if (ft_strlen(*token) == 0)
 		return (1);
 	ft_lexcreate(lex, ft_strdup(*token), WORD);
