@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 19:12:03 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/12/01 13:13:54 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/12/01 13:39:28 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	lex_analyzer(t_data *data)
 	if (ft_strlen(token))
 		space(&lex, &token);
 	free(token);
-	parser(lex, data);
+	if (lex)
+		parser(lex, data);
 	return (1);
 }
 
