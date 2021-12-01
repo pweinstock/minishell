@@ -6,11 +6,26 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 08:39:20 by khirsig           #+#    #+#             */
-/*   Updated: 2021/12/01 08:52:16 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/01 13:07:51 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execute.h"
+
+static void	new_pwd(t_pipex *p_strct, char *path)
+{
+	int	envnum;
+
+	envnum = get_envnum(p_strct->data->envp, "PWD");
+	if (envnum != -1)
+	{
+		free(p_strct->data->envp[envnum]);
+		p_strct->data->envp[envnum] = ft_strjoin("PWD=", path);
+	}
+	else
+		addback_env(p_strct, ft_strjoin("PWD=", path));
+	return ;
+}
 
 static void	old_pwd(t_pipex *p_strct, char *oldpath)
 {
@@ -65,6 +80,7 @@ int	bltin_cd(t_pipex *p_strct, char **cmd)
 	else if (cmd[1] && chdir(cmd[1]) == -1)
 		return (no_such_file(cmd[1]));
 	cwd = getcwd(NULL, 0);
+	new_pwd(p_strct, cwd);
 	cwd += ft_revchrsrch(cwd, '/') + 1;
 	free(p_strct->data->path_prefix);
 	p_strct->data->path_prefix = ft_strdup(cwd);

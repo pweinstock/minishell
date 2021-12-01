@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 09:03:38 by khirsig           #+#    #+#             */
-/*   Updated: 2021/12/01 08:55:16 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/01 13:13:23 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	bltin_echo(t_pipex *p_strct, char **cmd)
 	(void)p_strct;
 	flag = FALSE;
 	index = 1;
-	if (ft_strnstr(cmd[1], "-n", 2) != 0)
+	while (ft_strnstr(cmd[index], "-n", 2) != 0 && cmd[index][2] == '\0')
 	{
 		flag = TRUE;
-		index = 2;
+		index++;
 	}
 	while (cmd[index] != NULL)
 	{
