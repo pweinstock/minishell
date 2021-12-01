@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/12/01 09:07:05 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/01 09:25:57 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,5 @@ void	addback_env(t_pipex *p_strct, char *str);
 void	rotate_env(t_data *data, int envnum);
 void	replace_env(t_data *data, char *str, int envnum);
 int		add_env(t_pipex *p_strct, char *cmd);
-
-
 
 #endif
