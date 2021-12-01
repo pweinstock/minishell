@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 10:20:58 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/26 19:51:00 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/01 08:55:32 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	bltin_env(t_pipex *p_strct, char **cmd)
 {
-	int index;
+	int	index;
 
 	if (cmd[1])
 	{

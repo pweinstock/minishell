@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 08:40:28 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/02 14:13:43 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/01 08:54:21 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	bltin_compare(char *needle)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	while (g_bltin_cmds[index] != NULL)

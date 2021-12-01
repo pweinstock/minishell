@@ -23,6 +23,7 @@ OBJECTS = $(OBJDIR)/*.o
 SRC =	./srcs/main.c									\
 		./srcs/utils/char_utils.c						\
 		./srcs/utils/env_utils.c						\
+		./srcs/utils/add_env.c							\
 		./srcs/utils/init.c								\
 		./srcs/utils/signals.c							\
 		./srcs/execute/ex.c								\

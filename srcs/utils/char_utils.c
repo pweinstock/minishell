@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 15:16:43 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/24 14:44:12 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/01 09:09:52 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_chrsrch(char *haystack, char needle)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	while (haystack[index] != '\0')
@@ -28,7 +28,7 @@ int	ft_chrsrch(char *haystack, char needle)
 
 int	ft_revchrsrch(char *haystack, char needle)
 {
-	int index;
+	int	index;
 
 	index = ft_strlen(haystack);
 	while (index >= 0)
@@ -40,7 +40,7 @@ int	ft_revchrsrch(char *haystack, char needle)
 	return (-1);
 }
 
-char **ft_strarr_copy(char **str)
+char	**ft_strarr_copy(char **str)
 {
 	char	**new;
 	int		index;

@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:16:08 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/25 16:25:23 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/01 09:11:45 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,35 +30,33 @@ static void	child_process(t_pipex *p_strct)
 	exit(EXIT_SUCCESS);
 }
 
-static void create_child(t_pipex *p_strct)
+static void	create_child(t_pipex *p_strct)
 {
-		p_strct->child = fork();
-		if (p_strct->child == -1)
-			exit(EXIT_FAILURE);
-		if (p_strct->child == 0)
-			child_process(p_strct);
-		signal(SIGINT, SIG_IGN);
-		signal(SIGQUIT, SIG_IGN);
-		waitpid(p_strct->child, &p_strct->data->error_ret, 0);
-		// signal(SIGINT, signal_handler);
-		p_strct->data->is_child = TRUE;
-		if (WIFSIGNALED(p_strct->data->error_ret) != 0)
-		{
-			if (WTERMSIG(p_strct->data->error_ret) == SIGINT)
-				ft_putstr_fd("\n", 2);
-			if (WTERMSIG(p_strct->data->error_ret) == SIGQUIT)
-				ft_putstr_fd("Quit: 3\n", 2);
-			p_strct->data->error_ret = WTERMSIG(p_strct->data->error_ret);
-			p_strct->data->error_ret += 128;
-			return ;
-		}
-		p_strct->data->error_ret = WEXITSTATUS(p_strct->data->error_ret);
-
+	p_strct->child = fork();
+	if (p_strct->child == -1)
+		exit(EXIT_FAILURE);
+	if (p_strct->child == 0)
+		child_process(p_strct);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	waitpid(p_strct->child, &p_strct->data->error_ret, 0);
+	p_strct->data->is_child = TRUE;
+	if (WIFSIGNALED(p_strct->data->error_ret) != 0)
+	{
+		if (WTERMSIG(p_strct->data->error_ret) == SIGINT)
+			ft_putstr_fd("\n", 2);
+		if (WTERMSIG(p_strct->data->error_ret) == SIGQUIT)
+			ft_putstr_fd("Quit: 3\n", 2);
+		p_strct->data->error_ret = WTERMSIG(p_strct->data->error_ret);
+		p_strct->data->error_ret += 128;
+		return ;
+	}
+	p_strct->data->error_ret = WEXITSTATUS(p_strct->data->error_ret);
 }
 
 int	forking(t_pipex *p_strct)
 {
-	int is_bltin;
+	int	is_bltin;
 
 	is_bltin = 0;
 	is_bltin = bltin_compare(p_strct->cmd[0]);

@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 10:54:54 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/18 10:44:26 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/01 09:10:11 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	get_envnum(char **envp, char *needle)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (envp[i] != NULL)
@@ -26,7 +26,7 @@ int	get_envnum(char **envp, char *needle)
 	return (-1);
 }
 
-char **get_envpath(t_pipex *p_strct)
+char	**get_envpath(t_pipex *p_strct)
 {
 	int		envnum;
 	char	*temp;
@@ -41,7 +41,7 @@ char **get_envpath(t_pipex *p_strct)
 
 void	addback_env(t_pipex *p_strct, char *str)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	while (p_strct->data->envp[index] != NULL)

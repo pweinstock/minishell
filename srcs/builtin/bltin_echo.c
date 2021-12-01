@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 09:03:38 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/26 19:55:34 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/01 08:55:16 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 static void	echo_write(char *str, int fd)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	while (str[index] != '\0')
 	{
-		// if (str[index] != '\\' && str[index - 1] != '\\')
-			ft_putchar_fd(str[index], fd);
+		ft_putchar_fd(str[index], fd);
 		index++;
 	}
 	return ;
@@ -46,7 +45,7 @@ void	bltin_echo(t_pipex *p_strct, char **cmd)
 			ft_putchar_fd(' ', p_strct->data->fd_out);
 		index++;
 	}
-	if (flag == TRUE )
+	if (flag == TRUE)
 		return ;
 	ft_putchar_fd('\n', p_strct->data->fd_out);
 	return ;

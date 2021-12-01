@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 13:55:01 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/26 19:56:46 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/01 09:20:57 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	no_args_print(char *input, int fd)
 	return ;
 }
 
-static void	export_noargs(t_pipex *p_strct)
+static int	export_noargs(t_pipex *p_strct)
 {
 	char	**sort;
 	int		count;
@@ -91,65 +91,21 @@ static void	export_noargs(t_pipex *p_strct)
 		count++;
 	}
 	free(sort);
-	return ;
-}
-
-static int	export_str_handling(char *str)
-{
-	int	index;
-
-	index = 0;
-	if (ft_isalpha(str[index]) == 0)
-	{
-		ft_putstr_fd("minishell: export: `", 2);
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd("\': not a valid identifier\n", 2);
-		return (1);
-	}
-	while (str[index] != '\0')
-	{
-		if (str[index] == '=')
-			break ;
-		if (ft_isalnum(str[index]) == 0)
-		{
-			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd(str, 2);
-			ft_putstr_fd("\': not a valid identifier\n", 2);
-			return (1);
-		}
-		index++;
-	}
 	return (0);
 }
 
 int	bltin_export(t_pipex *p_strct, char **cmd)
 {
-	char	*temp;
 	int		word_index;
-	int		i;
 	int		ret;
 
 	word_index = 1;
 	ret = 0;
 	if (cmd[1] == NULL)
-	{
-		export_noargs(p_strct);
-		return (ret);
-	}
+		return (export_noargs(p_strct));
 	while (cmd[word_index] != NULL)
 	{
-		i = ft_chrsrch(cmd[word_index], '=');
-		if (export_str_handling(cmd[word_index]) == 0 && i != -1)
-		{
-			temp = ft_substr(cmd[word_index], 0, i + 1);
-			i = get_envnum(p_strct->data->envp, temp);
-			if (i != -1)
-				replace_env(p_strct->data, cmd[word_index], i);
-			else
-				addback_env(p_strct, cmd[word_index]);
-		}
-		else
-			ret = 1;
+		ret = add_env(p_strct, cmd[word_index]);
 		word_index++;
 	}
 	return (ret);

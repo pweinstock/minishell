@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 10:29:43 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/04 12:53:27 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/01 09:08:08 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	bltin_unset(t_pipex *p_strct, char **cmd)
 {
-	int index;
+	int	index;
 	int	envnum;
 
 	index = 1;
