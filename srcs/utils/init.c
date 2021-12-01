@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 12:53:47 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/27 18:10:39 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/12/01 10:52:33 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	init_data(t_data *data, char **envp)
 	data->path_prefix = ft_strdup("minishell");
 	data->fd_in = STDIN_FILENO;
 	data->fd_out = STDOUT_FILENO;
+	data->file_in = NULL;
+	data->file_out = NULL;
 	data->envp = ft_strarr_copy(envp);
 	envnum = get_envnum(data->envp, "OLDPWD");
 	if (envnum != -1)
