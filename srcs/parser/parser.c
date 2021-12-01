@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/12/01 10:53:54 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/12/01 13:06:57 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,105 +76,6 @@ int	parser3(t_data *data, t_lex **line_lst, t_lex *temp)
 	return (1);
 }
 
-int	word(t_lex **lex, t_lex **line_lst)
-{
-	t_lex	*element;
-
-	if (*line_lst == NULL)
-		*line_lst = ft_lexnew((*lex)->str, WORD);
-	else
-	{
-		element = ft_lexnew((*lex)->str, WORD);
-		ft_lexadd_back(*line_lst, element);
-		*line_lst = element;
-	}
-	return (1);
-}
-
-int	heredoc(t_lex **lex, t_data *data)
-{
-	char	*heredoc;
-
-	if (!redir_check(lex))
-		return (0);
-	else
-	{
-		data->is_heredoc = TRUE;
-		if (data->fd_in != STDIN_FILENO)
-			close(data->fd_in);
-		data->fd_in = open(".heredoc", O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
-		dup2(data->original_stdout, data->fd_out);
-		signal(SIGINT, heredoc_signal);
-		while (1)
-		{
-			heredoc = readline("heredoc> ");
-			if (!heredoc)
-				return (0);
-			if (heredoc[0] != 0 && ft_strlen(heredoc) == ft_strlen((*lex)->str) \
-			&& !ft_strncmp((*lex)->str, heredoc, ft_strlen(heredoc)))
-				break ;
-			write(data->fd_in, heredoc, ft_strlen(heredoc));
-			write(data->fd_in, "\n", 1);
-		}
-	}
-	return (1);
-}
-
-int	input(t_lex **lex, t_data *data, t_lex *temp)
-{
-	if (!redir_check(lex))
-		return (0);
-	else
-	{
-		data->fd_in = open((*lex)->str, O_RDWR, S_IRWXU);
-		if (data->fd_in == -1)
-		{
-			perror((*lex)->str);
-			free_list(temp);
-			return (0);
-		}
-	}
-	return (1);
-}
-
-int	append(t_lex **lex, t_data *data, t_lex *temp)
-{
-	if (!redir_check(lex))
-		return (0);
-	else
-	{
-		close(data->fd_out);
-		data->fd_out = open((*lex)->str, O_CREAT | O_RDWR | O_APPEND, S_IRWXU);
-		if (data->fd_out == -1)
-		{
-			perror((*lex)->str);
-			free_list(temp);
-			return (0);
-		}
-	}
-	data->redirection = 1;
-	return (1);
-}
-
-int	output(t_lex **lex, t_data *data, t_lex *temp)
-{
-	if (!redir_check(lex))
-		return (0);
-	else
-	{
-		close(data->fd_out);
-		data->fd_out = open((*lex)->str, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
-		if (data->fd_out == -1)
-		{
-			perror((*lex)->str);
-			free_list(temp);
-			return (0);
-		}	
-	}
-	data->redirection = 1;
-	return (1);
-}
-
 int	pipex(t_data *data, t_lex **line_lst)
 {
 	data->is_piped = TRUE;
@@ -202,61 +103,4 @@ int	pipex(t_data *data, t_lex **line_lst)
 	data->redirection = 0;
 	*line_lst = NULL;
 	return (1);
-}
-
-char	**str_array(t_lex *lst)
-{
-	char	**line;
-	int		i;
-	t_lex	*temp;
-
-	while (lst->previous != NULL)
-		lst = lst->previous;
-	temp = lst;
-	line = ft_calloc(lex_len(lst) + 1, sizeof(char **));
-	lst = temp;
-	i = 0;
-	while (lst)
-	{
-		line[i] = lst->str;
-		i++;
-		lst = lst->next;
-	}
-	line[i] = NULL;
-	free_list(temp);
-	return (line);
-}
-
-int	redir_check(t_lex **lex)
-{
-	*lex = (*lex)->next;
-	if (!*lex)
-	{
-		redir_err(NEWL);
-		return (0);
-	}
-	else if ((*lex)->type != WORD)
-	{
-		redir_err((*lex)->type);
-		return (0);
-	}
-	return (1);
-}
-
-void	redir_err(int type)
-{
-	write(STDOUT_FILENO, "minishell: syntax error near unexpected token ", 46);
-	if (type == OUTPUT)
-		write(STDOUT_FILENO, "`>'\n", 4);
-	else if (type == APPEND)
-		write(STDOUT_FILENO, "`>>'\n", 5);
-	else if (type == INPUT)
-		write(STDOUT_FILENO, "`>'\n", 4);
-	else if (type == HEREDOC)
-		write(STDOUT_FILENO, "`<<'\n", 5);
-	else if (type == PIPE)
-		write(STDOUT_FILENO, "`|'\n", 4);
-	else if (type == NEWL)
-		write(STDOUT_FILENO, "`newline'\n", 10);
-	return ;
 }

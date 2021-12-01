@@ -41,7 +41,11 @@ SRC =	./srcs/main.c									\
 		./srcs/builtin/bltin_eastereggs.c				\
 		./srcs/parser/list.c							\
 		./srcs/parser/lexical_analysis.c				\
+		./srcs/parser/lexical_analysis_spec.c			\
+		./srcs/parser/lexical_analysis_utils.c			\
 		./srcs/parser/parser.c							\
+		./srcs/parser/parser.spec.c						\
+		./srcs/parser/parser.utils.c					\
 
 
 all: header $(NAME)

@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/12/01 10:36:16 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/12/01 13:11:59 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	free_line(char **line)
 {
-	char **temp;
+	char	**temp;
 
 	temp = line;
 	while (*line)

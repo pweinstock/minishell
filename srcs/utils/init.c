@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 12:53:47 by khirsig           #+#    #+#             */
-/*   Updated: 2021/12/01 10:52:33 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/12/01 11:08:04 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	init_data(t_data *data, char **envp)
 
 void	reset(t_data *data)
 {
-	// ft_bzero(data->str, ft_strlen(data->str));
-	// free(data->str);
 	tcsetattr(STDIN_FILENO, TCSANOW, &data->original_attr);
 	data->file_in = NULL;
 	data->file_out = NULL;
