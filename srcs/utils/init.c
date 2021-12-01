@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 12:53:47 by khirsig           #+#    #+#             */
-/*   Updated: 2021/12/01 11:08:04 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/12/01 17:53:20 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ void	reset(t_data *data)
 	unlink(".heredoc");
 	unlink(".temp1");
 	unlink(".temp2");
+	data->is_piped = 0;
+	data->is_heredoc = 0;
+	data->redirection = 0;
 	dup2(data->original_stdin, STDIN_FILENO);
 	dup2(data->original_stdout, STDOUT_FILENO);
 	return ;

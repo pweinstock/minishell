@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/12/01 13:06:57 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/12/01 18:40:05 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ int	parser(t_lex *lex, t_data *data)
 	{	
 		if (lex->type == PIPE)
 		{
-			if (!lex->next || lex->next->type == PIPE)
+			if ((!lex->next || lex->next->type == PIPE) && free_list(temp))
 				return (1);
 			pipex(data, &line_lst);
+			data->is_heredoc = FALSE;
 		}
-		else if (!parser2(&lex, data, &line_lst, temp))
+		else if ((!parser2(&lex, data, &line_lst, temp)) && free_list(temp))
 			return (1);
 		lex = lex->next;
 	}

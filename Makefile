@@ -44,8 +44,8 @@ SRC =	./srcs/main.c									\
 		./srcs/parser/lexical_analysis_spec.c			\
 		./srcs/parser/lexical_analysis_utils.c			\
 		./srcs/parser/parser.c							\
-		./srcs/parser/parser.spec.c						\
-		./srcs/parser/parser.utils.c					\
+		./srcs/parser/parser_spec.c						\
+		./srcs/parser/parser_utils.c					\
 
 
 all: header $(NAME)
