@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ex.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/12/01 08:45:58 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/01 10:36:16 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execute.h"
+
+int	free_line(char **line)
+{
+	char **temp;
+
+	temp = line;
+	while (*line)
+	{
+		free(*line);
+		*line = NULL;
+		line++;
+	}
+	free(*line);
+	*line = NULL;
+	free(temp);
+	return (1);
+}
 
 int	execute(char **input, t_data *data)
 {
@@ -22,6 +39,10 @@ int	execute(char **input, t_data *data)
 	p_strct.data = data;
 	p_strct.envpath = get_envpath(&p_strct);
 	if (forking(&p_strct) == ERROR)
+	{
+		free_line(input);
 		return (1);
+	}
+	free_line(input);
 	return (0);
 }
