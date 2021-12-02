@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.spec.c                                      :+:      :+:    :+:   */
+/*   parser_spec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 11:24:11 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/12/01 18:31:04 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/12/02 14:04:18 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	heredoc(t_lex **lex, t_data *data)
 			heredoc = readline("heredoc> ");
 			if (!heredoc)
 				return (0);
-			if (heredoc[0] != 0 && ft_strlen(heredoc) == ft_strlen((*lex)->str) \
+			if (heredoc[0] != 0 && ft_strlen(heredoc) == ft_strlen((*lex)->str)
 			&& !ft_strncmp((*lex)->str, heredoc, ft_strlen(heredoc)))
 				break ;
 			write(data->fd_in, heredoc, ft_strlen(heredoc));
@@ -105,7 +105,7 @@ int	output(t_lex **lex, t_data *data, t_lex *temp)
 			perror((*lex)->str);
 			free_list(temp);
 			return (0);
-		}	
+		}
 	}
 	data->redirection = 1;
 	return (1);

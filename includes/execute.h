@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/12/02 10:01:18 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/02 10:55:44 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	replace_env(t_data *data, char *str, int envnum);
 int		add_env(t_pipex *p_strct, char *cmd);
 int		free_line(char **line);
 void	free_cmdpath(t_pipex *p_strct);
+void	free_envp(t_data *data);
 
 
 #endif

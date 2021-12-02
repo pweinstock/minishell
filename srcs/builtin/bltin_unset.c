@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 10:29:43 by khirsig           #+#    #+#             */
-/*   Updated: 2021/12/01 09:08:08 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/02 11:10:44 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	bltin_unset(t_pipex *p_strct, char **cmd)
 	int	envnum;
 
 	index = 1;
+	// system("leaks minishell");
 	while (cmd[index] != NULL)
 	{
 		envnum = get_envnum(p_strct->data->envp, cmd[index]);

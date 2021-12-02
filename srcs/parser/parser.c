@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/12/01 18:40:05 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/12/02 14:07:54 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	parser(t_lex *lex, t_data *data)
 	data->is_piped = FALSE;
 	data->is_heredoc = FALSE;
 	while (lex)
-	{	
+	{
 		if (lex->type == PIPE)
 		{
 			if ((!lex->next || lex->next->type == PIPE) && free_list(temp))

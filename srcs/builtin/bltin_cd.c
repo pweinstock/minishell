@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 08:39:20 by khirsig           #+#    #+#             */
-/*   Updated: 2021/12/01 13:07:51 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/02 13:13:14 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	new_pwd(t_pipex *p_strct, char *path)
 {
-	int	envnum;
+	char	*temp;
+	int		envnum;
 
 	envnum = get_envnum(p_strct->data->envp, "PWD");
 	if (envnum != -1)
@@ -23,13 +24,18 @@ static void	new_pwd(t_pipex *p_strct, char *path)
 		p_strct->data->envp[envnum] = ft_strjoin("PWD=", path);
 	}
 	else
-		addback_env(p_strct, ft_strjoin("PWD=", path));
+	{
+		temp = ft_strjoin("PWD=", path);
+		addback_env(p_strct, temp);
+		free(temp);
+	}
 	return ;
 }
 
 static void	old_pwd(t_pipex *p_strct, char *oldpath)
 {
-	int	envnum;
+	char	*temp;
+	int		envnum;
 
 	envnum = get_envnum(p_strct->data->envp, "OLDPWD");
 	if (envnum != -1)
@@ -38,7 +44,11 @@ static void	old_pwd(t_pipex *p_strct, char *oldpath)
 		p_strct->data->envp[envnum] = ft_strjoin("OLDPWD=", oldpath);
 	}
 	else
-		addback_env(p_strct, ft_strjoin("OLDPWD=", oldpath));
+	{
+		temp = ft_strjoin("OLDPWD=", oldpath);
+		addback_env(p_strct, temp);
+		free(temp);
+	}
 	return ;
 }
 
@@ -75,15 +85,20 @@ int	bltin_cd(t_pipex *p_strct, char **cmd)
 	envnum = get_envnum(p_strct->data->envp, "HOME=");
 	if (!cmd[1] && envnum != -1 && chdir(p_strct->data->envp[envnum] + 5) == -1)
 		return (no_such_file(p_strct->data->envp[envnum] + 5));
-	if (cmd[1] && cmd[1][0] == '-' && cmd[1][1] == '\0' && cd_min(p_strct) == 1)
-		return (1);
+	if (cmd[1] && cmd[1][0] == '-' && cmd[1][1] == '\0')
+	{
+		if (cd_min(p_strct) == 1)
+			return (1);
+	}
 	else if (cmd[1] && chdir(cmd[1]) == -1)
 		return (no_such_file(cmd[1]));
 	cwd = getcwd(NULL, 0);
 	new_pwd(p_strct, cwd);
-	cwd += ft_revchrsrch(cwd, '/') + 1;
+	envnum = ft_revchrsrch(cwd, '/') + 1;
 	free(p_strct->data->path_prefix);
-	p_strct->data->path_prefix = ft_strdup(cwd);
+	p_strct->data->path_prefix = ft_strdup(cwd + envnum);
+	free(cwd);
 	old_pwd(p_strct, oldpath);
+	free(oldpath);
 	return (0);
 }

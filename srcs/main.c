@@ -3,19 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:45:01 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/12/02 10:51:53 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/12/02 11:03:16 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void	free_envp(t_data *data)
+{
+	int index;
+
+	index = 0;
+	if (data->envp == NULL)
+	{
+		free(data->envp);
+		return ;
+	}
+	while (data->envp[index] != NULL)
+	{
+		free(data->envp[index]);
+		index++;
+	}
+	free(data->envp[index]);
+	free(data->envp);
+	return ;
+}
+
 void	reg_exit(t_data *data)
 {
 	write(1, "exit\n", 5);
 	reset(data);
+	free_envp(data);
 	exit(0);
 	return ;
 }

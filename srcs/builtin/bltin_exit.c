@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 14:19:31 by khirsig           #+#    #+#             */
-/*   Updated: 2021/12/02 10:01:34 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/02 13:07:14 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	bltin_exit(t_pipex *p_strct, char **cmd)
 	free_cmdpath(p_strct);
 	p_strct->cmd = NULL;
 	free_line(cmd);
+	free_envp(p_strct->data);
 	system("leaks minishell");
 	exit(ret);
 }

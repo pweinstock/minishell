@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 15:16:43 by khirsig           #+#    #+#             */
-/*   Updated: 2021/12/02 10:01:10 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/02 11:55:34 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ void	free_cmdpath(t_pipex *p_strct)
 {
 	int index;
 
+	if (p_strct->envpath == NULL)
+	{
+		free(p_strct->envpath);
+		return ;
+	}
 	index = 0;
 	while (p_strct->envpath[index] != NULL)
 	{
