@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/12/02 15:18:08 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/02 15:50:24 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	parser(t_lex *lex, t_data *data)
 			pipex(data, &line_lst);
 			data->is_heredoc = FALSE;
 		}
-		else if ((!parser2(&lex, data, &line_lst)) && free_list(temp))
+		else if (!parser2(&lex, data, &line_lst) && free_list(temp))
 			return (free_list(line_lst));
 		lex = lex->next;
 	}
