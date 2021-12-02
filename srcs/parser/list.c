@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 16:55:07 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/12/01 13:40:13 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/12/02 14:25:02 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,14 @@ int	free_list(t_lex *lst)
 {
 	t_lex	*next;
 
+	while (lst->previous)
+		lst = lst->previous;
 	while (lst)
 	{
 		next = lst->next;
-		ft_bzero(lst, sizeof(t_lex));
 		free(lst->str);
 		free(lst);
+		ft_bzero(lst, sizeof(t_lex));
 		lst = NULL;
 		lst = next;
 	}

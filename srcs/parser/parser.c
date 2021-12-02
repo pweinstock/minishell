@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/12/02 14:07:54 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/02 15:18:08 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,35 @@ int	parser(t_lex *lex, t_data *data)
 		if (lex->type == PIPE)
 		{
 			if ((!lex->next || lex->next->type == PIPE) && free_list(temp))
-				return (1);
+				return (free_list(line_lst));
 			pipex(data, &line_lst);
 			data->is_heredoc = FALSE;
 		}
-		else if ((!parser2(&lex, data, &line_lst, temp)) && free_list(temp))
-			return (1);
+		else if ((!parser2(&lex, data, &line_lst)) && free_list(temp))
+			return (free_list(line_lst));
 		lex = lex->next;
 	}
-	if (!line_lst && free_list(temp) && close(data->fd_in))
+	if (!line_lst && free_list(temp)/* && close(data->fd_in)*/)
 		return (1);
 	parser3(data, &line_lst, temp);
 	return (1);
 }
 
-int	parser2(t_lex **lex, t_data *data, t_lex **line_lst, t_lex *temp)
+int	parser2(t_lex **lex, t_data *data, t_lex **line_lst)
 {
 	if ((*lex)->type == OUTPUT)
 	{
-		if (!output(lex, data, temp))
+		if (!output(lex, data))
 			return (0);
 	}
 	else if ((*lex)->type == INPUT)
 	{
-		if (!input(lex, data, temp))
+		if (!input(lex, data))
 			return (0);
 	}
 	else if ((*lex)->type == APPEND)
 	{
-		if (!append(lex, data, temp))
+		if (!append(lex, data))
 			return (0);
 	}
 	else if ((*lex)->type == HEREDOC)

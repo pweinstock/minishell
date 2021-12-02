@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:45:01 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/12/02 11:03:16 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/02 15:12:47 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	reg_exit(t_data *data)
 {
 	write(1, "exit\n", 5);
 	reset(data);
-	free_envp(data);
 	exit(0);
 	return ;
 }

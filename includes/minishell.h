@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:39:48 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/12/01 18:08:48 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/12/02 15:18:17 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,12 @@ void	reset(t_data *data);
 
 //parsing
 int		parser(t_lex *lex, t_data *data);
-int		parser2(t_lex **lex, t_data *data, t_lex **line_lst, t_lex *temp);
+int		parser2(t_lex **lex, t_data *data, t_lex **line_lst);
 int		parser3(t_data *data, t_lex **line_lst, t_lex *temp);
 int		pipex(t_data *data, t_lex **line_lst);
-int		output(t_lex **lex, t_data *data, t_lex *temp);
-int		input(t_lex **lex, t_data *data, t_lex *temp);
-int		append(t_lex **lex, t_data *data, t_lex *temp);
+int		output(t_lex **lex, t_data *data);
+int		input(t_lex **lex, t_data *data);
+int		append(t_lex **lex, t_data *data);
 int		heredoc(t_lex **lex, t_data *data);
 int		word(t_lex **lex, t_lex **line_lst);
 char	**str_array(t_lex *lst);
