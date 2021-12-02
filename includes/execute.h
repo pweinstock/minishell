@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 09:58:00 by khirsig           #+#    #+#             */
-/*   Updated: 2021/12/01 09:25:57 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/02 08:38:11 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,9 @@ typedef struct s_pipex {
 	pid_t		child;
 }				t_pipex;
 
-const static char	*g_bltin_cmds[9] = {
+const static char	*g_bltin_cmds[8] = {
 	"cd",
 	"exit",
-	"pikachu",
 	"pwd",
 	"echo",
 	"env",
