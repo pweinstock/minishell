@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 11:15:15 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/12/01 13:14:07 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/12/02 10:10:02 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ char	*ft_strchrjoin(char *s1, char const s2)
 		new_string[index] = s1[index];
 		index++;
 	}
-	s1 = NULL;
 	free(s1);
+	s1 = NULL;
 	new_string[index] = s2;
 	index++;
 	new_string[index] = '\0';
