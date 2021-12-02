@@ -6,10 +6,11 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 15:16:43 by khirsig           #+#    #+#             */
-/*   Updated: 2021/12/01 09:09:52 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/02 10:01:10 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../includes/execute.h"
 #include "../../includes/minishell.h"
 
 int	ft_chrsrch(char *haystack, char needle)
@@ -58,4 +59,19 @@ char	**ft_strarr_copy(char **str)
 	}
 	new[index] = NULL;
 	return (new);
+}
+
+void	free_cmdpath(t_pipex *p_strct)
+{
+	int index;
+
+	index = 0;
+	while (p_strct->envpath[index] != NULL)
+	{
+		free(p_strct->envpath[index]);
+		index++;
+	}
+	free(p_strct->envpath[index]);
+	free(p_strct->envpath);
+	return ;
 }

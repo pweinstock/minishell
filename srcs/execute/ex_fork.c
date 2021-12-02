@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 08:16:08 by khirsig           #+#    #+#             */
-/*   Updated: 2021/12/01 09:11:45 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/02 10:04:05 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,15 @@ static void	child_process(t_pipex *p_strct)
 	if (dup2(p_strct->data->fd_out, STDOUT_FILENO) == -1)
 		exit(errno);
 	runcmd(p_strct, p_strct->cmd);
+	free_cmdpath(p_strct);
 	exit(EXIT_SUCCESS);
 }
 
-static void	create_child(t_pipex *p_strct)
+static int	create_child(t_pipex *p_strct)
 {
 	p_strct->child = fork();
 	if (p_strct->child == -1)
-		exit(EXIT_FAILURE);
+		return (ERROR);
 	if (p_strct->child == 0)
 		child_process(p_strct);
 	signal(SIGINT, SIG_IGN);
@@ -49,9 +50,10 @@ static void	create_child(t_pipex *p_strct)
 			ft_putstr_fd("Quit: 3\n", 2);
 		p_strct->data->error_ret = WTERMSIG(p_strct->data->error_ret);
 		p_strct->data->error_ret += 128;
-		return ;
+		return (0);
 	}
 	p_strct->data->error_ret = WEXITSTATUS(p_strct->data->error_ret);
+	return (0);
 }
 
 int	forking(t_pipex *p_strct)
@@ -71,7 +73,8 @@ int	forking(t_pipex *p_strct)
 			perror("Error");
 			return (ERROR);
 		}
-		create_child(p_strct);
+		if (create_child(p_strct) == ERROR)
+			return (ERROR);
 		close(p_strct->end[0]);
 		close(p_strct->end[1]);
 	}

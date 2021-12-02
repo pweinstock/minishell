@@ -6,7 +6,7 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 13:55:01 by khirsig           #+#    #+#             */
-/*   Updated: 2021/12/01 09:20:57 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/02 09:33:01 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ static int	export_noargs(t_pipex *p_strct)
 	while (p_strct->data->envp[count] != NULL)
 		count++;
 	sort = malloc(sizeof(char *) * count + 1);
+	if (sort == NULL)
+		return (1);
 	count = 0;
 	while (p_strct->data->envp[count] != NULL)
 	{

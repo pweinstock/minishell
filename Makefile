@@ -38,7 +38,6 @@ SRC =	./srcs/main.c									\
 		./srcs/builtin/bltin_echo.c						\
 		./srcs/builtin/bltin_compare.c					\
 		./srcs/builtin/bltin_exit.c						\
-		./srcs/builtin/bltin_eastereggs.c				\
 		./srcs/parser/list.c							\
 		./srcs/parser/lexical_analysis.c				\
 		./srcs/parser/lexical_analysis_spec.c			\

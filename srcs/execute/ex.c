@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ex.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:50:41 by khirsig           #+#    #+#             */
-/*   Updated: 2021/12/01 18:41:51 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/12/02 10:04:00 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	execute(char **input, t_data *data)
 		free_line(input);
 		return (1);
 	}
+	free_cmdpath(&p_strct);
+	p_strct.cmd = NULL;
 	free_line(input);
 	return (0);
 }

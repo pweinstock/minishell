@@ -6,11 +6,12 @@
 /*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 14:19:31 by khirsig           #+#    #+#             */
-/*   Updated: 2021/11/25 08:16:07 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/02 10:01:34 by khirsig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execute.h"
+#include "../../includes/minishell.h"
 
 static void	no_nbr(char *str)
 {
@@ -49,10 +50,13 @@ void	bltin_exit(t_pipex *p_strct, char **cmd)
 {
 	int	ret;
 
-	(void)p_strct;
 	ret = 0;
 	write(1, "exit\n", 5);
 	if (cmd[1] != NULL)
 		ret = exit_atoi(cmd[1]);
+	free_cmdpath(p_strct);
+	p_strct->cmd = NULL;
+	free_line(cmd);
+	system("leaks minishell");
 	exit(ret);
 }
