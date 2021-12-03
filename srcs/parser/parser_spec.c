@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 11:24:11 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/12/02 15:51:17 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/12/03 11:49:00 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ int	word(t_lex **lex, t_lex **line_lst)
 
 int	heredoc(t_lex **lex, t_data *data)
 {
-	char	*heredoc;
-
 	if (!redir_check(lex))
 		return (0);
 	else
@@ -41,19 +39,7 @@ int	heredoc(t_lex **lex, t_data *data)
 		data->fd_in = open(".heredoc", O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
 		dup2(data->original_stdout, data->fd_out);
 		signal(SIGINT, heredoc_signal);
-		while (1)
-		{
-			heredoc = readline("heredoc> ");
-			if (!heredoc)
-				return (0);
-			if (heredoc[0] != 0 && ft_strlen(heredoc) == ft_strlen((*lex)->str) \
-			&& !ft_strncmp((*lex)->str, heredoc, ft_strlen(heredoc)))
-				break ;
-			write(data->fd_in, heredoc, ft_strlen(heredoc));
-			write(data->fd_in, "\n", 1);
-			free(heredoc);
-		}
-		free(heredoc);
+		heredoc_loop(lex, data);
 	}
 	return (1);
 }

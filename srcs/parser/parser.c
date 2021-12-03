@@ -6,7 +6,7 @@
 /*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 16:35:05 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/12/02 15:50:24 by pweinsto         ###   ########.fr       */
+/*   Updated: 2021/12/03 11:51:15 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	parser(t_lex *lex, t_data *data)
 			return (free_list(line_lst));
 		lex = lex->next;
 	}
-	if (!line_lst && free_list(temp)/* && close(data->fd_in)*/)
+	if (!line_lst && free_list(temp))
 		return (1);
 	parser3(data, &line_lst, temp);
 	return (1);

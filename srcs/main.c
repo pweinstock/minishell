@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khirsig <khirsig@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pweinsto <pweinsto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 11:45:01 by pweinsto          #+#    #+#             */
-/*   Updated: 2021/12/02 15:12:47 by khirsig          ###   ########.fr       */
+/*   Updated: 2021/12/03 11:38:59 by pweinsto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_envp(t_data *data)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	if (data->envp == NULL)
